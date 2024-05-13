@@ -1,0 +1,119 @@
+/* FORMATO HEADER */
+/* #header{
+    height: 1rem;
+} */
+
+/* FORMATO LOGOS HEADER */
+#logo_redes{
+    filter: none;    
+}
+#logo_redes:hover{
+filter: invert();
+transition-duration: 250ms;
+
+}
+#logo_instagram{
+    filter: invert();
+}
+#logo_instagram:hover{
+    transition-duration: 250ms;
+    filter: none;
+}
+
+
+/* FORMATO MENU FLEX HEADER */
+.group.open .group-\[\.open\]\:py-4 {
+    padding-top: 0rem !important;
+    padding-bottom: 0rem !important;
+    margin-top: 3rem !important;
+    border-top: solid;
+    border-color: rgb(255, 166, 0);
+}
+
+/* FORMATO BODY */
+/* #content{
+    background-image: url(../src/assets/fondo_content.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 90vh;
+}
+#chat_section{
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    height: 55vh;
+} */
+
+/* FORMATO FOOTER */
+/* #footer{
+    height: 10vh;
+} */
+@media screen and (max-width: 768px) {
+    #content {
+        width: 100%; /* 100% del ancho del contenedor padre */
+        height: 1500px; /* Altura fija para pantallas pequeñas */
+        margin-bottom: 100px;
+    }
+    #chat_section{
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+        height: 750px;
+        border-radius: 4px;
+        border-color: red;
+        border: solid;
+    }
+    #footer{
+        height: 100px;
+    }
+}
+@media screen and (max-height: 480px) {
+    #content{
+        width: 100%; /* 100% del ancho del contenedor padre */
+        height: 1500px; /* Altura fija para pantallas pequeñas */
+        margin-bottom: 100px;
+    }
+    #chat_section{
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+        height: 750px;
+        border-radius: 4px;
+        border-color: red;
+        border: solid;
+    }
+    #footer{
+        height: 100px;
+    }
+    
+}
+@media screen and (min-width: 768px) {
+    #content{
+        height: 100vh;
+        margin-bottom: 100px;
+    }
+    #chat_section{
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+        height: 55vh;
+        border-radius: 15px;
+        border-color: red;
+        border: solid;
+        border-style: solid;
+        border-width: 3px;
+    }
+}
+@media screen and (min-height: 480px) {
+    #content{
+        height: 100vh;
+        margin-bottom: 100px;
+    }
+    #chat_section{
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+        height: 55vh;
+        border-radius: 15px;
+        border-color: red;
+        border: solid;
+        border-style: solid;
+        border-width: 3px;
+    }
+
+}
