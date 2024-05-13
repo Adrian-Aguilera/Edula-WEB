@@ -8,7 +8,7 @@ EdulA web es el apartado visual que alojará los resultados del funcionamiento d
 Clonar el repositorio 
 ```bash
   git clone https://github.com/Fabio-Castillo/Edula-WEB.git
-
+```
 Go to the project directory
 
 ```bash
