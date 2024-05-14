@@ -24,7 +24,7 @@ Instalacion de comandos Vue.JS para CLI (Utilizando Node.JS)
     npm install -g @vue/cli
 ```
 
-Instalacion de librerias 
+Instalacion de librerias del proyecto
 ```bash
     npm install
 ```
