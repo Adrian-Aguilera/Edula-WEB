@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Clase Virtual Prueba</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="./TemplateData/style.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/specs.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/motion-tailwind/motion-tailwind.css" rel="stylesheet">
+  </head>
+  <body class="bg-black" style="background-image: url(../img/fondo_content.jpg); background-repeat: repeat; background-size: cover !important;">
+    <div id="content">
+      <div class="relative flex flex-wrap items-center justify-between w-full bg-red-800 group py-4 shrink-0" id="header">
+        <div class="container relative flex flex-wrap items-center justify-between w-full group py-4 shrink-0">
+          <div>
+            <a href="https://www.itca.edu.sv"><img class="sm:h-6 md:h-6 lg:h-8 xl:h-8 object-cover" id="logo_header" src="https://www.itca.edu.sv/wp-content/uploads/2017/01/logo-new-white-1.png"></a>
+          </div>
+          <div class="items-center justify-between hidden gap-12 md:flex">
+            <a class="md:text-base lg:text-lg xl:text-xl font-semibold text-white hover:text-yellow-400"><p id="texto_header">Clase Virtual Prueba</p></a>
+          </div>
+          <div class="items-center hidden gap-8 md:flex">
+            <!-- <button class="flex items-center text-sm font-normal text-white hover:text-yellow-400 transition duration-300">Log In</button> -->
+            <a href="#"><img class="min-w-0 md:h-4 lg:h-6 max-h-6"  id="logo_redes" src="../img/Youtube_logo.png"></a>
+            <a href="#"><img class="min-w-0 md:h-4 lg:h-6 max-h-6" id="logo_instagram" src="../img/logo_instagram.png"></a>
+            <a href="#"><img class="min-w-0 md:h-4 lg:h-6 max-h-6" id="logo_instagram" src="../img/logo_facebook.png"></a>
+            <a href="#"><img class="min-w-0 md:h-4 lg:h-6 max-h-6" id="logo_instagram" src="../img/logo_x.png"></a>
+            <img src="../img/foto_user.png" class="max-w-10 rounded-lg" alt="">
+            <a href="../index.html">
+              <button class="flex items-center px-4 py-2 text-sm font-bold rounded-xl  bg-white text-red-800 hover:bg-yellow-400 hover:text-black transition duration-300">
+                Cerrar sesión
+              </button>     
+            </a>
+          </div>
+          <a class="text-sm font-semibold md:hidden text-white hover:text-yellow-400">Clase Virtual Prueba</a>
+          <button onclick="(() => { this.closest('.group').classList.toggle('open')})()" class="flex md:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M3 8H21C21.2652 8 21.5196 7.89464 21.7071 7.70711C21.8946 7.51957 22 7.26522 22 7C22 6.73478 21.8946 6.48043 21.7071 6.29289C21.5196 6.10536 21.2652 6 21 6H3C2.73478 6 2.48043 6.10536 2.29289 6.29289C2.10536 6.48043 2 6.73478 2 7C2 7.26522 2.10536 7.51957 2.29289 7.70711C2.48043 7.89464 2.73478 8 3 8ZM21 16H3C2.73478 16 2.48043 16.1054 2.29289 16.2929C2.10536 16.4804 2 16.7348 2 17C2 17.2652 2.10536 17.5196 2.29289 17.7071C2.48043 17.8946 2.73478 18 3 18H21C21.2652 18 21.5196 17.8946 21.7071 17.7071C21.8946 17.5196 22 17.2652 22 17C22 16.7348 21.8946 16.4804 21.7071 16.2929C21.5196 16.1054 21.2652 16 21 16ZM21 11H3C2.73478 11 2.48043 11.1054 2.29289 11.2929C2.10536 11.4804 2 11.7348 2 12C2 12.2652 2.10536 12.5196 2.29289 12.7071C2.48043 12.8946 2.73478 13 3 13H21C21.2652 13 21.5196 12.8946 21.7071 12.7071C21.8946 12.5196 22 12.2652 22 12C22 11.7348 21.8946 11.4804 21.7071 11.2929C21.5196 11.1054 21.2652 11 21 11Z" fill="white"></path>
+            </svg>
+          </button>
+          <div class="relative align-middle items-center flex md:hidden transition-all duration-300 ease-in-out flex-col shadow-main justify-center w-full gap-3 overflow-hidden bg-red-800 max-h-0 group-[.open]:py-4 px-4 squared-2xl group-[.open]:max-h-64 top-full">
+            <!-- <a class="text-sm font-normal text-white hover:text-yellow-400" href="javascript:void(0)">Product</a>
+            <a class="text-sm font-normal text-white hover:text-yellow-400" href="javascript:void(0)">Features</a>
+            <a class="text-sm font-normal text-white hover:text-yellow-400" href="javascript:void(0)">Pricing</a>
+            <a class="text-sm font-normal text-white hover:text-yellow-400" href="javascript:void(0)">Company</a> -->   
+            <div class="container relative flex flex-wrap items-center justify-between w-full group py-7 shrink-0">
+              <a href="#"><img class="min-w-0 max-h-6"  id="logo_redes" src="../img/Youtube_logo.png"></a>
+              <a href="#"><img class="min-w-0 max-h-6" id="logo_instagram" src="../img/logo_instagram.png"></a>
+              <a href="#"><img class="min-w-0 max-h-6" id="logo_instagram" src="../img/logo_facebook.png"></a>
+              <a href="#"><img class="min-w-0 max-h-6" id="logo_instagram" src="../img/logo_x.png"></a>             
+            </div>
+            <img src="../img/foto_user.png" class="max-w-10 rounded-lg" alt="">
+            <a href="../index.html">
+              <button class="flex items-center px-4 py-2 text-sm font-bold rounded-xl  bg-white text-red-800 hover:bg-yellow-400 hover:text-black transition duration-300">
+                Cerrar sesión
+              </button>     
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center align-middle mt-8 mb-8">
+        <div id="unity-container" class="unity-desktop">
+          <canvas id="unity-canvas" width=1000 height=600></canvas>
+          <div id="unity-loading-bar">
+            <div id="unity-logo"></div>
+            <div id="unity-progress-bar-empty">
+              <div id="unity-progress-bar-full"></div>
+            </div>
+          </div>
+          <div id="unity-warning"> </div>
+          <div id="unity-footer">
+            <div id="unity-webgl-logo"></div>
+           <div id="unity-fullscreen-button"></div>     
+            <div id="unity-build-title"></div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="w-full mt-16 mb-8 ">
+          <div class="flex bg-red-800 md:hidden my-8 max-h-2">
+            <hr style="height: 100vh;">
+          </div>
+          <div class="flex flex-col justify-center align-middle text-center mb-12 lg:mt-16 xl:mt-0">
+            <div class="flex justify-center text-center">
+              <h1 class="text-white text-2xl md:text-3xl lg:text-4xl font-extrabold uppercase">¿Tienes alguna pregunta sobre el contenido?</h1>
+            </div>
+            <div class="flex bg-red-800 max-h-2 mt-6">
+              <hr style="height: 100vh;">
+            </div>
+            <div class="flex justify-center text-center mt-4">
+              <h1 class="text-white text-base md:text-lg lg:text-xl font-bold">Nuestra Inteligencia artificial te asistirá con la consulta que tengas:</h1>
+            </div>
+            <div class="flex flex-col mt-4 justify-between md:h-96 rounded-xl border border-red-800" id="chat_section">
+              <div class="flex items-end align-bottom text-left justify-center p-4" style="height: 90%;">
+                <!-- <p class="align-bottom text-white font-bold">
+                  Tú: Buen día, ¿Cómo puedo inscribirme a ITCA?
+                  <br>
+                  <br>
+                  ITCA: Buen día, puedes inscribirte utilizando el formulario que encontrarás en nuestra página web. Lo encontrarás en la sección "Nuevo Ingreso"  y siguiendo los pasos de inscripción. En esta sección también encontrarás más información relevante para el proceso de inscripción.
+                  <br>
+                  <br>
+                  Puedes utilizar este para ir directamente: <a href="https://www.itca.edu.sv/nuevo-ingreso/" style="text-decoration: underline;">https://www.itca.edu.sv/nuevo-ingreso/</a> 
+                  <br>
+                  <br>
+                  Espero esta información haya sido de tu ayuda. Si necesitas asistencia con otra duda, estoy a tu disposición.
+                </p> -->
+              </div>
+              <div class="text-center mb-2">
+                <form action="" method="POST">
+                  <input type="text" class="min-h-8 rounded-md font-semibold" placeholder="Haz una pregunta" style="padding-left: 4px; width: 70%;">
+                  <input type="submit" value="Enviar" class="font-semibold" id="btnEnviar">
+                </form>
+              </div>
+            </div>
+            <!-- <img class="w-4/5 rounded-md bg" src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/../img/header-1.png" alt="header image"> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="flex flex-wrap align-middle bg-red-800" id="footer">
+      <div class=" items-center justify-center text-center align-middle">
+        <p class="text-sm text-center text-slate-500 py-1 align-middle justify-center">
+          Tailwind CSS Component from 
+        </p>
+      </div>
+    </div> -->
+
+    <script>
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
+
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
+      function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
+        }
+        updateBannerVisibility();
+      }
+
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/prueba.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/prueba.data",
+        frameworkUrl: buildUrl + "/prueba.framework.js",
+        codeUrl: buildUrl + "/prueba.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "invesweb",
+        productVersion: "0.1",
+        showBanner: unityShowBanner,
+      };
+
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        container.className = "unity-mobile";
+        canvas.className = "unity-mobile";
+
+        // To lower canvas resolution on mobile devices to gain some
+        // performance, uncomment the following line:
+        // config.devicePixelRatio = 1;
+
+        unityShowBanner('WebGL builds are not supported on mobile devices.');
+      } else {
+        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
+      }
+
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
+</html>
