@@ -35,6 +35,18 @@ transition-duration: 250ms;
 }
  
 /* FORMATO BODY */
+
+#btnEnviar{
+    background-color: rgb(153 27 27); 
+    color: white;
+    padding: 6px; 
+    border-radius: 6px;
+}
+#btnEnviar:hover{
+    transition: 250ms;
+    background-color: white; 
+    color: rgb(153 27 27);
+}
 @media (max-width: 767px) and (min-width: 0px){
     #chat_section{
         height:560px;
