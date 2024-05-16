@@ -1,0 +1,77 @@
+/* FORMATO HEADER */
+@media (max-width: 675px) {
+    #logo_header {
+        height: 25px;
+    }
+    #texto_header{
+        font-size: 485px;
+    }
+}
+/* FORMATO LOGOS HEADER */
+#logo_redes{
+    filter: none;    
+}
+#logo_redes:hover{
+filter: invert();
+transition-duration: 250ms;
+
+}
+#logo_instagram{
+    filter: invert();
+}
+#logo_instagram:hover{
+    transition-duration: 250ms;
+    filter: none;
+}
+
+
+/* FORMATO MENU FLEX HEADER */
+.group.open .group-\[\.open\]\:py-4 {
+    padding-top: 0rem !important;
+    padding-bottom: 0rem !important;
+    margin-top: 3rem !important;
+    border-top: solid;
+    border-color: rgb(255, 166, 0);
+}
+ 
+/* FORMATO BODY */
+
+#btnEnviar{
+    background-color: rgb(153 27 27); 
+    color: white;
+    padding: 6px; 
+    border-radius: 6px;
+}
+#btnEnviar:hover{
+    transition: 250ms;
+    background-color: white; 
+    color: rgb(153 27 27);
+}
+@media (max-width: 767px) and (min-width: 0px){
+    #chat_section{
+        height:560px;
+        background-color: rgba(0, 0, 0, 0.651);
+    } 
+} 
+@media (max-width: 1023px) and (min-width: 768px){
+    #chat_section{
+        height:560px;
+        background-color: rgba(0, 0, 0, 0.651);
+    } 
+} 
+@media (max-width: 1279px) and (min-width: 1024px)  {
+    #chat_section{
+        height:600px;
+        background-color: rgba(0, 0, 0, 0.651);
+    } 
+}
+@media(min-width: 1280px)  {
+    #chat_section{
+        height:550px;
+        background-color: rgba(0, 0, 0, 0.651);
+    } 
+} 
+/* FORMATO FOOTER */
+ #footer{
+    height: 10vh;
+}
