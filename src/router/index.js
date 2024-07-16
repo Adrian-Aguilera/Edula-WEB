@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Page_General from '../components/page_general.vue'
 import Page_ChatBot from '../components/page_chatbot.vue' 
+// import Page_Classes from '../components/page_classes.vue' 
+
 
 const routes = [
   {
@@ -13,6 +15,11 @@ const routes = [
     name: 'Page_ChatBot',
     component: Page_ChatBot
   }
+  // {
+  //   path: '/Clases',
+  //   name: 'Page_Classes',
+  //   component: Page_Classes
+  // }
 ]
 
 const router = createRouter({

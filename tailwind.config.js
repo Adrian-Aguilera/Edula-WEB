@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./public/*.{html,css,js}","./public/clases-unity/*.{html,css,js}"],
+  content: ["./src/components/*.{html,css,js,vue}","./public/clases-unity/*.{html,css,js,vue}"],
   theme: {
     extend: {},
   },
