@@ -23,7 +23,6 @@
             <a class="md:text-base lg:text-lg xl:text-xl font-semibold text-white hover:text-yellow-400"><p id="texto_header">Clase Virtual Prueba</p></a>
           </div>
           <div class="items-center hidden gap-8 md:flex">
-            <!-- <button class="flex items-center text-sm font-normal text-white hover:text-yellow-400 transition duration-300">Log In</button> -->
             <a href="#"><img class="min-w-0 md:h-4 lg:h-6 max-h-6"  id="logo_redes" src="../img/Youtube_logo.png"></a>
             <a href="#"><img class="min-w-0 md:h-4 lg:h-6 max-h-6" id="logo_instagram" src="../img/logo_instagram.png"></a>
             <a href="#"><img class="min-w-0 md:h-4 lg:h-6 max-h-6" id="logo_instagram" src="../img/logo_facebook.png"></a>
@@ -42,10 +41,6 @@
             </svg>
           </button>
           <div class="relative align-middle items-center flex md:hidden transition-all duration-300 ease-in-out flex-col shadow-main justify-center w-full gap-3 overflow-hidden bg-red-800 max-h-0 group-[.open]:py-4 px-4 squared-2xl group-[.open]:max-h-64 top-full">
-            <!-- <a class="text-sm font-normal text-white hover:text-yellow-400" href="javascript:void(0)">Product</a>
-            <a class="text-sm font-normal text-white hover:text-yellow-400" href="javascript:void(0)">Features</a>
-            <a class="text-sm font-normal text-white hover:text-yellow-400" href="javascript:void(0)">Pricing</a>
-            <a class="text-sm font-normal text-white hover:text-yellow-400" href="javascript:void(0)">Company</a> -->   
             <div class="container relative flex flex-wrap items-center justify-between w-full group py-7 shrink-0">
               <a href="#"><img class="min-w-0 max-h-6"  id="logo_redes" src="../img/Youtube_logo.png"></a>
               <a href="#"><img class="min-w-0 max-h-6" id="logo_instagram" src="../img/logo_instagram.png"></a>
@@ -95,18 +90,6 @@
             </div>
             <div class="flex flex-col mt-4 justify-between md:h-96 rounded-xl border border-red-800" id="chat_section">
               <div class="flex items-end align-bottom text-left justify-center p-4" style="height: 90%;">
-                <!-- <p class="align-bottom text-white font-bold">
-                  Tú: Buen día, ¿Cómo puedo inscribirme a ITCA?
-                  <br>
-                  <br>
-                  ITCA: Buen día, puedes inscribirte utilizando el formulario que encontrarás en nuestra página web. Lo encontrarás en la sección "Nuevo Ingreso"  y siguiendo los pasos de inscripción. En esta sección también encontrarás más información relevante para el proceso de inscripción.
-                  <br>
-                  <br>
-                  Puedes utilizar este para ir directamente: <a href="https://www.itca.edu.sv/nuevo-ingreso/" style="text-decoration: underline;">https://www.itca.edu.sv/nuevo-ingreso/</a> 
-                  <br>
-                  <br>
-                  Espero esta información haya sido de tu ayuda. Si necesitas asistencia con otra duda, estoy a tu disposición.
-                </p> -->
               </div>
               <div class="text-center mb-2">
                 <form action="" method="POST">
@@ -115,18 +98,10 @@
                 </form>
               </div>
             </div>
-            <!-- <img class="w-4/5 rounded-md bg" src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/../img/header-1.png" alt="header image"> -->
           </div>
         </div>
       </div>
     </div>
-    <!-- <div class="flex flex-wrap align-middle bg-red-800" id="footer">
-      <div class=" items-center justify-center text-center align-middle">
-        <p class="text-sm text-center text-slate-500 py-1 align-middle justify-center">
-          Tailwind CSS Component from 
-        </p>
-      </div>
-    </div> -->
 
     <script>
       var container = document.querySelector("#unity-container");
@@ -136,12 +111,6 @@
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var warningBanner = document.querySelector("#unity-warning");
 
-      // Shows a temporary message banner/ribbon for a few seconds, or
-      // a permanent error message on top of the canvas if type=='error'.
-      // If type=='warning', a yellow highlight color is used.
-      // Modify or remove this function to customize the visually presented
-      // way that non-critical warnings and error messages are presented to the
-      // user.
       function unityShowBanner(msg, type) {
         function updateBannerVisibility() {
           warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
@@ -173,12 +142,6 @@
         showBanner: unityShowBanner,
       };
 
-      // By default Unity keeps WebGL canvas render target size matched with
-      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-      // Set this to false if you want to decouple this synchronization from
-      // happening inside the engine, and you would instead like to size up
-      // the canvas DOM size and WebGL render target sizes yourself.
-      // config.matchWebGLToCanvasSize = false;
 
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
