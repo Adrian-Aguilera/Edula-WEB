@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div>
     <Head_Block />
     <Header_User />
@@ -16,7 +16,7 @@
         <div id="unity-warning"></div>
         <div id="unity-footer">
           <div id="unity-webgl-logo"></div>
-          <div id="unity-fullscreen-button"></div>     
+          <div id="unity-fullscreen-button"></div>
           <div id="unity-build-title"></div>
         </div>
       </div>
@@ -54,9 +54,10 @@
 </template>
 
 <script>
-import Header_User from './header_user.vue'
-import Head_Block from './head_block.vue'
-import Footer_Block from './footer_block.vue'
+/* global createUnityInstance */
+import Header_User from './header_user.vue';
+import Head_Block from './head_block.vue';
+import Footer_Block from './footer_block.vue';
 
 export default {
   name: 'Page_Classes',
@@ -66,53 +67,79 @@ export default {
     };
   },
   mounted() {
-    const buildUrl = '/clases-unity/Build';
-    const loaderUrl = `${buildUrl}/prueba.loader.js`;
-    const config = {
-      dataUrl: `${buildUrl}/prueba.data`,
-      frameworkUrl: `${buildUrl}/prueba.framework.js`,
-      codeUrl: `${buildUrl}/prueba.wasm`,
-      streamingAssetsUrl: `${buildUrl}/StreamingAssets`,
-      companyName: "DefaultCompany",
-      productName: "invesweb",
-      productVersion: "0.1",
-    };
+  var container = this.$refs.unityContainer;
+  var canvas = container.querySelector("#unity-canvas");
+  var loadingBar = container.querySelector("#unity-loading-bar");
+  var progressBarFull = container.querySelector("#unity-progress-bar-full");
+  var fullscreenButton = container.querySelector("#unity-fullscreen-button");
+  var warningBanner = container.querySelector("#unity-warning");
 
-    const container = this.$refs.unityContainer;
-
-    this.loadUnityScript(loaderUrl)
-      .then(() => {
-        if (typeof createUnityInstance !== 'undefined') {
-          return createUnityInstance(container, config);
-        } else {
-          throw new Error('createUnityInstance is not defined');
-        }
-      })
-      .then((unityInstance) => {
-        this.loading = false;
-        console.log('Unity instance initialized:', unityInstance);
-      })
-      .catch((error) => {
-        console.error('Failed to initialize Unity:', error);
-      });
-  },
-  methods: {
-    loadUnityScript(url) {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = url;
-        script.onload = () => {
-          if (typeof createUnityInstance !== 'undefined') {
-            resolve();
-          } else {
-            reject(new Error('createUnityInstance is not defined even after script load'));
-          }
-        };
-        script.onerror = () => reject(new Error(`Failed to load script: ${url}`));
-        document.body.appendChild(script);
-      });
+  function unityShowBanner(msg, type) {
+    function updateBannerVisibility() {
+      warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
     }
-  },
+    var div = document.createElement('div');
+    div.innerHTML = msg;
+    warningBanner.appendChild(div);
+    if (type == 'error') div.style = 'background: red; padding: 10px;';
+    else {
+      if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+      setTimeout(function() {
+        warningBanner.removeChild(div);
+        updateBannerVisibility();
+      }, 5000);
+    }
+    updateBannerVisibility();
+  }
+
+  const buildUrl = '/clases-unity/Build/';
+  const loaderUrl = `${buildUrl}prueba.loader.js`;
+  const config = {
+    dataUrl: `${buildUrl}prueba.data`,
+    frameworkUrl: `${buildUrl}prueba.framework.js`,
+    codeUrl: `${buildUrl}prueba.wasm`,
+    streamingAssetsUrl: `${buildUrl}StreamingAssets/`,
+    companyName: "DefaultCompany",
+    productName: "invesweb",
+    productVersion: "0.1",
+    showBanner: unityShowBanner,
+  };
+
+  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    var meta = document.createElement('meta');
+    meta.name = 'viewport';
+    meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+    document.getElementsByTagName('head')[0].appendChild(meta);
+    container.className = "unity-mobile";
+    canvas.className = "unity-mobile";
+    unityShowBanner('WebGL builds are not supported on mobile devices.');
+  } else {
+    canvas.style.width = "960px";
+    canvas.style.height = "600px";
+  }
+
+  loadingBar.style.display = "block";
+
+  var script = document.createElement("script");
+  script.src = loaderUrl;
+  script.onload = () => {
+    console.log("Script cargado correctamente");
+    createUnityInstance(canvas, config, (progress) => {
+      console.log(`Progreso: ${progress * 100}%`);
+      progressBarFull.style.width = 100 * progress + "%";
+    }).then((unityInstance) => {
+      console.log("Instancia de Unity creada");
+      loadingBar.style.display = "none";
+      fullscreenButton.onclick = () => {
+        unityInstance.SetFullscreen(1);
+      };
+    }).catch((message) => {
+      console.error("Error al crear la instancia de Unity:", message);
+      alert(message);
+    });
+  };
+  document.body.appendChild(script);
+},
   components: {
     Header_User,
     Head_Block,
@@ -149,4 +176,4 @@ export default {
   color: white;
   font-size: 1.5rem;
 }
-</style> -->
+</style>

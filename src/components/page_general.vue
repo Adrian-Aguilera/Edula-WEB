@@ -13,7 +13,7 @@
           Como estudiante de ITCA-FEPADE tienes acceso a diversas herramientas virtuales exclusivas para impulsar tu aprendizaje ¡Échales un vistazo!
         </p>
         <div class="flex flex-col items-center gap-4 py-3">
-          <router-link to="/Chat">
+          <router-link to="/Classes">
             <button class="flex items-center py-4 font-bold text-white text-lg px-7 bg-red-800 hover:bg-red-600 focus:ring-4 focus:ring-purple-blue-100 transition duration-300 rounded-xl">
               Ingresar
             </button>

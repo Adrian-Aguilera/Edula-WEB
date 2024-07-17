@@ -33,7 +33,7 @@
               <a href="#"><img class="min-w-0 max-h-6" id="logo_instagram" src="img/logo_x.png"></a>             
             </div>
             <img src="img/foto_user.png" class="max-w-10 rounded-lg" alt="">
-            <router-link to="/">  
+            <router-link to="/Home">  
                 <button class="flex items-center px-4 py-2 text-sm font-bold rounded-xl bg-white text-red-800 hover:bg-yellow-400 hover:text-black transition duration-300">
                 Cerrar sesión
                 </button>    
