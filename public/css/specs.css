@@ -41,6 +41,7 @@ transition-duration: 250ms;
     color: white;
     padding: 6px; 
     border-radius: 6px;
+    margin-left: 0.5rem;
 }
 #btnEnviar:hover{
     transition: 250ms;
@@ -51,7 +52,10 @@ transition-duration: 250ms;
     #chat_section{
         height:560px;
         background-color: rgba(0, 0, 0, 0.651);
-    } 
+    }
+    #info_section{
+        margin-top: 2.5rem;
+    }
 } 
 @media (max-width: 1023px) and (min-width: 768px){
     #chat_section{
@@ -63,13 +67,25 @@ transition-duration: 250ms;
     #chat_section{
         height:600px;
         background-color: rgba(0, 0, 0, 0.651);
-    } 
+    }
+    /* #info_section{
+        width: 50%;
+    }
+    #chat_block{
+        width: 50%;
+    } */
 }
 @media(min-width: 1280px)  {
     #chat_section{
         height:550px;
         background-color: rgba(0, 0, 0, 0.651);
-    } 
+    }
+    /* #info_section{
+        width: 50%;
+    }
+    #chat_block{
+        width: 50%;
+    } */
 } 
 /* FORMATO FOOTER */
  #footer{
