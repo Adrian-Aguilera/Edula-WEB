@@ -44,14 +44,12 @@
 <script>
   import Header_User from './header_user.vue'
   import Head_Block from './head_block.vue'
-  import Footer_Block from './footer_block.vue'
 
   export default {
       name: 'Page_ChatBot',
       components: {
         Header_User,
         Head_Block,
-        Footer_Block
       },
       props: {
         msg: String

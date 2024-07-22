@@ -57,7 +57,6 @@
 /* global createUnityInstance */
 import Header_User from './header_user.vue';
 import Head_Block from './head_block.vue';
-import Footer_Block from './footer_block.vue';
 
 export default {
   name: 'Page_Classes',
@@ -143,7 +142,6 @@ export default {
   components: {
     Header_User,
     Head_Block,
-    Footer_Block,
   }
 };
 </script>
