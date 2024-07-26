@@ -8,5 +8,13 @@ module.exports = {
         directory: path.join(__dirname, 'public'),
       },
     },
+    resolve: {
+      alias: {
+        '@components': path.resolve(__dirname, 'src/components'),
+        '@pages': path.resolve(__dirname, 'src/pages'),
+        '@routes': path.resolve(__dirname, 'src/router'),
+        '@views': path.resolve(__dirname, 'src/views'),
+      }
+    }
   },
 };
