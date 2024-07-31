@@ -1,13 +1,16 @@
 <template>
     <ChatBox :messages="messages" :currentUser="currentUser" @send-message="handleSendMessage" />
-    <form method="post">
-        <SubmitContent @action="onSubmit"></SubmitContent>
+
+    <form @submit.prevent="onSubmit" method="post">
+        <input type="text" v-model="formProps.input">
+        <SubmitContent type="submit"></SubmitContent>
     </form>
 </template>
 
 <script>
     import ChatBox from '@components/box/ChatBox.vue';
     import SubmitContent from  '@components/Submit/SubmitComponent.vue'
+    //import axios from 'axios'
     export default {
         name: 'generalChat',
         components: {
@@ -16,19 +19,18 @@
         },
         data() {
             return {
-            messages: [
-                { user: 'Alice', text: 'Hello!' },
-                { user: 'Bob', text: 'Hi there!' }
-            ],
-            currentUser: 'Alice'
+                //campos necesarios del formulario (chat)
+                formProps: {
+                    input: "",
+                },
             }
         },
         methods: {
             handleSendMessage(message) {
             this.messages.push(message);
             },
-            onSubmit(){
-                console.log('enviado')
+            async onSubmit(){
+                console.log(this.formProps.input)
             },
         },
     }
