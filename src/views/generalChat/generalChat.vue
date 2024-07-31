@@ -36,6 +36,7 @@
                     },
                     mesage : this.formProps.message,
                 }
+                //carga desde el archivo .env (crear uno con su respectiva nombre: VUE_APP_API_TOKEN, VUE_APP_API_URL)
                 const token = process.env.VUE_APP_API_TOKEN
                 const configAuth = {
                     headers: {
