@@ -36,14 +36,14 @@
                     },
                     mesage : this.formProps.message,
                 }
-                const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyODM1MTg3LCJpYXQiOjE3MjAyNDMxODcsImp0aSI6IjUyZjNjOGVmMmU3MTRhZjk4ZGI2YTNjMTc4NjljMDdiIiwidXNlcl9pZCI6Mn0.hUUaAXFNfTWJDGuIs8exzJkTiMaeuSYl0YyKi29i5hk'
+                const token = process.env.VUE_APP_API_TOKEN
                 const configAuth = {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 }
                 try {
-                    const response = await axios.post('http://127.0.0.1:8000/api/general/chat', jsonData, configAuth)
+                    const response = await axios.post(`${process.env.VUE_APP_API_URL}api/general/chat`, jsonData, configAuth)
                     if (response.status === 200) {
                         const responseData = await response.data
                         // muestra el contenido de la respuesta
