@@ -38,12 +38,16 @@
                 }
                 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyODM1MTg3LCJpYXQiOjE3MjAyNDMxODcsImp0aSI6IjUyZjNjOGVmMmU3MTRhZjk4ZGI2YTNjMTc4NjljMDdiIiwidXNlcl9pZCI6Mn0.hUUaAXFNfTWJDGuIs8exzJkTiMaeuSYl0YyKi29i5hk'
                 const configAuth = {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
                 }
                 try {
                     const response = await axios.post('http://127.0.0.1:8000/api/general/chat', jsonData, configAuth)
                     if (response.status === 200) {
-                        console.log(JSON.stringify(response.data))
+                        const responseData = await response.data
+                        // muestra el contenido de la respuesta
+                        console.log(responseData.data.response)
                     }
                 } catch (error) {
                     console.log(error)
