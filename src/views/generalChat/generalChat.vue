@@ -37,7 +37,7 @@
                     mesage : this.formProps.message,
                 }
                 try {
-                    const response = await axios.post('https://127.0.0.1:8000/api/general/chat', jsonData)
+                    const response = await axios.post('http://127.0.0.1:8000/api/general/chat', jsonData)
                     console.log(response.status)
                 } catch (error) {
                     console.log(error)
