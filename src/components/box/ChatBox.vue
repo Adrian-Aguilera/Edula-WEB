@@ -14,10 +14,6 @@
         Espero esta información haya sido de tu ayuda. Si necesitas asistencia con otra duda, estoy a tu disposición.
       </p>
     </div>
-    <form action="" method="">
-      <input type="text" class="min-h-8 rounded-md font-semibold" placeholder="Haz una pregunta" style="padding-left: 4px; width: 70%;">
-      <input type="submit" value="Enviar" class="font-semibold" id="btnEnviar">
-    </form>
   </div>
 </template>
 
