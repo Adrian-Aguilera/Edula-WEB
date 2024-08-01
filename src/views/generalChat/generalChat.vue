@@ -10,7 +10,11 @@
 <script>
     import ChatBox from '@components/box/ChatBox.vue';
     import SubmitContent from  '@components/Submit/SubmitComponent.vue'
-    import axios from 'axios'
+    import optionRequests from '@utils/generalUtils/getResponse.js'
+    const {
+        getRequest,
+    } = optionRequests
+
     export default {
         name: 'generalChat',
         components: {
@@ -26,25 +30,10 @@
             }
         },
         methods: {
-            handleSendMessage(message) {
-            this.messages.push(message);
-            },
             async onSubmit(){
-                const jsonData = {
-                    type_engine : {
-                        EngineGeneral: true
-                    },
-                    mesage : this.formProps.message,
-                }
-                //carga desde el archivo .env (crear uno con su respectiva nombre: VUE_APP_API_TOKEN, VUE_APP_API_URL)
-                const token = process.env.VUE_APP_API_TOKEN
-                const configAuth = {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+                const message = this.formProps.message
                 try {
-                    const response = await axios.post(`${process.env.VUE_APP_API_URL}api/general/chat`, jsonData, configAuth)
+                    const response = await getRequest('api/general/chat', message)
                     if (response.status === 200) {
                         const responseData = await response.data
                         // muestra el contenido de la respuesta
