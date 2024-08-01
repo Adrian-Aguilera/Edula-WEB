@@ -1,18 +1,11 @@
 <template>
   <div class="flex flex-col mt-8 justify-between md:h-96 rounded-xl min-w-full border border-red-800" id="chat_section">
-    <div class="flex items-end align-bottom text-left justify-center p-4" style="height: 90%;">
-      <p class="align-bottom text-white font-bold">
-        Tú: Tengo dudas sobre el contenido visto en la clase de "Tablas de verdad"
-        <br>
-        <br>
-        EduLA: Buen día, puedes encontrar material de apoyo sobre la clase que mencionas en el siguiente enlace
-        <br>
-        <br>
-        Haz clic para ir directamente: <router-link to="/Clases" class="underline">Tablas de verdad</router-link>
-        <br>
-        <br>
-        Espero esta información haya sido de tu ayuda. Si necesitas asistencia con otra duda, estoy a tu disposición.
-      </p>
+    <div class="flex flex-col p-4 overflow-y-auto" style="height: 90%;">
+      <div v-for="(message, index) in messages" :key="index" class="mb-2">
+        <p :class="{'text-right': message.user === currentUser, 'text-left': message.user !== currentUser}" class="text-white font-bold">
+          {{ message.user === currentUser ? 'Tú' : 'Bot' }}: {{ message.text }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -23,29 +16,24 @@ export default {
   props: {
     messages: {
       type: Array,
-      required: true,
-      default: () => []
+      required: true
     },
     currentUser: {
       type: String,
       required: true
     }
-  },
-  data() {
-    return {
-      newMessage: ''
-    }
-  },
-  methods: {
-    sendMessage() {
-      if (this.newMessage.trim() !== '') {
-        this.$emit('send-message', {
-          user: this.currentUser,
-          text: this.newMessage.trim()
-        });
-        this.newMessage = '';
-      }
-    }
   }
 }
 </script>
+
+<style scoped>
+#chat_section {
+  background-color: #1a202c;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+</style>
