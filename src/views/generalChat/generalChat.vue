@@ -45,12 +45,14 @@ export default {
           if (responseData.data.error){
             this.isError = true
             console.log('error input')
+            this.formProps.message = "";
+          }else{
+            console.log(responseData)
+            this.messages.push({
+              user: "Edula",
+              text: responseData.data.response,
+            });
           }
-          console.log(responseData)
-          this.messages.push({
-            user: "Edula",
-            text: responseData.data.response,
-          });
           this.formProps.message = "";
         }
       } catch (error) {
