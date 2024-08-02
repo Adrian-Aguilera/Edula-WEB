@@ -39,7 +39,7 @@ export default {
       this.messages.push({ user: this.currentUser, text: message });
 
       try {
-        const response = await getRequest("api/general/chat", { message });
+        const response = await getRequest("general/chat", message );
         if (response.status === 200) {
           const responseData = response.data;
           if (responseData.data.error){
