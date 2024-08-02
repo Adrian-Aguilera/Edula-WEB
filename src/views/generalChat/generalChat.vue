@@ -1,9 +1,9 @@
 <template>
   <div>
-    <ChatBox :messages="messages" :currentUser="currentUser" />
+    <ChatBox :messages="messages" :currentUser="currentUser" :isError="isError"/>
 
     <form @submit.prevent="onSubmit" method="post">
-      <input type="text" v-model="formProps.message" />
+      <input type="text" class="bg-blue-500" v-model="formProps.message" />
       <SubmitContent type="submit"></SubmitContent>
     </form>
   </div>
@@ -28,6 +28,7 @@ export default {
       },
       messages: [],
       currentUser: "Usuario",
+      isError:false
     };
   },
   methods: {
@@ -41,6 +42,11 @@ export default {
         const response = await getRequest("api/general/chat", { message });
         if (response.status === 200) {
           const responseData = response.data;
+          if (responseData.data.error){
+            this.isError = true
+            console.log('error input')
+          }
+          console.log(responseData)
           this.messages.push({
             user: "Edula",
             text: responseData.data.response,
