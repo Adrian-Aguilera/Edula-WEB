@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ChatBox :messages="messages" :currentUser="currentUser" :isError="isError"/>
+    <ChatBox :messages="messages" :currentUser="currentUser" :isError="isError" :isLoading="isLoading"/>
     <div class="mt-6">
       <form @submit.prevent="onSubmit" method="post"  class="flex items-center max-w-sm mx-auto">
         <div class="relative w-full">
@@ -36,7 +36,8 @@ export default {
       },
       messages: [],
       currentUser: "Usuario",
-      isError:false
+      isError:false,
+      isLoading: false,
     };
   },
   methods: {
@@ -45,14 +46,14 @@ export default {
       if (message.trim() === "") return;
 
       this.messages.push({ user: this.currentUser, text: message });
-
+      this.isLoading = true
       try {
         const response = await getRequest("general/chat", message );
+        this.isLoading = false
         if (response.status === 200) {
           const responseData = response.data;
           if (responseData.data.error){
             this.isError = true
-            console.log('error input')
             this.formProps.message = "";
           }else{
             console.log(responseData)
@@ -64,6 +65,7 @@ export default {
           this.formProps.message = "";
         }
       } catch (error) {
+        this.isLoading = false
         console.log(error);
       }
     },
