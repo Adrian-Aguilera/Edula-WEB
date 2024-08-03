@@ -1,13 +1,21 @@
 <template>
   <div class="flex flex-col mt-8 justify-between md:h-96 rounded-xl min-w-full border border-red-800" id="chat_section">
-    <div class="flex flex-col p-4 overflow-y-auto" style="height: 90%;">
-      <div v-for="(message, index) in messages" :key="index" class="mb-2">
-        <p :class="{'text-right': message.user === currentUser, 'text-left': message.user !== currentUser}" class="text-white font-bold">
-          {{ message.user === currentUser ? 'Tú' : 'Bot' }}: {{ message.text }}
-        </p>
+    <div class="flex flex-col p-4 overflow-y-auto">
+      <div v-for="(message, index) in messages" :key="index" class="flex items-start gap-2.5 mb-4">
+        <img v-if="message.user !== currentUser" class="w-8 h-8 rounded-full" :src="require('@assets/EdulaBot.jpg')" alt="User image">
+
+        <div :class="{'flex-row-reverse': message.user === currentUser, 'flex-row': message.user !== currentUser}" class="flex items-start gap-2.5 w-full">
+          <div :class="{'bg-gray-100 dark:bg-gray-700': message.user !== currentUser, 'bg-blue-500 text-white leading-1.5 w-28 text-left': message.user === currentUser}" class="flex flex-col leading-1.5 p-4 rounded-xl">
+            <div class="flex space-x-2 ">
+              <span class="text-sm font-semibold">{{ message.user === currentUser ? 'Tú' : 'EdulaBot' }}</span>
+            </div>
+            <p class="text-sm font-normal text-justify">{{ message.text }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
   <div v-if="isError == true">
     <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
       <div class="flex">
@@ -41,11 +49,5 @@ export default {
 <style scoped>
 #chat_section {
   background-color: #1a202c;
-}
-.text-right {
-  text-align: right;
-}
-.text-left {
-  text-align: left;
 }
 </style>
