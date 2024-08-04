@@ -48,7 +48,7 @@ export default {
       this.messages.push({ user: this.currentUser, text: message });
       this.isLoading = true
       try {
-        const response = await getRequest("general/chat", message );
+        const response = await getRequest("EduGeneral/general/chat", message );
         this.isLoading = false
         if (response.status === 200) {
           const responseData = response.data;
