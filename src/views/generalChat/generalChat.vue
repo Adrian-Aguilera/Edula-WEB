@@ -61,11 +61,11 @@ export default {
             this.isError = true
             this.formProps.message = "";
           }else{
-            console.log(responseData)
             this.messages.push({
               user: "Edula",
               text: responseData.data.response,
             });
+            this.formProps.message = "";
           }
           this.formProps.message = "";
         }
