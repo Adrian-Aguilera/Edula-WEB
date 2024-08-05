@@ -17,4 +17,7 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
   }
+  body{
+    background-image: url('../src/assets/fondo_content.jpg');
+  }
 </style>
