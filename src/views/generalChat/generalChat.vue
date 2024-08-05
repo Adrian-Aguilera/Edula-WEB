@@ -4,7 +4,7 @@
     <div class="mt-16">
       <ChatBox :messages="messages" :currentUser="currentUser" :isError="isError" :isLoading="isLoading"/>
     </div>
-    <div class="mt-6">
+    <div class="mt-2">
       <form @submit.prevent="onSubmit" method="post" class="flex items-center max-w-sm mx-auto">
         <div class="relative w-full">
           <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

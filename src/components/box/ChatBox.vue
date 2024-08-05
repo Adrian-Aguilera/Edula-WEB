@@ -1,7 +1,7 @@
 <template>
   <div class="ml-5 mr-5">
     <div class="flex flex-col mt-8 justify-between rounded-xl min-w-full border border-red-800" id="chat_section" style="height: 500px;">
-      <div class="flex flex-col p-4 overflow-y-auto h-full" style="height: calc(100% - 50px);">
+      <div class="flex flex-col p-4 overflow-y-auto h-full" style="height: calc(100% - 50px);" ref="messageContainer">
         <div v-for="(message, index) in messages" :key="index" class="flex items-start gap-2.5 mb-4">
           <img v-if="message.user !== currentUser" class="w-8 h-8 rounded-full" :src="require('@assets/EdulaBot.jpg')" alt="User image">
           <div :class="{'flex-row-reverse': message.user === currentUser, 'flex-row': message.user !== currentUser}" class="flex items-start gap-2.5 w-full">
@@ -23,6 +23,13 @@
           Cargando respuesta
         </div>
       </div>
+    </div>
+    <div class="mt-2">
+      <button  @click="scrollToBottom" type="button" class="text-white bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 14-4-4m4 4 4-4"/>
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -54,6 +61,12 @@ export default {
     isError:Boolean,
     isLoading: Boolean,
   },
+  methods:{
+    scrollToBottom(){
+      const container = this.$refs.messageContainer;
+      container.scrollTop = container.scrollHeight;
+    }
+  }
 }
 </script>
 
