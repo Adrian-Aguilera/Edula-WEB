@@ -1,6 +1,6 @@
 <template>
   <div class="ml-5 mr-5">
-    <div class="flex flex-col mt-8 justify-between rounded-xl min-w-full border border-red-800" id="chat_section" style="height: 500px;">
+    <div class="flex flex-col mt-8 justify-between rounded-xl min-w-full border border-color" id="chat_section" style="height: 500px;">
       <div class="flex flex-col p-4 overflow-y-auto h-full" style="height: calc(100% - 50px);" ref="messageContainer">
         <div v-for="(message, index) in messages" :key="index" class="flex items-start gap-2.5 mb-4">
           <img v-if="message.user !== currentUser" class="w-8 h-8 rounded-full" :src="require('@assets/EdulaBot.jpg')" alt="User image">
@@ -73,5 +73,8 @@ export default {
 <style scoped>
 #chat_section {
   background-color: #1a202c;
+}
+.border-color{
+  border-color: #991b1b;
 }
 </style>

@@ -1,10 +1,13 @@
 <template>
     <nav class="bg-nav dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b  dark:border-gray-600">
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-          <img :src="require('@assets/itca-blanco.png')" class="h-10" alt="Itca Fepade">
-          <!--<span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Itca Fepade</span>-->
-        </a>
+        <router-link to="/">
+          <a class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img :src="require('@assets/itca-blanco.png')" class="h-10" alt="Itca Fepade">
+            <!--<span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Itca Fepade</span>-->
+          </a>
+        </router-link>
+
         <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <a href="https://apps.itca.edu.sv/" class="text-gray-900  bg-white hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-semibold rounded-xl text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 me-2 mb-2">
             ¿Estudiante?
