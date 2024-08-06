@@ -22,7 +22,7 @@ const routes = [
   },
   {
     path: '/generalChat',
-    name: 'generalChat',
+    name: 'Chat General',
     component: generalChat
   }
 ]
