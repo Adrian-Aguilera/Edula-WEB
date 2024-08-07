@@ -57,17 +57,20 @@
       </div>
     </div>
   </div>
+  <Footer_block />
 </template>
 
 <script>
 import Header_Block from './header_block.vue'
 import Head_Block from './head_block.vue'
+import Footer_block from './footer_block.vue';
 
 export default {
   name: 'Page_General',
   components: {
     Header_Block,
     Head_Block,
+    Footer_block
   },
   props: {
     msg: String

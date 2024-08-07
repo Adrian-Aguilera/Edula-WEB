@@ -1,27 +1,30 @@
 <template>
   <div>
     <Head_Block />
-    <Header_User />
-    <link rel="shortcut icon" href="/clases-unity/TemplateData/favicon.ico">
-    <link rel="stylesheet" href="/clases-unity/TemplateData/style.css">
-    <div class="unity-container-wrapper">
-      <div id="unity-container" ref="unityContainer" class="unity-desktop">
-        <canvas id="unity-canvas" width="1000" height="600"></canvas>
-        <div id="unity-loading-bar">
-          <div id="unity-logo"></div>
-          <div id="unity-progress-bar-empty">
-            <div id="unity-progress-bar-full"></div>
-          </div>
-        </div>
-        <div id="unity-warning"></div>
-        <div id="unity-footer">
-          <div id="unity-webgl-logo"></div>
-          <div id="unity-fullscreen-button"></div>
-          <div id="unity-build-title"></div>
+    <Header_User @toggle-sidebar="toggleSidebar"/>
+    <Sidebar_block  :is-sidebar-open="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+    <div class="container">
+      <div class="flex justify-center text-center mt-5">
+        <h1 class="text-white text-2xl md:text-3xl lg:text-4xl font-extrabold uppercase">CLASE 1: TABLAS DE VERDAD</h1>
+      </div>
+      <div class="flex bg-red-800 max-h-2 mt-6">
+        <hr style="height: 100vh;">
+      </div>
+      <div class="iframe-container">
+        <div class="container" id="contenedorUnity">
+          <iframe src="/clases-unity/clase_prueba.html" frameborder="0" class="responsive-iframe"></iframe>
         </div>
       </div>
+      <div class="flex bg-red-800 max-h-2 mt-6">
+        <hr style="height: 100vh;">
+      </div>
+      <div class="flex justify-center text-center mt-4">
+        <h1 class="text-white text-base md:text-lg lg:text-2xl font-bold">Haz consultas que tengas sobre el contenido visto en clase:</h1>
+      </div>
+      <ChatBox />
     </div>
-    <div class="container">
+
+    <!-- <div class="container">
       <div class="w-full mt-16 mb-8">
         <div class="flex bg-red-800 md:hidden my-8 max-h-2">
           <hr style="height: 100vh;">
@@ -48,130 +51,105 @@
           </div>
         </div>
       </div>
-    </div>
-    <Footer_Block />
+    </div> -->
+    <Footer_block />
   </div>
 </template>
 
 <script>
-/* global createUnityInstance */
 import Header_User from './header_user.vue';
 import Head_Block from './head_block.vue';
+import Footer_block from './footer_block.vue';
+import Sidebar_block from './sidebar_block.vue';
+import ChatBox from './box/ChatBox.vue';
 
 export default {
   name: 'Page_Classes',
-  data() {
-    return {
-      loading: true
-    };
-  },
-  mounted() {
-  var container = this.$refs.unityContainer;
-  var canvas = container.querySelector("#unity-canvas");
-  var loadingBar = container.querySelector("#unity-loading-bar");
-  var progressBarFull = container.querySelector("#unity-progress-bar-full");
-  var fullscreenButton = container.querySelector("#unity-fullscreen-button");
-  var warningBanner = container.querySelector("#unity-warning");
-
-  function unityShowBanner(msg, type) {
-    function updateBannerVisibility() {
-      warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
-    }
-    var div = document.createElement('div');
-    div.innerHTML = msg;
-    warningBanner.appendChild(div);
-    if (type == 'error') div.style = 'background: red; padding: 10px;';
-    else {
-      if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-      setTimeout(function() {
-        warningBanner.removeChild(div);
-        updateBannerVisibility();
-      }, 5000);
-    }
-    updateBannerVisibility();
-  }
-
-  const buildUrl = '/clases-unity/Build/';
-  const loaderUrl = `${buildUrl}prueba.loader.js`;
-  const config = {
-    dataUrl: `${buildUrl}prueba.data`,
-    frameworkUrl: `${buildUrl}prueba.framework.js`,
-    codeUrl: `${buildUrl}prueba.wasm`,
-    streamingAssetsUrl: `${buildUrl}StreamingAssets/`,
-    companyName: "DefaultCompany",
-    productName: "invesweb",
-    productVersion: "0.1",
-    showBanner: unityShowBanner,
-  };
-
-  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-    var meta = document.createElement('meta');
-    meta.name = 'viewport';
-    meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-    document.getElementsByTagName('head')[0].appendChild(meta);
-    container.className = "unity-mobile";
-    canvas.className = "unity-mobile";
-    unityShowBanner('WebGL builds are not supported on mobile devices.');
-  } else {
-    canvas.style.width = "960px";
-    canvas.style.height = "600px";
-  }
-
-  loadingBar.style.display = "block";
-
-  var script = document.createElement("script");
-  script.src = loaderUrl;
-  script.onload = () => {
-    console.log("Script cargado correctamente");
-    createUnityInstance(canvas, config, (progress) => {
-      console.log(`Progreso: ${progress * 100}%`);
-      progressBarFull.style.width = 100 * progress + "%";
-    }).then((unityInstance) => {
-      console.log("Instancia de Unity creada");
-      loadingBar.style.display = "none";
-      fullscreenButton.onclick = () => {
-        unityInstance.SetFullscreen(1);
-      };
-    }).catch((message) => {
-      console.error("Error al crear la instancia de Unity:", message);
-      alert(message);
-    });
-  };
-  document.body.appendChild(script);
-},
   components: {
     Header_User,
     Head_Block,
-  }
+    Footer_block,
+    Sidebar_block,
+    ChatBox
+  },
+  data() {
+        return {
+          isSidebarOpen: false,
+        };
+      },
+      methods: {
+        toggleSidebar() {
+          this.isSidebarOpen = !this.isSidebarOpen;
+        },
+      },
 };
 </script>
 
-<style>
-.unity-container-wrapper {
+<style scoped>
+
+.iframe-container {
   position: relative;
   width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding-top: 56.25%; /* Aspect ratio 16:9, ajusta según necesites */
+  height: 0;
+  overflow: hidden;
+  margin-top: 25px;
 }
 
-.unity-container {
-  width: 100%;
-  height: 100%;
-}
-
-.loading-overlay {
+.responsive-iframe {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 1.5rem;
+  border: 0;
 }
+
+/* Estilos generales (para dispositivos pequeños por defecto) */
+.container {
+  height: 100%;
+  padding-bottom: 35px;
+}
+
+/* Dispositivos pequeños (celulares en modo retrato, menos de 576px) */
+@media (max-width: 575.98px) {
+  .container {
+  height: 100%;
+  padding-bottom: 35px;
+}
+}
+
+/* Dispositivos medianos (celulares en modo paisaje y tablets pequeños, de 576px a 767px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .container {
+  height: 100%;
+  padding-bottom: 35px;
+}
+}
+
+/* Dispositivos grandes (tablets grandes y laptops pequeños, de 768px a 991px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .container {
+  height: 100%;
+  padding-bottom: 35px;
+}
+}
+
+/* Dispositivos extra grandes (laptops grandes y desktops pequeños, de 992px a 1199px) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .container {
+  height: 100%;
+  padding-bottom: 35px;
+}
+}
+
+/* Dispositivos XXL (desktops grandes, 1200px y mayores) */
+@media (min-width: 1200px) {
+  .container {
+  height: 100%;
+  padding-bottom: 35px;
+}
+}
+
+
 </style>

@@ -3,8 +3,11 @@
       <div class="container relative flex flex-wrap items-center justify-between w-full group py-4 shrink-0">
         <div>
           <a href="https://www.itca.edu.sv">
-            <img class="sm:h-6 md:h-6 lg:h-8 xl:h-8 object-cover" id="logo_header" src="https://www.itca.edu.sv/wp-content/uploads/2017/01/logo-new-white-1.png">
-          </a>
+            <picture>
+                <source srcset="img/itca-blanco.png" media="(min-width: 768px)">
+                <img src="img/itca-blanco-sm.png">
+              </picture>          
+            </a>
         </div>
         <div class="items-center justify-between hidden gap-12 md:flex">
           <a class="md:text-base lg:text-lg xl:text-xl font-semibold text-white hover:text-yellow-400">
@@ -72,5 +75,48 @@
   
   <style>
   
+  picture img{
+  width: 30px;
+  margin-left: 10px;
+}
+
+/* Dispositivos pequeños (celulares en modo retrato, menos de 576px) */
+@media (max-width: 575.98px) {
+  picture img{
+  width: 30px;
+  margin-left: 10px;
+}
+}
+
+/* Dispositivos medianos (celulares en modo paisaje y tablets pequeños, de 576px a 767px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  picture img{
+  width: 30px;
+  margin-left: 10px;
+}
+}
+
+/* Dispositivos grandes (tablets grandes y laptops pequeños, de 768px a 991px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  picture img{
+  width: 150px;
+}
+}
+
+/* Dispositivos extra grandes (laptops grandes y desktops pequeños, de 992px a 1199px) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  picture img{
+  width: 150px;
+}
+}
+
+/* Dispositivos XXL (desktops grandes, 1200px y mayores) */
+@media (min-width: 1200px) {
+  picture img{
+  width: 200px;
+}
+}
+
+
   </style>
   

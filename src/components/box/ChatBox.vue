@@ -8,14 +8,14 @@
         EduLA: Buen día, puedes encontrar material de apoyo sobre la clase que mencionas en el siguiente enlace
         <br>
         <br>
-        Haz clic para ir directamente: <router-link to="/Clases" class="underline">Tablas de verdad</router-link>
+        Haz clic para ir directamente: <router-link to="/Classes" class="underline">Tablas de verdad</router-link>
         <br>
         <br>
         Espero esta información haya sido de tu ayuda. Si necesitas asistencia con otra duda, estoy a tu disposición.
       </p>
     </div>
     <form action="" method="">
-      <input type="text" class="min-h-8 rounded-md font-semibold" placeholder="Haz una pregunta" style="padding-left: 4px; width: 70%;">
+      <input type="text" class="min-h-8 rounded-md font-semibold" placeholder="Haz una pregunta" style="padding-left: 4px; width: 70%; margin-bottom: 5px;">
       <input type="submit" value="Enviar" class="font-semibold" id="btnEnviar">
     </form>
   </div>
