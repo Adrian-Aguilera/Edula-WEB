@@ -1,7 +1,6 @@
 <template>
   <div class="flex flex-col min-h-screen">
-    <NavBar/>
-    <div class="mt-16">
+    <div class="mt-36">
       <ChatBox :messages="messages" :currentUser="currentUser" :isError="isError" :isLoading="isLoading"/>
     </div>
     <div class="mt-2">
@@ -23,7 +22,6 @@
 <script>
 import ChatBox from "@components/box/ChatBox.vue";
 import SubmitContent from "@components/Submit/SubmitComponent.vue";
-import NavBar from '@components/navBar/NavBar.vue';
 import optionRequests from "@utils/generalUtils/getResponse.js";
 const { getRequest } = optionRequests;
 
@@ -32,7 +30,6 @@ export default {
   components: {
     ChatBox,
     SubmitContent,
-    NavBar,
   },
   data() {
     return {

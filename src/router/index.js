@@ -12,17 +12,17 @@ const routes = [
   },
   {
     path: '/Chat',
-    name: 'Page_ChatBot',
+    name: 'Chat Edula',
     component: Page_ChatBot
   },
   {
     path: '/Classes',
-    name: 'Page_Classes',
+    name: 'Clases',
     component: Page_Classes
   },
   {
     path: '/generalChat',
-    name: 'generalChat',
+    name: 'Chat General',
     component: generalChat
   }
 ]
