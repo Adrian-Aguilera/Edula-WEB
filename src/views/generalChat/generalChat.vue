@@ -15,6 +15,7 @@
       </form>
     </div>
   </div>
+  <footerComponent></footerComponent>
 </template>
 
 <script>
@@ -22,6 +23,8 @@ import ChatBox from "@components/box/ChatBox.vue";
 import SubmitContent from "@components/Submit/SubmitComponent.vue";
 import optionRequests from "@utils/generalUtils/getResponse.js";
 import InformativeContent from '@components/ContainerText/InformativeContent.vue';
+import footerComponent from '@components/ContainerText/footerComponent.vue';
+
 const { getRequest } = optionRequests;
 
 export default {
@@ -30,6 +33,7 @@ export default {
     ChatBox,
     SubmitContent,
     InformativeContent,
+    footerComponent,
   },
   data() {
     return {

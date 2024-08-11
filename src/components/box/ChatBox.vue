@@ -1,5 +1,5 @@
 <template>
-  <div class="ml-5 mr-5">
+  <div class="ml-36 mr-36">
     <div class="flex flex-col mt-8 justify-between rounded-2 min-w-full p-4 rounded-lg border-gray-200 border-dashed " id="chat_section" style="height: 650px;">
       <div class="flex  mb-3">
         <div class="rounded-full flex" style="background-color: #ff5600; width: 200px;">
