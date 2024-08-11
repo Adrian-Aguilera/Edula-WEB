@@ -25,7 +25,7 @@ export default {
   }
   body{
     /*background-image: url('../src/assets/fondo_content.jpg');*/
-    background: rgb(181,34,55);
-    background: linear-gradient(0deg, rgba(181,34,55,1) 0%, rgba(25,25,25,1) 100%);
+    background: #17100e;
+    /*background: linear-gradient(0deg, rgba(181,34,55,1) 0%, rgba(25,25,25,1) 100%);*/
   }
 </style>
