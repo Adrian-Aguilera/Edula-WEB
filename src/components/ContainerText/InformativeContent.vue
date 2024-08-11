@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>
+        <h2 class="h-style">
             Nuestra Inteligencia artificial te asistirá con cualquier consulta
         </h2>
     </div>
@@ -11,7 +11,7 @@ export default {
 }
 </script>
 <style>
-h2{
+.h-style{
     color: #fff !important;
     font-size: 30px !important;
     font-weight: 700 !important;
