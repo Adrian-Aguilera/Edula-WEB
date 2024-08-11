@@ -13,7 +13,7 @@
         <div v-for="(message, index) in messages" :key="index" class="flex items-start gap-2.5 mb-4">
           <img v-if="message.user !== currentUser" class="w-8 h-8 rounded-full" :src="require('@assets/EdulaBot.jpg')" alt="User image">
           <div :class="{'flex-row-reverse': message.user === currentUser, 'flex-row': message.user !== currentUser}" class="flex items-start gap-2.5 w-full">
-            <div :class="{'bg-gray-100 dark:bg-gray-700': message.user !== currentUser, 'bg-blue-500 text-white leading-1.5 w-auto': message.user === currentUser}" class="flex flex-col leading-1.5 p-4 rounded-xl">
+            <div :class="{'bg-gray-100 dark:bg-gray-700': message.user !== currentUser, 'bgm-orange text-white text-f leading-1.5 w-auto': message.user === currentUser}" class="flex flex-col leading-1.5 p-4 rounded-xl">
               <div class="flex space-x-2">
                 <span class="text-sm font-semibold">{{ message.user === currentUser ? 'Tú' : 'EdulaBot' }}</span>
               </div>
@@ -92,5 +92,16 @@ export default {
 .b-color{
   border: #cc1c1c solid;
   border-radius: 8px;
+}
+.text-f{
+  font-weight: 500 !important;
+  font-family: "ABeeZee", sans-serif !important;
+}
+.text-black{
+  color: #000;
+}
+
+.bgm-orange{
+  background-color: #ff5600 !important;
 }
 </style>
