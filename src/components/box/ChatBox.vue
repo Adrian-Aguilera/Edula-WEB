@@ -1,7 +1,15 @@
 <template>
   <div class="ml-5 mr-5">
-    <div class="flex flex-col mt-8 justify-between rounded-2 min-w-full p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700" id="chat_section" style="height: 500px;">
-      <div class="flex flex-col p-4 overflow-y-auto h-full" style="height: calc(100% - 50px);" ref="messageContainer">
+    <div class="flex flex-col mt-8 justify-between rounded-2 min-w-full p-4 rounded-lg border-gray-200 border-dashed " id="chat_section" style="height: 650px;">
+      <div class="flex  mb-3">
+        <div class="rounded-full flex" style="background-color: #ff5600; width: 200px;">
+          <div class="flex items-center ml-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12"/></svg>
+          </div>
+          <p class="infoText">Para Clientes</p>
+        </div>
+      </div>
+      <div class="flex flex-col p-4 overflow-y-auto h-full b-color " style="height: calc(100% - 50px);" ref="messageContainer">
         <div v-for="(message, index) in messages" :key="index" class="flex items-start gap-2.5 mb-4">
           <img v-if="message.user !== currentUser" class="w-8 h-8 rounded-full" :src="require('@assets/EdulaBot.jpg')" alt="User image">
           <div :class="{'flex-row-reverse': message.user === currentUser, 'flex-row': message.user !== currentUser}" class="flex items-start gap-2.5 w-full">
@@ -72,6 +80,16 @@ export default {
 
 <style scoped>
 #chat_section {
-  background-color: #1a202c;
+  background-color: #ffffff;
+}
+.infoText{
+  padding: 9px ;
+  font-size: 18px !important;
+  text-align: center;
+  font-weight: 700 !important;
+  font-family: "ABeeZee", sans-serif !important;
+}
+.b-color{
+  border: #c01717 solid;
 }
 </style>

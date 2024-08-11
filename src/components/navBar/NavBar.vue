@@ -1,24 +1,25 @@
 <template>
   <nav class="flex justify-between">
     <div class="flex space-x-4">
-      <div class="ltr" >
-        <div class="bg-white text-black p-2 rounded-lg shadow-md">
-          <div class="flex">
-            <div style="width: 230px;">
-              <img :src="require('@/assets/Logo55Web_1700x379.svg')" alt="ITCA FEPADE" width="100%">
-            </div>
-            <div class="ml-6 mr-4 nav_item__TGdUC">
-              <a class="Resize">Institucion</a>
-            </div>
-            <div class="ml-6 mr-4 nav_item__TGdUC">
-              <a class="Resize">Portal Estudiantil</a>
-            </div>
-            <div class="ml-3 mr-4 nav_item__TGdUC">
-              <a class="Resize">Biblioteca</a>
+      <div class="flex space-x-4">
+        <div class="ltr" >
+          <div class="bg-white text-black p-2 rounded-lg shadow-md">
+            <div class="flex">
+              <div style="width: 230px;">
+                <img :src="require('@/assets/favicon.png')" alt="ITCA FEPADE" width="100%">
+              </div>
+              <div class="ml-4 mr-2 nav_item__TGdUC">
+                <a class="Resize">Itca fepade</a>
+              </div>
+              <div class="ml-4 mr-2 nav_item__TGdUC">
+                <a class="Resize">Portal estudiantil</a>
+              </div>
+              <div class="ml-4 mr-2 nav_item__TGdUC">
+                <a class="Resize">Biblioteca</a>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
     <div class="flex space-x-4">
@@ -28,13 +29,13 @@
             <div style="width: 230px;">
               <img :src="require('@/assets/favicon.png')" alt="ITCA FEPADE" width="100%">
             </div>
-            <div class="ml-6 mr-4 nav_item__TGdUC">
-              <a class="Resize">Institucion</a>
+            <div class="ml-4 mr-2 nav_item__TGdUC">
+              <a class="Resize" >Institucion</a>
             </div>
-            <div class="ml-6 mr-4 nav_item__TGdUC">
+            <div class="ml-4 mr-2 nav_item__TGdUC">
               <a class="Resize">Moodle</a>
             </div>
-            <div class="ml-6 mr-4 nav_item__TGdUC">
+            <div class="ml-4 mr-2 nav_item__TGdUC">
               <a class="original-button">Estudiante</a>
             </div>
           </div>
@@ -81,19 +82,19 @@ nav{
   width: 100% !important;
   border-radius: 6px !important;
   color: #17100e !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
   display: flex !important;
   flex-direction: column !important;
   text-align: left !important;
   justify-content: center;
+  font-family: "ABeeZee", sans-serif !important;
 }
 .Resize{
-  padding: 9px ;
-  font-size: 22px !important;
+  font-size: 18px !important;
   text-align: center;
 }
 
-.Resize:hover{
+.nav_item__TGdUC:hover{
   background-color: #f4f3ec;
   border-radius: 0.5rem;
 }
@@ -107,7 +108,7 @@ nav{
   color: #333333;
   font-size: 18px;
   border-radius: 0px;
-  width: 200px;
+  width: 180px;
   height: 40px;
   font-weight: bold;
   border: 2px solid #333333;
