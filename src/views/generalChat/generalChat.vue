@@ -9,14 +9,9 @@
     <div class="mt-2">
       <form @submit.prevent="onSubmit" method="post" class="flex items-center max-w-sm mx-auto">
         <div class="relative w-full">
-          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/>
-            </svg>
-          </div>
-          <input type="text" id="simple-search" v-model="formProps.message" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Pregunta algo..." required />
+          <input type="text" id="simple-search" v-model="formProps.message" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Pregunta algo..." required />
+          <SubmitContent type="submit"></SubmitContent>
         </div>
-        <SubmitContent type="submit"></SubmitContent>
       </form>
     </div>
   </div>
