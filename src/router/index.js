@@ -7,7 +7,12 @@ import generalChat from '@views/generalChat/generalChat.vue'
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'Chat General',
+    component: generalChat
+  },
+  {
+    path: '/infoPage',
+    name: 'information',
     component: Page_General
   },
   {
@@ -20,11 +25,6 @@ const routes = [
     name: 'Clases',
     component: Page_Classes
   },
-  {
-    path: '/generalChat',
-    name: 'Chat General',
-    component: generalChat
-  }
 ]
 
 const router = createRouter({

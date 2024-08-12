@@ -1,39 +1,20 @@
 <template>
-  <nav class="bg-nav dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b  dark:border-gray-600">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <button type="button"  class="flex items-center space-x-3 rtl:space-x-reverse" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
-        <img :src="require('@assets/itca-blanco.png')" class="h-10" alt="Itca Fepade">
-        <!--<span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Itca Fepade</span>-->
-      </button>
-      <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-        <a href="https://apps.itca.edu.sv/" class="text-gray-900  bg-white hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-semibold rounded-xl text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 me-2 mb-2">
-          ¿Estudiante?
-          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-          </svg>
-        </a>
+  <div class="bg-white text-black p-2 rounded-lg shadow-md">
+    <div class="flex">
+      <div style="width: 230px;">
+        <img :src="urlImage" alt="ITCA FEPADE" width="100%">
+      </div>
+      <div class="ml-4 mr-2 nav_item__TGdUC">
+        <a :href="linkOne" class="Resize"> {{ textFirst  }} </a>
+      </div>
+      <div class="ml-4 mr-2 nav_item__TGdUC">
+        <a :href="secondLink" class="Resize"> {{ textSecond }} </a>
+      </div>
+      <div class="ml-4 mr-2 nav_item__TGdUC">
+        <a :href="treeLink" :class="isStudent ? 'original-button':' Resize'"> {{ textTree }}</a>
       </div>
     </div>
-  </nav>
-  <div id="drawer-navigation" class="fixed top-0 left-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-navigation-label">
-    <img :src="require('@assets/Logo55Web_1700x379.png')"  id="drawer-navigation-label" class="items-center h-12">
-    <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" >
-        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-        <span class="sr-only">Close menu</span>
-    </button>
-  <div class="py-4 overflow-y-auto">
-      <ul class="space-y-2 font-medium">
-        <li v-for="route in routes" :key="route.name">
-          <router-link :to="route.path" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-              {{ route.iconSVG }}
-            </svg>
-            <span class="ms-3">{{ route.name }}</span>
-          </router-link>
-        </li>
-      </ul>
-   </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -41,7 +22,19 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 export default {
   name: "NavBar",
-  props: {},
+  props: {
+    urlImage: String,
+    linkOne: String,
+    textFirst: String,
+    secondLink: String,
+    textSecond: String,
+    treeLink:String,
+    textTree: String,
+    isStudent: {
+      type: Boolean,
+      required: true
+    }
+  },
 
   setup() {
     const router = useRouter();
@@ -64,4 +57,54 @@ export default {
 .bg-nav {
   background-color: brown;
 }
+nav{
+  margin-top: 29px;
+  margin-left: 37px;
+  margin-right: 37px;
+}
+.nav_item__TGdUC {
+  width: 100% !important;
+  border-radius: 6px !important;
+  color: #17100e !important;
+  font-weight: 800 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  text-align: left !important;
+  justify-content: center;
+  font-family: "ABeeZee", sans-serif !important;
+}
+.Resize{
+  font-size: 18px !important;
+  text-align: center;
+}
+
+.nav_item__TGdUC:hover{
+  background-color: #f4f3ec;
+  border-radius: 0.5rem;
+}
+
+.original-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  text-decoration: none;
+  color: #333333;
+  font-size: 18px;
+  border-radius: 0px;
+  width: 180px;
+  height: 40px;
+  font-weight: bold;
+  border: 2px solid #333333;
+  transition: 0.3s;
+  box-shadow: -5px 5px 0px 0px rgba(51, 51, 51, 1);
+  background-color: #ffffff;
+}
+
+.original-button:hover {
+  box-shadow: 0 0 #333;
+  color: #fff;
+  background-color: #333;
+}
+
 </style>
