@@ -90,7 +90,7 @@ export default {
   font-family: "ABeeZee", sans-serif !important;
 }
 .b-color{
-  border: #d22424 solid;
+  border: #d22424b4 solid;
   border-radius: 8px;
 }
 .text-f{
