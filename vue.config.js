@@ -7,6 +7,10 @@ module.exports = {
       static: {
         directory: path.join(__dirname, 'public'),
       },
+      host: '0.0.0.0', // Permite que el servidor escuche en todas las interfaces de red
+      allowedHosts: 'all',
+      public: process.env.VUE_APP_PUBLIC_URL || 'localhost:8080',
+      port: process.env.VUE_APP_PORT || 8080,
     },
     resolve: {
       alias: {
