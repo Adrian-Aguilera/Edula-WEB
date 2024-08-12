@@ -18,9 +18,9 @@
       <div class="flex space-x-4">
         <NavBar
           :urlImage="require('@/assets/favicon.png')"
-          linkOne="https://www.itca.edu.sv/"
-          textFirst="Institucion"
-          secondLink="https://apps.itca.edu.sv/"
+          linkOne="https://www.itca.edu.sv/nuevo-ingreso/"
+          textFirst="Nuevo Ingreso"
+          secondLink="https://virtual3.itca.edu.sv/"
           textSecond="Moodle"
           treeLink="http://aplicaciones.itca.edu.sv/portal-erecursos/"
           textTree="Estudiante"
