@@ -1,13 +1,16 @@
 <template>
     <div>
         <h2 class="h-style">
-            Nuestra Inteligencia artificial te asistirá con cualquier consulta
+            {{ contenido }}
         </h2>
     </div>
 </template>
 <script>
 export default {
     name: "InformativeContent",
+    props: {
+        contenido: String,
+    }
 }
 </script>
 <style>

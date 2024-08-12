@@ -3,15 +3,22 @@
   <div id="app">
     <router-view></router-view>
   </div>
+  <footerComponent
+    year="2024"
+    url="https://www.itca.edu.sv/"
+    author="Itca Fepade"
+  />
 </template>
 
 <script>
+import footerComponent from '@components/ContainerText/footerComponent.vue';
 import NavBar from '@components/navBar/NavBar.vue';
 
 export default {
   name: 'App',
   components:{
     NavBar,
+    footerComponent,
   }
 }
 </script>

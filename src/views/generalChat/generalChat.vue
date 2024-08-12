@@ -1,7 +1,9 @@
 <template>
   <div class="flex flex-col min-h-screen">
     <div class="mt-24">
-      <InformativeContent/>
+      <InformativeContent
+        contenido="Nuestra Inteligencia artificial te asistirá con cualquier consulta"
+      />
     </div>
     <div class="mt-14">
       <ChatBox :messages="messages" :currentUser="currentUser" :isError="isError" :isLoading="isLoading"/>
@@ -15,7 +17,6 @@
       </form>
     </div>
   </div>
-  <footerComponent></footerComponent>
 </template>
 
 <script>
@@ -23,7 +24,6 @@ import ChatBox from "@components/box/ChatBox.vue";
 import SubmitContent from "@components/Submit/SubmitComponent.vue";
 import optionRequests from "@utils/generalUtils/getResponse.js";
 import InformativeContent from '@components/ContainerText/InformativeContent.vue';
-import footerComponent from '@components/ContainerText/footerComponent.vue';
 
 const { getRequest } = optionRequests;
 
@@ -33,7 +33,6 @@ export default {
     ChatBox,
     SubmitContent,
     InformativeContent,
-    footerComponent,
   },
   data() {
     return {
