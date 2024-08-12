@@ -2,7 +2,7 @@
   <div class="ml-36 mr-36">
     <div class="flex flex-col mt-8 justify-between rounded-2 min-w-full p-4 rounded-lg border-gray-200 border-dashed " id="chat_section" style="height: 650px;">
       <div class="flex  mb-3">
-        <div class="rounded-full flex" style="background-color: #ff5600; width: 200px;">
+        <div class="rounded-full flex" style="background-color: #ff5600; width: 200px;" >
           <div class="flex items-center ml-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12"/></svg>
           </div>
@@ -80,7 +80,7 @@ export default {
 
 <style scoped>
 #chat_section {
-  background-color: #ffffff;
+  background-color: #0e0f2ed0;
 }
 .infoText{
   padding: 9px ;
