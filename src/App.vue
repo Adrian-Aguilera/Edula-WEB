@@ -1,5 +1,34 @@
 <template>
-  <NavBar/>
+  <nav class="flex justify-between">
+    <div class="flex space-x-4">
+      <div class="flex space-x-4">
+        <NavBar
+          :urlImage="require('@/assets/favicon.png')"
+          linkOne="https://www.itca.edu.sv/"
+          textFirst="Itca fepade"
+          secondLink="https://apps.itca.edu.sv/"
+          textSecond="Portal estudiantil"
+          treeLink="http://aplicaciones.itca.edu.sv/portal-erecursos/"
+          textTree="Biblioteca"
+          :isStudent="false"
+        />
+      </div>
+    </div>
+    <div class="flex space-x-4">
+      <div class="flex space-x-4">
+        <NavBar
+          :urlImage="require('@/assets/favicon.png')"
+          linkOne="https://www.itca.edu.sv/"
+          textFirst="Institucion"
+          secondLink="https://apps.itca.edu.sv/"
+          textSecond="Moodle"
+          treeLink="http://aplicaciones.itca.edu.sv/portal-erecursos/"
+          textTree="Estudiante"
+          :isStudent="true"
+        />
+      </div>
+    </div>
+  </nav>
   <div id="app">
     <router-view></router-view>
   </div>

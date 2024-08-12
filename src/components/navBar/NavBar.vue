@@ -1,48 +1,20 @@
 <template>
-  <nav class="flex justify-between">
-    <div class="flex space-x-4">
-      <div class="flex space-x-4">
-        <div class="ltr" >
-          <div class="bg-white text-black p-2 rounded-lg shadow-md">
-            <div class="flex">
-              <div style="width: 230px;">
-                <img :src="require('@/assets/favicon.png')" alt="ITCA FEPADE" width="100%">
-              </div>
-              <div class="ml-4 mr-2 nav_item__TGdUC">
-                <a class="Resize">Itca fepade</a>
-              </div>
-              <div class="ml-4 mr-2 nav_item__TGdUC">
-                <a class="Resize">Portal estudiantil</a>
-              </div>
-              <div class="ml-4 mr-2 nav_item__TGdUC">
-                <a class="Resize">Biblioteca</a>
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class="bg-white text-black p-2 rounded-lg shadow-md">
+    <div class="flex">
+      <div style="width: 230px;">
+        <img :src="urlImage" alt="ITCA FEPADE" width="100%">
+      </div>
+      <div class="ml-4 mr-2 nav_item__TGdUC">
+        <a :href="linkOne" class="Resize"> {{ textFirst  }} </a>
+      </div>
+      <div class="ml-4 mr-2 nav_item__TGdUC">
+        <a :href="secondLink" class="Resize"> {{ textSecond }} </a>
+      </div>
+      <div class="ml-4 mr-2 nav_item__TGdUC">
+        <a :href="treeLink" :class="isStudent ? 'original-button':' Resize'"> {{ textTree }}</a>
       </div>
     </div>
-    <div class="flex space-x-4">
-      <div class="ltr" >
-        <div class="bg-white text-black p-2 rounded-lg shadow-md">
-          <div class="flex">
-            <div style="width: 230px;">
-              <img :src="require('@/assets/favicon.png')" alt="ITCA FEPADE" width="100%">
-            </div>
-            <div class="ml-4 mr-2 nav_item__TGdUC">
-              <a class="Resize" >Institucion</a>
-            </div>
-            <div class="ml-4 mr-2 nav_item__TGdUC">
-              <a class="Resize">Moodle</a>
-            </div>
-            <div class="ml-4 mr-2 nav_item__TGdUC">
-              <a class="original-button">Estudiante</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
+  </div>
 </template>
 
 <script>
@@ -50,7 +22,19 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 export default {
   name: "NavBar",
-  props: {},
+  props: {
+    urlImage: String,
+    linkOne: String,
+    textFirst: String,
+    secondLink: String,
+    textSecond: String,
+    treeLink:String,
+    textTree: String,
+    isStudent: {
+      type: Boolean,
+      required: true
+    }
+  },
 
   setup() {
     const router = useRouter();
