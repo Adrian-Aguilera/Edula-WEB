@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white text-black p-2 rounded-lg shadow-md">
+  <div class="bgm-menu text-black p-2 rounded-lg shadow-md">
     <div class="flex">
       <div style="width: 230px;">
         <img :src="urlImage" alt="ITCA FEPADE" width="100%">
@@ -51,6 +51,9 @@ export default {
 };
 </script>
 <style>
+.bgm-menu{
+  background-color: #ffffffe9;
+}
 .flex-contents {
   display: contents !important;
 }

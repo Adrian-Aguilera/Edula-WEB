@@ -2,7 +2,7 @@
   <div class="mx-4 sm:mx-8 lg:mx-36">
     <div class="flex flex-col mt-8 justify-between rounded-2 min-w-full p-4 rounded-lg border-gray-200 border-dashed " id="chat_section" :style="{ height: '650px' }">
       <div class="flex mb-3">
-        <div class="rounded-full flex" style="background-color: #ff5600; width: 150px;" >
+        <div class="rounded-full flex target-size" >
           <div class="flex items-center ml-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12"/></svg>
           </div>
@@ -81,12 +81,16 @@ export default {
 
 <style scoped>
 #chat_section {
-  background-color: #0e0f2ed0;
+  /*background-color: #0e0f2ed0;*/
+  background-color: #0e0f2ed3;
 }
-
+.target-size{
+  background-color: #ff5600;
+  width: 215px;
+}
 .infoText {
   padding: 9px;
-  font-size: 16px !important; /* Ajuste de tamaño para pantallas pequeñas */
+  font-size: 16px !important;
   text-align: center;
   font-weight: 700 !important;
   font-family: "ABeeZee", sans-serif !important;
@@ -94,13 +98,14 @@ export default {
 
 @media (min-width: 640px) {
   .infoText {
-    font-size: 18px !important; /* Ajuste para pantallas medianas y grandes */
+    font-size: 18px !important;
   }
 }
 
 .b-color {
-  border: #d22424b4 solid;
-  border-radius: 8px;
+  /*border: #d22424b4 solid;*/
+  border: #ffffff7d solid;
+  border-radius: 9px;
 }
 
 .text-f {
@@ -123,8 +128,8 @@ export default {
 /* Ajustes responsivos para el padding y tamaños de fuente en diferentes dispositivos */
 @media (min-width: 640px) {
   .infoText {
-    font-size: 18px !important; /* Ajuste para pantallas medianas y grandes */
-    padding: 12px; /* Más espacio en pantallas más grandes */
+    font-size: 18px !important;
+    padding: 12px;
   }
   .b-color {
     border-radius: 10px;
@@ -137,27 +142,27 @@ export default {
 
 @media (min-width: 768px) {
   .infoText {
-    font-size: 20px !important; /* Ajuste para pantallas aún más grandes */
-    padding: 14px; /* Aumenta el padding */
+    font-size: 20px !important;
+    padding: 14px;
   }
   
   .text-f {
-    font-size: 18px !important; /* Texto más grande en pantallas más grandes */
+    font-size: 18px !important;
   }
 }
 
 @media (min-width: 1024px) {
   .infoText {
-    font-size: 22px !important; /* Ajuste para pantallas muy grandes */
-    padding: 16px; /* Aumenta el padding */
+    font-size: 18px !important;
+    padding: 16px;
   }
   
   .b-color {
-    border-radius: 12px; /* Más redondeo en pantallas más grandes */
+    border-radius: 12px;
   }
 
   .text-f {
-    font-size: 20px !important; /* Texto más grande en pantallas grandes */
+    font-size: 20px !important;
   }
 }
 </style>

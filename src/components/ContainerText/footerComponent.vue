@@ -33,7 +33,7 @@ export default {
 
 <style>
 .bgm-mod{
-    background-color: #c90902e5;
+    background-color: #1e1673dd;
 }
 .text-mod{
     color: #ffffff;
