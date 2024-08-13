@@ -1,15 +1,15 @@
 <template>
-  <div class="ml-36 mr-36">
-    <div class="flex flex-col mt-8 justify-between rounded-2 min-w-full p-4 rounded-lg border-gray-200 border-dashed " id="chat_section" style="height: 650px;">
-      <div class="flex  mb-3">
-        <div class="rounded-full flex" style="background-color: #ff5600; width: 200px;" >
+  <div class="mx-4 sm:mx-8 lg:mx-36">
+    <div class="flex flex-col mt-8 justify-between rounded-2 min-w-full p-4 rounded-lg border-gray-200 border-dashed " id="chat_section" :style="{ height: '650px' }">
+      <div class="flex mb-3">
+        <div class="rounded-full flex" style="background-color: #ff5600; width: 150px;" >
           <div class="flex items-center ml-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12"/></svg>
           </div>
-          <p class="infoText">Para Clientes</p>
+          <p class="infoText text-xs sm:text-base">Para Clientes</p>
         </div>
       </div>
-      <div class="flex flex-col p-4 overflow-y-auto h-full b-color " style="height: calc(100% - 50px);" ref="messageContainer">
+      <div class="flex flex-col p-4 overflow-y-auto h-full b-color" :style="{ height: 'calc(100% - 50px)' }" ref="messageContainer">
         <div v-for="(message, index) in messages" :key="index" class="flex items-start gap-2.5 mb-4">
           <img v-if="message.user !== currentUser" class="w-8 h-8 rounded-full" :src="require('@assets/EdulaBot.jpg')" alt="User image">
           <div :class="{'flex-row-reverse': message.user === currentUser, 'flex-row': message.user !== currentUser}" class="flex items-start gap-2.5 w-full">
@@ -33,9 +33,9 @@
       </div>
     </div>
     <div class="mt-2">
-      <button  @click="scrollToBottom" type="button" class="text-white animate-bounce bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      <button @click="scrollToBottom" type="button" class="text-white animate-bounce bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 14-4-4m4 4 4-4"/>
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 14-4-4m4 4 4-4"/>
         </svg>
       </button>
     </div>
@@ -53,6 +53,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -82,29 +83,81 @@ export default {
 #chat_section {
   background-color: #0e0f2ed0;
 }
-.infoText{
-  padding: 9px ;
-  font-size: 18px !important;
+
+.infoText {
+  padding: 9px;
+  font-size: 16px !important; /* Ajuste de tamaño para pantallas pequeñas */
   text-align: center;
   font-weight: 700 !important;
   font-family: "ABeeZee", sans-serif !important;
 }
-.b-color{
+
+@media (min-width: 640px) {
+  .infoText {
+    font-size: 18px !important; /* Ajuste para pantallas medianas y grandes */
+  }
+}
+
+.b-color {
   border: #d22424b4 solid;
   border-radius: 8px;
 }
-.text-f{
+
+.text-f {
   font-weight: 500 !important;
   font-family: "ABeeZee", sans-serif !important;
 }
-.text-black{
+
+.text-black {
   color: #000;
 }
 
-.bgm-orange{
+.bgm-orange {
   background-color: #ff5600 !important;
 }
-.bgm-response{
+
+.bgm-response {
   background-color: #e4e3e2 !important;
+}
+
+/* Ajustes responsivos para el padding y tamaños de fuente en diferentes dispositivos */
+@media (min-width: 640px) {
+  .infoText {
+    font-size: 18px !important; /* Ajuste para pantallas medianas y grandes */
+    padding: 12px; /* Más espacio en pantallas más grandes */
+  }
+  .b-color {
+    border-radius: 10px;
+  }
+
+  .text-f {
+    font-size: 16px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .infoText {
+    font-size: 20px !important; /* Ajuste para pantallas aún más grandes */
+    padding: 14px; /* Aumenta el padding */
+  }
+  
+  .text-f {
+    font-size: 18px !important; /* Texto más grande en pantallas más grandes */
+  }
+}
+
+@media (min-width: 1024px) {
+  .infoText {
+    font-size: 22px !important; /* Ajuste para pantallas muy grandes */
+    padding: 16px; /* Aumenta el padding */
+  }
+  
+  .b-color {
+    border-radius: 12px; /* Más redondeo en pantallas más grandes */
+  }
+
+  .text-f {
+    font-size: 20px !important; /* Texto más grande en pantallas grandes */
+  }
 }
 </style>
