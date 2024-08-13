@@ -8,7 +8,15 @@ module.exports = {
     },
     host: '0.0.0.0', // Permite que el servidor escuche en todas las interfaces de red
     allowedHosts: 'all', // Permite cualquier host
-    port: process.env.VUE_APP_PORT || 8080,
+    port: process.env.VUE_APP_PORT || 8082,
+    client: {
+      webSocketURL: {
+        protocol: 'wss',
+        hostname: 'localhost',
+        port: process.env.VUE_APP_PORT || 8080,
+        pathname: '/ws',
+      },
+    },
   },
   configureWebpack: {
     resolve: {
