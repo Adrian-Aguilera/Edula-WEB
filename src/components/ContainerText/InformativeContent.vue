@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h2 class="h-style">
+    <div class="flex w-full justify-center">
+        <h2 class="h-style text-center">
             {{ contenido }}
         </h2>
     </div>
@@ -16,8 +16,9 @@ export default {
 <style>
 .h-style{
     color: #fff !important;
-    font-size: 30px !important;
+    font-size: 44px !important;
     font-weight: 700 !important;
-    font-family: "ABeeZee", sans-serif !important;
+    font-family: "Times New Roman", Times, serif !important;
+    width: 40%;
 }
 </style>

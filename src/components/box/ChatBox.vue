@@ -82,7 +82,8 @@ export default {
 <style scoped>
 #chat_section {
   /*background-color: #0e0f2ed0;*/
-  background-color: #0e0f2ed3;
+  background-color: #F5F7FB;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.15);
 }
 .target-size{
   background-color: #ff5600;
@@ -93,7 +94,7 @@ export default {
   font-size: 16px !important;
   text-align: center;
   font-weight: 700 !important;
-  font-family: "ABeeZee", sans-serif !important;
+  font-family: "Montserrat", sans-serif !important;
 }
 
 @media (min-width: 640px) {
@@ -104,7 +105,7 @@ export default {
 
 .b-color {
   /*border: #d22424b4 solid;*/
-  border: #ffffff7d solid;
+  border: #2b2059 solid;
   border-radius: 9px;
 }
 

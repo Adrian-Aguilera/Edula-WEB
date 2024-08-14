@@ -5,11 +5,11 @@
         <NavBar
           :urlImage="require('@/assets/favicon.png')"
           linkOne="https://www.itca.edu.sv/"
-          textFirst="Itca fepade"
+          textFirst="ITCA FEPADE"
           secondLink="https://apps.itca.edu.sv/"
-          textSecond="Portal estudiantil"
+          textSecond="PORTAL ESTUDIANTIL"
           treeLink="http://aplicaciones.itca.edu.sv/portal-erecursos/"
-          textTree="Biblioteca"
+          textTree="BIBLIOTECA"
           :isStudent="false"
         />
       </div>
@@ -19,11 +19,11 @@
         <NavBar
           :urlImage="require('@/assets/favicon.png')"
           linkOne="https://www.itca.edu.sv/nuevo-ingreso/"
-          textFirst="Nuevo Ingreso"
+          textFirst="NUEVO INGRESO"
           secondLink="https://virtual3.itca.edu.sv/"
-          textSecond="Moodle"
+          textSecond="MOODLE"
           treeLink="http://aplicaciones.itca.edu.sv/portal-erecursos/"
-          textTree="Estudiante"
+          textTree="ESTUDIANTE"
           :isStudent="true"
         />
       </div>

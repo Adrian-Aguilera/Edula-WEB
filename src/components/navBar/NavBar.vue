@@ -52,13 +52,10 @@ export default {
 </script>
 <style>
 .bgm-menu{
-  background-color: #ffffffe9;
+  background-color: #ffffff;
 }
 .flex-contents {
   display: contents !important;
-}
-.bg-nav {
-  background-color: brown;
 }
 nav{
   margin-top: 29px;
@@ -74,17 +71,13 @@ nav{
   flex-direction: column !important;
   text-align: left !important;
   justify-content: center;
-  font-family: "ABeeZee", sans-serif !important;
+  font-family: "Montserrat", sans-serif !important;
 }
 .Resize{
-  font-size: 18px !important;
+  font-size: 17px !important;
   text-align: center;
 }
 
-.nav_item__TGdUC:hover{
-  background-color: #f4f3ec;
-  border-radius: 0.5rem;
-}
 
 .original-button {
   display: flex;
@@ -92,22 +85,22 @@ nav{
   justify-content: center;
   line-height: 1;
   text-decoration: none;
-  color: #333333;
+  color: #eeeeee;
   font-size: 18px;
-  border-radius: 0px;
+  border-radius: 6px;
   width: 180px;
   height: 40px;
   font-weight: bold;
   border: 2px solid #333333;
   transition: 0.3s;
-  box-shadow: -5px 5px 0px 0px rgba(51, 51, 51, 1);
-  background-color: #ffffff;
+  background-color: #17100e;
 }
 
 .original-button:hover {
-  box-shadow: 0 0 #333;
-  color: #fff;
-  background-color: #333;
+  box-shadow: -5px 5px 0px 0px rgb(195, 40, 48),
+              -10px 10px 0px 0px rgba(43, 74, 214, 0.8),
+              -15px 15px 0px 0px rgb(247, 231, 8),
+              -20px 20px 0px 0px rgba(23, 55, 197, 0.146);
 }
 
 </style>
