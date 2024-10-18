@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class="gold-background">
     <v-img
       class="mx-auto my-6"
-      max-width="228"
-      src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-v3-slim-text-light.svg"
+      max-width="700"
+      src="@/assets/logoItca.png"
     ></v-img>
 
     <v-card
-      class="mx-auto pa-12 pb-8"
+      class="mx-auto pa-12 pb-8 "
       elevation="8"
       max-width="448"
       rounded="lg"
@@ -49,7 +49,7 @@
         variant="tonal"
       >
         <v-card-text class="text-medium-emphasis text-caption">
-          Warning: After 3 consecutive failed login attempts, you account will be temporarily locked for three hours. If you must login now, you can also click "Forgot login password?" below to reset the login password.
+          Warning: After 3 consecutive failed login attempts, your account will be temporarily locked for three hours. If you must login now, you can also click "Forgot login password?" below to reset the login password.
         </v-card-text>
       </v-card>
 
@@ -77,7 +77,6 @@
   </div>
 </template>
 
-
 <script>
   export default {
     data: () => ({
@@ -86,4 +85,10 @@
   }
 </script>
 
-
+<style scoped>
+.gold-background {
+  background-color: #ffffff; /* Código hexadecimal para dorado */
+  min-height: 100vh; /* Asegura que el fondo cubra toda la altura de la página */
+  padding: 16px;
+}
+</style>

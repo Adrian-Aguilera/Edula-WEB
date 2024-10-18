@@ -1,7 +1,8 @@
 <template>
-  <v-app>
+  <v-app >
     <v-main>
       <router-view to="/Login" />
+      
     </v-main>
   </v-app>
 </template>
@@ -16,3 +17,5 @@ export default {
   }),
 }
 </script>
+
+
