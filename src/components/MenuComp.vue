@@ -14,6 +14,9 @@
       <v-btn class="custom-btn" @click="goToPage">
         Biblioteca
       </v-btn>
+      <v-btn class="custom-btn" @click="goToPage">
+        Iniciar sesión
+      </v-btn>
     </div>
   </template>
   
@@ -36,6 +39,7 @@
     background-color: white;
     margin-left: 5%;
     border-radius: 10px;
+    justify-content:center;
   }
   .custom-btn {
     background-color: transparent !important;
