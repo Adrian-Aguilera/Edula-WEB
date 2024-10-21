@@ -1,4 +1,6 @@
 <template>
+  <div class="center">
+
     <div class="menuStyle">
       <div>
         <v-img :width="50" aspect-ratio="4/3" cover
@@ -18,6 +20,7 @@
         Iniciar sesión
       </v-btn>
     </div>
+  </div>
   </template>
   
   <script>
@@ -32,12 +35,17 @@
   </script>
   
   <style scoped>
+  .center{
+    display: flex;
+    justify-content: center;
+  }
   .menuStyle {
     display: flex;
-    width: 90%;
+    width: auto;
     height: auto;
-    background-color: white;
-    margin-left: 5%;
+    background-color: rgba(66, 66, 66, 0.253);
+    border: 1px solid #707070;
+    
     border-radius: 10px;
     justify-content:center;
   }
@@ -45,6 +53,7 @@
     background-color: transparent !important;
     border-radius: 10px;
     height: auto;
+    color: aliceblue;
   }
   </style>
   
