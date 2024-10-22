@@ -1,6 +1,6 @@
 <template>
   <div >
-    <LoginStudentComponent />
+    <LoginStudentComponent urlReferencia="https://www.itca.edu.sv/" />
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
     <v-container fluid class="bg-surface-variant ConGeneral">
         <v-row no-gutters class="h-100">
-            <v-col class="Con1" cols="12" md="4">
+            <v-col class="Con1" cols="12" md="4" lg="4" xl="4" xxl="4">
                 <v-sheet class="pa-0 ma-0 h-100 d-flex align-center justify-center">
                     <v-card class="pa-6 pb-8 cardForm" elevation="1" max-width="400" rounded="lg">
                         <v-img
@@ -10,62 +10,56 @@
                             src="@/assets/logo-itca.avif"
                         ></v-img>
 
-                        <!-- Cambié text-red por text-red-500 -->
-                        <div class="text-subtitle-1 text-medium-emphasis ">
+                        <div class="text-subtitle-1 text-medium-emphasis">
                             <strong class="text-orange-darken-3">Carnet</strong> 
                         </div>
 
                         <v-text-field
+                            class="text-orange-darken-4"
                             density="compact"
                             placeholder="Carnet"
-                            prepend-inner-icon="mdi-email-outline"
+                            prepend-inner-icon="bi bi-person-vcard-fill"
                             variant="outlined"
                         ></v-text-field>
 
                         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-                            <strong class="text-orange-darken-3">contraseña</strong> 
+                            <strong class="text-orange-darken-3">Contraseña</strong> 
                         </div>
 
                         <v-text-field
+                            class="text-orange-darken-4"
                             :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
                             :type="visible ? 'text' : 'password'"
                             density="compact"
                             placeholder="Ingresa tu contraseña"
-                            prepend-inner-icon="mdi-lock-outline"
+                            prepend-inner-icon="bi bi-key-fill"
                             variant="outlined"
                             @click:append-inner="visible = !visible"
                         ></v-text-field>
 
-                        <v-card class="my-6" color="surface-variant" variant="tonal">
-                            <v-card-text class="text-medium-emphasis text-caption">
-                                Warning: After 3 consecutive failed login attempts, your account will be temporarily locked for three hours. If you must login now, you can also click "Forgot login password?" below to reset the login password.
+                        <v-card
+                            class="mb-12"
+                            color="surface-variant"
+                            variant="tonal"
+                        >
+                            <v-card-text class="text-medium-emphasis text-caption alerta">
+                                Solo estudiantes de Itca Fepade pueden acceder a nuestra plataforma. Si no eres de Itca Fepade, no podrás acceder a la plataforma.
                             </v-card-text>
                         </v-card>
 
                         <v-btn
-                            class="mb-4"
-                            color="red"
+                            class="mb-4 bi bi-door-open"
+                            color="orange-darken-4"
                             size="large"
                             variant="tonal"
                             block
                         >
-                            Log In
+                            Iniciar Sesion
                         </v-btn>
-
-                        <v-card-text class="text-center">
-                            <a
-                                class="text-red text-decoration-none"
-                                href="#"
-                                rel="noopener noreferrer"
-                                target="_blank"
-                            >
-                                Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
-                            </a>
-                        </v-card-text>
                     </v-card>
                 </v-sheet>
             </v-col>
-            <v-col class="Con2" cols="12" md="8">
+            <v-col class="Con2 hide-on-small" cols="12" md="8" lg="8" xl="8" xxl="8">
                 <v-sheet class="pa-0 ma-0 h-100 caja2"></v-sheet>
             </v-col>
         </v-row>
@@ -91,6 +85,13 @@ export default {
 }
 
 .cardForm {
-    border: solid 1px #ff6a34;
+    border: solid 1px #d18469;
+}
+
+/* Media query para ocultar el segundo v-col en pantallas menores a 900px */
+@media (max-width: 960px) {
+    .hide-on-small {
+        display: none;
+    }
 }
 </style>
