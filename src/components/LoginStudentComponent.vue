@@ -1,34 +1,27 @@
 <template>
     <v-container fluid class="bg-surface-variant ConGeneral">
         <v-row no-gutters class="h-100">
-            <v-col class="Con1" cols="12" md="5">
-                <v-sheet class="pa-0 ma-0 bg-purple darken-2 h-100 d-flex align-center justify-center">
-                    <v-card class="pa-6 pb-8" elevation="8" max-width="448" rounded="lg">
+            <v-col class="Con1" cols="12" md="4">
+                <v-sheet class="pa-0 ma-0  h-100 d-flex align-center justify-center">
+                    <v-card class="pa-6 pb-8 cardForm" elevation="1" max-width="400" rounded="lg">
                         <v-img
                             class="mx-auto my-6"
-                            max-width="228"
-                            src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-v3-slim-text-light.svg"
+                            max-width="120"
+                            src="@/assets/logo-itca.avif"
                         ></v-img>
 
-                        <div class="text-subtitle-1 text-medium-emphasis">Account</div>
+                        <div class="text-subtitle-1 text-medium-emphasis">Carnet</div>
 
                         <v-text-field
                             density="compact"
-                            placeholder="Email address"
+                            placeholder="Carnet"
                             prepend-inner-icon="mdi-email-outline"
                             variant="outlined"
                         ></v-text-field>
 
                         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-                            Password
-                            <a
-                                class="text-caption text-decoration-none text-blue"
-                                href="#"
-                                rel="noopener noreferrer"
-                                target="_blank"
-                            >
-                                Forgot login password?
-                            </a>
+                            Contraseña
+                           
                         </div>
 
                         <v-text-field
@@ -70,8 +63,8 @@
                     </v-card>
                 </v-sheet>
             </v-col>
-            <v-col class="Con2" cols="12" md="7">
-                <v-sheet class="pa-0 ma-0 bg-teal lighten-4 h-100"></v-sheet>
+            <v-col class="Con2" cols="12" md="8">
+                <v-sheet class="pa-0 ma-0 h-100 caja2"></v-sheet>
             </v-col>
         </v-row>
     </v-container>
@@ -87,5 +80,15 @@ export default {
 .ConGeneral {
     height: 100vh;
     padding: 0;
+}
+
+.caja2{
+    background-image: url("@/assets/pc.jpg");
+    background-size: 100%;
+    background-position: center;
+}
+
+.cardForm{
+    border: solid 1px #ff6a34;
 }
 </style>
