@@ -1,16 +1,17 @@
 <template>
   <div >
-    <LoginComponent urlReferencia="https://www.itca.edu.sv/"></LoginComponent>
+    <LoginStudentComponent />
   </div>
 </template>
 
 <script>
-import LoginComponent from '@/components/LoginComponent.vue';
+
+import LoginStudentComponent from '@/components/LoginStudentComponent.vue'
 
   export default {
     name: "LoginView",
     components: {
-      LoginComponent,
+      LoginStudentComponent,
     },
 
 
