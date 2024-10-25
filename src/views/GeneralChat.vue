@@ -153,4 +153,12 @@ p{
     color: black !important;
     margin: 10px;
 }
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 10px;
+    
+  }
 </style>
