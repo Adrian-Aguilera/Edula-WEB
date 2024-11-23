@@ -36,7 +36,19 @@
                             variant="outlined"
                             @click:append-inner="visible = !visible"
                         ></v-text-field>
-
+                        <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
+                            <strong class="text-orange-darken-3">Confirmar Contraseña</strong> 
+                        </div>
+                        <v-text-field
+                            class="text-orange-darken-4"
+                            :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                            :type="visible ? 'text' : 'password'"
+                            density="compact"
+                            placeholder="Repetite tu contraseña"
+                            prepend-inner-icon="bi bi-key-fill"
+                            variant="outlined"
+                            @click:append-inner="visible = !visible"
+                        ></v-text-field>
                         <v-card
                             class="mb-12"
                             color="surface-variant"
@@ -54,7 +66,7 @@
                             variant="tonal"
                             block
                         >
-                            Iniciar Sesion
+                            Crear Cuenta
                         </v-btn>
                     </v-card>
                 </v-sheet>
@@ -75,15 +87,16 @@ export default {
 <style scoped>
 .ConGeneral {
     height: 100vh;
-    padding: 0;
+    padding: 0px;
+    
+    background-color: transparent; /* Elimina el fondo del contenedor */
 }
 
 .caja2 {
-    background-image: url("@/assets/login.jpeg");
+    background-image: url("@/assets/create.jpeg");
     background-size:contain; /* Ajusta la imagen para cubrir todo el contenedor */
     background-position: center; /* Centra la imagen en el contenedor */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
-    
 }
 
 .cardForm {
