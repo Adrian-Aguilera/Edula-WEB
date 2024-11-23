@@ -15,11 +15,9 @@
         Biblioteca
       </v-btn>
       <v-btn class="custom-btn" @click="goToLogin">
-        Iniciar sesión
+        Cerrar sesión
       </v-btn>
-      <v-btn class="custom-btn" @click="goToCreate">
-        Crear cuenta
-      </v-btn>
+    
     </div>
   </template>
   
@@ -39,9 +37,7 @@
       goToLogin() {
         this.$router.push('/login');
       },
-      goToCreate() {
-        this.$router.push('/CreateAccount');
-      }
+    
 
     },
   }
