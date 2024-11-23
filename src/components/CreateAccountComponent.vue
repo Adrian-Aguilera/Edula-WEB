@@ -87,7 +87,9 @@ export default {
 <style scoped>
 .ConGeneral {
     height: 100vh;
-    padding: 0;
+    padding: 0px;
+    
+    background-color: transparent; /* Elimina el fondo del contenedor */
 }
 
 .caja2 {

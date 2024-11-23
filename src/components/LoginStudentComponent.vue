@@ -79,9 +79,11 @@ export default {
 }
 
 .caja2 {
-    background-image: url("@/assets/pc.jpg");
-    background-size: cover; /* Cambiado a cover para cubrir completamente */
-    background-position: center;
+    background-image: url("@/assets/login.jpeg");
+    background-size:contain; /* Ajusta la imagen para cubrir todo el contenedor */
+    background-position: center; /* Centra la imagen en el contenedor */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    
 }
 
 .cardForm {

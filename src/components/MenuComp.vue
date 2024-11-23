@@ -14,8 +14,11 @@
       <v-btn class="custom-btn" @click="goToPage">
         Biblioteca
       </v-btn>
-      <v-btn class="custom-btn" @click="goToPage">
+      <v-btn class="custom-btn" @click="goToLogin">
         Iniciar sesión
+      </v-btn>
+      <v-btn class="custom-btn" @click="goToCreate">
+        Crear cuenta
       </v-btn>
     </div>
   </template>
@@ -24,9 +27,14 @@
   export default {
     name: "MenuComp",
     methods: {
-      goToPage() {
-        this.$router.push('/Home');
+      
+      goToLogin() {
+        this.$router.push('/login');
+      },
+      goToCreate() {
+        this.$router.push('/CreateAccount');
       }
+
     },
   }
   </script>
