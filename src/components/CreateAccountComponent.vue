@@ -81,11 +81,16 @@
         </v-col>
       </v-row>
   
-      <!-- Snackbar para el mensaje de éxito o error -->
-      <v-snackbar v-model="snackbar.visible" :color="snackbar.color" timeout="3000">
-        {{ snackbar.message }}
-        <v-btn color="green" text @click="snackbar.visible = false">Cerrar</v-btn>
-      </v-snackbar>
+      <!-- Alerta de éxito o error -->
+      <v-dialog v-model="alert.visible" persistent max-width="290">
+        <v-card>
+          <v-card-title class="headline">{{ alert.title }}</v-card-title>
+          <v-card-text>{{ alert.message }}</v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" @click="alert.visible = false">Cerrar</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
   </template>
   
@@ -100,10 +105,10 @@
         password: '',
         confirmPassword: '',
         visible: false,
-        snackbar: {
+        alert: {
           visible: false,
+          title: '',
           message: '',
-          color: '', // "success" o "error"
         },
       };
     },
@@ -111,13 +116,13 @@
       createAccount() {
         // Validación de que el carnet tenga exactamente 6 dígitos
         if (this.carnet.length !== 6) {
-          this.showSnackbar('El carnet debe tener exactamente 6 dígitos.', 'error');
+          this.showAlert('Error', 'El carnet debe tener exactamente 6 dígitos.');
           return;
         }
   
         // Validación de que las contraseñas coincidan
         if (this.password !== this.confirmPassword) {
-          this.showSnackbar('Las contraseñas no coinciden.', 'error');
+          this.showAlert('Error', 'Las contraseñas no coinciden.');
           return;
         }
   
@@ -131,20 +136,20 @@
         axios
           .post('http://127.0.0.1:8000/LoginMetodos/api/Registrar', data)
           .then(() => {
-            this.showSnackbar('Cuenta creada exitosamente.', 'success');
+            this.showAlert('Éxito', 'Cuenta creada exitosamente.');
             this.$router.push('/login'); // Redirigir a la página de login
           })
           .catch(error => {
             console.error("Hubo un error al crear la cuenta:", error);
-            this.showSnackbar('Hubo un error al crear la cuenta. Intenta nuevamente.', 'error');
+            this.showAlert('Error', 'Hubo un error al crear la cuenta. Intenta nuevamente.');
           });
       },
   
-      // Método para mostrar el Snackbar
-      showSnackbar(message, color) {
-        this.snackbar.message = message;
-        this.snackbar.color = color;
-        this.snackbar.visible = true;
+      // Método para mostrar la alerta
+      showAlert(title, message) {
+        this.alert.title = title;
+        this.alert.message = message;
+        this.alert.visible = true;
       },
     },
   };
