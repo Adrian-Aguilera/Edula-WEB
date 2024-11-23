@@ -14,7 +14,7 @@
                             <strong class="text-orange-darken-3">Carnet</strong> 
                         </div>
 
-                        <!-- Campo para el carnet con v-model -->
+                        <!-- Campo para el carnet con validación -->
                         <v-text-field
                             v-model="carnet"
                             class="text-orange-darken-4"
@@ -22,6 +22,10 @@
                             placeholder="Carnet"
                             prepend-inner-icon="bi bi-person-vcard-fill"
                             variant="outlined"
+                            type="text"
+                            :rules="[carnetRules]"
+                            maxlength="6"
+                            @input="validateCarnet"
                         ></v-text-field>
 
                         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
@@ -59,6 +63,7 @@
                             variant="tonal"
                             block
                             @click="onSubmit" 
+                            :disabled="!isFormValid" 
                         >
                             Iniciar Sesion
                         </v-btn>
@@ -76,7 +81,7 @@
 import axios from 'axios';
 
 export default {
-    name: 'LoginView', // Cambiar a un nombre apropiado para el componente
+    name: 'LoginView',
 
     data() {
         return {
@@ -91,7 +96,20 @@ export default {
         };
     },
 
+    computed: {
+        // Computado para habilitar/deshabilitar el botón de enviar
+        isFormValid() {
+            return this.carnet.length === 6 && this.password.length > 0;
+        }
+    },
+
     methods: {
+        // Validación para permitir solo números en el carnet
+        validateCarnet() {
+            // Eliminar cualquier carácter que no sea un número
+            this.carnet = this.carnet.replace(/[^0-9]/g, '');
+        },
+
         // Método llamado cuando el botón de iniciar sesión es presionado
         async onSubmit() {
             // Verificar si se ingresaron las credenciales
@@ -110,7 +128,7 @@ export default {
                 // Realizar la solicitud POST a la API
                 const response = await axios.post('http://127.0.0.1:8000/LoginMetodos/api/login', data, {
                     headers: {
-                        'Content-Type': 'application/json', // Asegúrate de especificar el tipo de contenido
+                        'Content-Type': 'application/json',
                     },
                 });
 
@@ -118,14 +136,12 @@ export default {
                     // Si la respuesta contiene los tokens de acceso y refresh
                     this.showAlert("Éxito", "Inicio de sesión exitoso.");
                     // Redirigir a otra página si es necesario
-                    this.$router.push('/home'); // Cambiar la ruta según sea necesario
+                    this.$router.push('/home');
                 } else {
-                    // Error en las credenciales
                     this.showAlert("Error", "Credenciales incorrectas.");
                 }
             } catch (error) {
                 console.error("Error al iniciar sesión:", error);
-                // Mostrar un error de red o problemas de servidor
                 this.showAlert("Error", "Hubo un error al intentar iniciar sesión. Intenta nuevamente.");
             }
         },
@@ -137,6 +153,15 @@ export default {
             this.alert.visible = true;
         },
     },
+
+    // Reglas de validación para el campo carnet
+    validations: {
+        carnet: {
+            required: true,
+            length: (value) => value.length === 6,
+            numeric: (value) => /^[0-9]+$/.test(value),
+        },
+    }
 };
 </script>
 
