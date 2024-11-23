@@ -1,19 +1,19 @@
 <template>
     <div class="container-full">
-      <MenuComp />
+    
       <CreateAccountComponent urlReferencia="https://www.itca.edu.sv/" />
     </div>
   </template>
   
   <script>
   import CreateAccountComponent from '@/components/CreateAccountComponent.vue';
-  import MenuComp from '@/components/MenuComp.vue';
+
   
   export default {
     name: "AccountView",
     components: {
       CreateAccountComponent,
-      MenuComp,
+   
     },
   };
   </script>

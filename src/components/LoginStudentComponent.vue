@@ -14,19 +14,27 @@
                             <strong class="text-orange-darken-3">Carnet</strong> 
                         </div>
 
+                        <!-- Campo para el carnet con validación -->
                         <v-text-field
+                            v-model="carnet"
                             class="text-orange-darken-4"
                             density="compact"
                             placeholder="Carnet"
                             prepend-inner-icon="bi bi-person-vcard-fill"
                             variant="outlined"
+                            type="text"
+                            :rules="[carnetRules]"
+                            maxlength="6"
+                            @input="validateCarnet"
                         ></v-text-field>
 
                         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
                             <strong class="text-orange-darken-3">Contraseña</strong> 
                         </div>
 
+                        <!-- Campo para la contraseña con visibilidad dinámica -->
                         <v-text-field
+                            v-model="password"
                             class="text-orange-darken-4"
                             :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
                             :type="visible ? 'text' : 'password'"
@@ -47,14 +55,28 @@
                             </v-card-text>
                         </v-card>
 
+                        <!-- Botón para enviar la solicitud de inicio de sesión -->
                         <v-btn
                             class="mb-4 bi bi-door-open"
                             color="orange-darken-4"
                             size="large"
                             variant="tonal"
                             block
+                            @click="onSubmit" 
+                            :disabled="!isFormValid" 
                         >
                             Iniciar Sesion
+                        </v-btn>
+                        <v-btn
+                            class="mb-4 bi bi-door-open"
+                            color="orange-darken-4"
+                            size="large"
+                            variant="tonal"
+                            block
+                            @click="createCount" 
+                            
+                        >
+                            No tienes una cuenta?
                         </v-btn>
                     </v-card>
                 </v-sheet>
@@ -63,12 +85,110 @@
                 <v-sheet class="pa-0 ma-0 h-100 caja2"></v-sheet>
             </v-col>
         </v-row>
+         <!-- Alerta de éxito o error -->
+      <v-dialog v-model="alert.visible" persistent max-width="290">
+        <v-card>
+          <v-card-title class="headline">{{ alert.title }}</v-card-title>
+          <v-card-text>{{ alert.message }}</v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" @click="alert.visible = false">Cerrar</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
 </template>
 
 <script>
+import axios from 'axios';
+
+
 export default {
-    name: 'YourComponentName', // Asegúrate de cambiar esto a un nombre apropiado
+    name: 'LoginView',
+
+    data() {
+        return {
+            carnet: "", // Inicializa el carnet vacío
+            password: "", // Inicializa la contraseña vacía
+            visible: false, // Controlar visibilidad de la contraseña
+            alert: {
+                visible: false,
+                title: "",
+                message: "",
+            },
+        };
+    },
+
+    computed: {
+        // Computado para habilitar/deshabilitar el botón de enviar
+        isFormValid() {
+            return this.carnet.length === 6 && this.password.length > 0;
+        }
+    },
+
+    methods: {
+        // Validación para permitir solo números en el carnet
+        validateCarnet() {
+            // Eliminar cualquier carácter que no sea un número
+            this.carnet = this.carnet.replace(/[^0-9]/g, '');
+        },
+        createCount(){
+            this.$router.push('/CreateAccount');
+        },
+        // Método llamado cuando el botón de iniciar sesión es presionado
+        async onSubmit() {
+    // Verificar si se ingresaron las credenciales
+    if (!this.carnet || !this.password) {
+        this.showAlert("Error", "Por favor, ingresa tu carnet y contraseña.");
+        return;
+    }
+
+    // Preparar los datos para enviar en la solicitud POST
+    const data = {
+        carnet: this.carnet,
+        password: this.password,
+    };
+
+    try {
+        // Realizar la solicitud POST a la API
+        const response = await axios.post('http://127.0.0.1:8000/LoginMetodos/api/login', data, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.data.data) {
+            // Si la respuesta contiene los tokens de acceso y refresh
+            this.showAlert("Éxito", "Inicio de sesión exitoso.");
+
+            // Esperar un momento para mostrar la alerta antes de redirigir
+            setTimeout(() => {
+                this.$router.push('/home'); // Redirigir a la página de inicio
+            }, 2000); // 2000 ms = 2 segundos
+        } else {
+            this.showAlert("Error", "Credenciales incorrectas.");
+        }
+    } catch (error) {
+        console.error("Error al iniciar sesión:", error);
+        this.showAlert("Error", "Hubo un error al intentar iniciar sesión. Intenta nuevamente.");
+    }
+},
+
+        // Método para mostrar alertas
+        showAlert(title, message) {
+            this.alert.title = title;
+            this.alert.message = message;
+            this.alert.visible = true;
+        },
+    },
+
+    // Reglas de validación para el campo carnet
+    validations: {
+        carnet: {
+            required: true,
+            length: (value) => value.length === 6,
+            numeric: (value) => /^[0-9]+$/.test(value),
+        },
+    }
 };
 </script>
 
@@ -80,10 +200,9 @@ export default {
 
 .caja2 {
     background-image: url("@/assets/login.jpeg");
-    background-size:contain; /* Ajusta la imagen para cubrir todo el contenedor */
-    background-position: center; /* Centra la imagen en el contenedor */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .cardForm {

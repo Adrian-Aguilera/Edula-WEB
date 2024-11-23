@@ -74,6 +74,16 @@
               >
                 Crear Cuenta
               </v-btn>
+              <v-btn
+                class="mb-4 bi bi-door-open"
+                color="orange-darken-4"
+                size="large"
+                variant="tonal"
+                block
+                @click="goToLogin"
+              >
+                Ya tienes una cuenta?
+              </v-btn>
             </v-card>
           </v-sheet>
         </v-col>
@@ -132,6 +142,9 @@
     this.carnet = this.carnet.replace(/[^0-9]/g, ''); // Elimina cualquier caracter que no sea número
   },
 
+    goToLogin() {
+      this.$router.push('/Login');
+    },
   createAccount() {
     // Validación de que el carnet tenga exactamente 6 dígitos
     if (this.carnet.length !== 6) {
