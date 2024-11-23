@@ -69,6 +69,7 @@
                 variant="tonal"
                 block
                 @click="createAccount"
+                :disabled="!isFormValid"
               >
                 Crear Cuenta
               </v-btn>
@@ -112,6 +113,18 @@
         },
       };
     },
+    computed: {
+      // Verifica si todos los campos están completos y las contraseñas coinciden
+      isFormValid() {
+        return (
+          this.carnet &&
+          this.password &&
+          this.confirmPassword &&
+          this.password === this.confirmPassword &&
+          this.carnet.length === 6
+        );
+      },
+    },
     methods: {
       createAccount() {
         // Validación de que el carnet tenga exactamente 6 dígitos
@@ -136,17 +149,23 @@
         axios
           .post('http://127.0.0.1:8000/LoginMetodos/api/Registrar', data)
           .then(() => {
+            // Mostrar la alerta de éxito
             this.showAlert('Éxito', 'Cuenta creada exitosamente.');
-            this.$router.push('/login'); // Redirigir a la página de login
+  
+            // Retrasar la redirección para asegurar que la alerta se vea
+            setTimeout(() => {
+              this.$router.push('/login'); // Redirigir a la página de login
+            }, 2000); // 2 segundos de retraso para permitir que el usuario vea la alerta
           })
-          .catch(error => {
-            console.error("Hubo un error al crear la cuenta:", error);
+          .catch((error) => {
+            console.error('Hubo un error al crear la cuenta:', error);
             this.showAlert('Error', 'Hubo un error al crear la cuenta. Intenta nuevamente.');
           });
       },
   
       // Método para mostrar la alerta
       showAlert(title, message) {
+        console.log('Mostrando alerta:', title, message);  // Verifica si está siendo llamada
         this.alert.title = title;
         this.alert.message = message;
         this.alert.visible = true;
@@ -164,7 +183,7 @@
   }
   
   .caja2 {
-    background-image: url("@/assets/create.jpeg");
+    background-image: url('@/assets/create.jpeg');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
