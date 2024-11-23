@@ -1,70 +1,24 @@
-# Edula-WEB
-Proyecto EduLA web
+# edula-web
 
-EdulA web es el apartado visual que alojará los resultados del funcionamiento de Edula Engine
-
-## Ejecutar local
-
-Clonar el repositorio 
-```bash
-  git clone https://github.com/Fabio-Castillo/Edula-WEB.git
+## Project setup
 ```
-Go to the project directory
-
-```bash
-  cd /EdulA-WEB
+npm install
 ```
 
-
-## Instalacion
-
-Instalacion de comandos Vue.JS para CLI (Utilizando Node.JS)
-
-```bash
-    npm install -g @vue/cli
+### Compiles and hot-reloads for development
+```
+npm run serve
 ```
 
-Instalacion de librerias del proyecto
-```bash
-    npm install
+### Compiles and minifies for production
 ```
-## Deployment
-
-Ejecutar servidor local Vue.JS
-
-```bash
-  npm run serve
+npm run build
 ```
 
-
-## Informacion Adicional
-
-Cargar watchflag para actualizaciones de diseño utilizando TailwindCSS
-
-```bash
-    npm run css
+### Lints and fixes files
+```
+npm run lint
 ```
 
-## Herramientas
-
-**Lenguaje:** JavaScript
-**FrameWork** Vue.JS
-
-
-## Modulos
-**public:** Contiene página principal y sub archivos necesarios para el sitio
-
-## Feedback
-
-Nombre archivos CSS
-
-`specs.css: Especifiaciones`
-
-`style.css: Estilo`
-
-## Estructura:
-
-
-**public:** Contiene página principal y sub archivos necesarios para el sitio
-
-**src:** input TailwindCSS y archivo main.js
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
