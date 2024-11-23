@@ -85,6 +85,16 @@
                 <v-sheet class="pa-0 ma-0 h-100 caja2"></v-sheet>
             </v-col>
         </v-row>
+         <!-- Alerta de éxito o error -->
+      <v-dialog v-model="alert.visible" persistent max-width="290">
+        <v-card>
+          <v-card-title class="headline">{{ alert.title }}</v-card-title>
+          <v-card-text>{{ alert.message }}</v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" @click="alert.visible = false">Cerrar</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
 </template>
 
@@ -126,39 +136,42 @@ export default {
         },
         // Método llamado cuando el botón de iniciar sesión es presionado
         async onSubmit() {
-            // Verificar si se ingresaron las credenciales
-            if (!this.carnet || !this.password) {
-                this.showAlert("Error", "Por favor, ingresa tu carnet y contraseña.");
-                return;
-            }
+    // Verificar si se ingresaron las credenciales
+    if (!this.carnet || !this.password) {
+        this.showAlert("Error", "Por favor, ingresa tu carnet y contraseña.");
+        return;
+    }
 
-            // Preparar los datos para enviar en la solicitud POST
-            const data = {
-                carnet: this.carnet,
-                password: this.password,
-            };
+    // Preparar los datos para enviar en la solicitud POST
+    const data = {
+        carnet: this.carnet,
+        password: this.password,
+    };
 
-            try {
-                // Realizar la solicitud POST a la API
-                const response = await axios.post('http://127.0.0.1:8000/LoginMetodos/api/login', data, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+    try {
+        // Realizar la solicitud POST a la API
+        const response = await axios.post('http://127.0.0.1:8000/LoginMetodos/api/login', data, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
-                if (response.data.data) {
-                    // Si la respuesta contiene los tokens de acceso y refresh
-                    this.showAlert("Éxito", "Inicio de sesión exitoso.");
-                    // Redirigir a otra página si es necesario
-                    this.$router.push('/home');
-                } else {
-                    this.showAlert("Error", "Credenciales incorrectas.");
-                }
-            } catch (error) {
-                console.error("Error al iniciar sesión:", error);
-                this.showAlert("Error", "Hubo un error al intentar iniciar sesión. Intenta nuevamente.");
-            }
-        },
+        if (response.data.data) {
+            // Si la respuesta contiene los tokens de acceso y refresh
+            this.showAlert("Éxito", "Inicio de sesión exitoso.");
+
+            // Esperar un momento para mostrar la alerta antes de redirigir
+            setTimeout(() => {
+                this.$router.push('/home'); // Redirigir a la página de inicio
+            }, 2000); // 2000 ms = 2 segundos
+        } else {
+            this.showAlert("Error", "Credenciales incorrectas.");
+        }
+    } catch (error) {
+        console.error("Error al iniciar sesión:", error);
+        this.showAlert("Error", "Hubo un error al intentar iniciar sesión. Intenta nuevamente.");
+    }
+},
 
         // Método para mostrar alertas
         showAlert(title, message) {

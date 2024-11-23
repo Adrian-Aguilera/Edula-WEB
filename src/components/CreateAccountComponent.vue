@@ -81,7 +81,6 @@
                 variant="tonal"
                 block
                 @click="goToLogin"
-               
               >
                 Ya tienes una cuenta?
               </v-btn>
