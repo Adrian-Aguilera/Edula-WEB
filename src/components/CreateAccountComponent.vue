@@ -15,13 +15,14 @@
               </div>
   
               <v-text-field
-                v-model="carnet"
-                class="text-orange-darken-4"
-                density="compact"
-                placeholder="Carnet"
-                prepend-inner-icon="bi bi-person-vcard-fill"
-                variant="outlined"
-                maxlength="6"
+              v-model="carnet"
+              class="text-orange-darken-4"
+              density="compact"
+              placeholder="Carnet"
+              prepend-inner-icon="bi bi-person-vcard-fill"
+              variant="outlined"
+              maxlength="6"
+              @input="validateCarnet"
               ></v-text-field>
   
               <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
@@ -126,51 +127,57 @@
       },
     },
     methods: {
-      createAccount() {
-        // Validación de que el carnet tenga exactamente 6 dígitos
-        if (this.carnet.length !== 6) {
-          this.showAlert('Error', 'El carnet debe tener exactamente 6 dígitos.');
-          return;
-        }
-  
-        // Validación de que las contraseñas coincidan
-        if (this.password !== this.confirmPassword) {
-          this.showAlert('Error', 'Las contraseñas no coinciden.');
-          return;
-        }
-  
-        // Preparar los datos para enviar a la API
-        const data = {
-          carnet: this.carnet,
-          password: this.password,
-        };
-  
-        // Usar axios directamente para hacer la solicitud POST
-        axios
-          .post('http://127.0.0.1:8000/LoginMetodos/api/Registrar', data)
-          .then(() => {
-            // Mostrar la alerta de éxito
-            this.showAlert('Éxito', 'Cuenta creada exitosamente.');
-  
-            // Retrasar la redirección para asegurar que la alerta se vea
-            setTimeout(() => {
-              this.$router.push('/login'); // Redirigir a la página de login
-            }, 2000); // 2 segundos de retraso para permitir que el usuario vea la alerta
-          })
-          .catch((error) => {
-            console.error('Hubo un error al crear la cuenta:', error);
-            this.showAlert('Error', 'Hubo un error al crear la cuenta. Intenta nuevamente.');
-          });
-      },
-  
-      // Método para mostrar la alerta
-      showAlert(title, message) {
+  // Método para validar que solo se ingresen números en el campo de carnet
+  validateCarnet() {
+    this.carnet = this.carnet.replace(/[^0-9]/g, ''); // Elimina cualquier caracter que no sea número
+  },
+
+  createAccount() {
+    // Validación de que el carnet tenga exactamente 6 dígitos
+    if (this.carnet.length !== 6) {
+      this.showAlert('Error', 'El carnet debe tener exactamente 6 dígitos.');
+      return;
+    }
+
+    // Validación de que las contraseñas coincidan
+    if (this.password !== this.confirmPassword) {
+      this.showAlert('Error', 'Las contraseñas no coinciden.');
+      return;
+    }
+
+    // Preparar los datos para enviar a la API
+    const data = {
+      carnet: this.carnet,
+      password: this.password,
+    };
+
+    // Usar axios directamente para hacer la solicitud POST
+    axios
+      .post('http://127.0.0.1:8000/LoginMetodos/api/Registrar', data)
+      .then(() => {
+        // Mostrar la alerta de éxito
+        this.showAlert('Éxito', 'Cuenta creada exitosamente.');
+
+        // Retrasar la redirección para asegurar que la alerta se vea
+        setTimeout(() => {
+          this.$router.push('/login'); // Redirigir a la página de login
+        }, 2000); // 2 segundos de retraso para permitir que el usuario vea la alerta
+      })
+      .catch((error) => {
+        console.error('Hubo un error al crear la cuenta:', error);
+        this.showAlert('Error', 'Hubo un error al crear la cuenta. Intenta nuevamente.');
+      });
+    },
+
+    // Método para mostrar la alerta
+    showAlert(title, message) {
         console.log('Mostrando alerta:', title, message);  // Verifica si está siendo llamada
         this.alert.title = title;
         this.alert.message = message;
         this.alert.visible = true;
-      },
     },
+    },
+
   };
   </script>
   
