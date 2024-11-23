@@ -11,7 +11,7 @@
       <v-btn class="custom-btn" @click="goToPortal">
         Portal estudiantil
       </v-btn>
-      <v-btn class="custom-btn" @click="goToPage">
+      <v-btn class="custom-btn" @click="goToBiblio">
         Biblioteca
       </v-btn>
       <v-btn class="custom-btn" @click="goToLogin">
@@ -33,7 +33,9 @@
       goToPortal() {
       window.location.href = "https://apps.itca.edu.sv/portalestudiantil/";
       },
-
+      goToBiblio() {
+      window.location.href = "http://aplicaciones.itca.edu.sv/portal-erecursos/";
+      },
       goToLogin() {
         this.$router.push('/login');
       },
