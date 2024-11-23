@@ -67,6 +67,17 @@
                         >
                             Iniciar Sesion
                         </v-btn>
+                        <v-btn
+                            class="mb-4 bi bi-door-open"
+                            color="orange-darken-4"
+                            size="large"
+                            variant="tonal"
+                            block
+                            @click="createCount" 
+                            
+                        >
+                            No tienes una cuenta?
+                        </v-btn>
                     </v-card>
                 </v-sheet>
             </v-col>
@@ -79,6 +90,7 @@
 
 <script>
 import axios from 'axios';
+
 
 export default {
     name: 'LoginView',
@@ -109,7 +121,9 @@ export default {
             // Eliminar cualquier carácter que no sea un número
             this.carnet = this.carnet.replace(/[^0-9]/g, '');
         },
-
+        createCount(){
+            this.$router.push('/CreateAccount');
+        },
         // Método llamado cuando el botón de iniciar sesión es presionado
         async onSubmit() {
             // Verificar si se ingresaron las credenciales

@@ -1,6 +1,5 @@
 <template>
   <div class="container-full">
-    <MenuComp />
     <LoginStudentComponent urlReferencia="https://www.itca.edu.sv/" />
   </div>
 </template>
@@ -8,13 +7,13 @@
 <script>
 
 import LoginStudentComponent from '@/components/LoginStudentComponent.vue'
-import MenuComp from '@/components/MenuComp.vue'
+
 
   export default {
     name: "LoginView",
     components: {
       LoginStudentComponent,
-      MenuComp,
+  
     },
 
 
