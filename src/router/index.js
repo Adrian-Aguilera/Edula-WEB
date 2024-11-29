@@ -8,6 +8,12 @@ const routes = [
     name: 'LoginName',
     component: LoginView
   },
+  
+  {
+    path: '/CreateAccount',
+    name: 'CreateAccountName',
+    component: CreateAccountViewAccountView
+  },
   {
     path: '/GeneralChat',
     name: 'GeneralChat',
