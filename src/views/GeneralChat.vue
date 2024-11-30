@@ -3,8 +3,26 @@
         <AppBarComponent />
         <v-main class="align-center justify-center d-flex" style="min-height: 100vh;">
             <div style="width: -webkit-fill-available;">
-                <div class="d-flex align-center justify-center mb-11">
+                <div class="d-flex justify-center mb-11">
                     <v-img  src="@/assets/logo-itca.avif" width="200" height="120" contain></v-img>
+                </div>
+                <div class="d-flex  justify-end" style="width: 84%;">
+                    <div>
+                        <v-chip class="mr-2" variant="tonal" :color="isActivo ? 'green-darken-4' : 'red'" @click="isActive">
+                            {{ isActivo ? 'En linea' : 'Desconectado' }}
+                            <template v-slot:append>
+                                <v-icon class="ml-2" icon="bi bi-diamond-fill" :color="isActivo ? 'green-lighten-1' : 'red'"></v-icon>
+                            </template>
+                        </v-chip>
+                        <span v-if="!loading">
+                            <v-icon icon="bi bi-slack" color="orange-darken-4" ></v-icon>
+                        </span>
+                        <v-progress-circular
+                            v-else
+                            color="red"
+                            indeterminate
+                        ></v-progress-circular>
+                    </div>
                 </div>
                 <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
                     style="height: 400px; margin-top: 10px; background-color: rgba(187, 187, 187, 0.253);">
@@ -19,7 +37,6 @@
                         </v-card>
                         <!-- Respuesta de la IA -->
                         <v-card class="CardEduIA mb-5" style="margin-right: 45px;" title="EduIA" flat elevation="5">
-                            <v-progress-linear v-if="loading" color="orange-darken-3" indeterminate reverse></v-progress-linear>
                             <p>{{ historial.ia }}</p>
                         </v-card>
                     </div>
@@ -84,7 +101,8 @@ export default {
         order: 0,
         tokens:{
             access: process.env.VUE_APP_ACCESS_TOKEN,
-        }
+        },
+        isActivo: false,
     }),
     methods: {
         async sendMessage() {
@@ -130,10 +148,14 @@ export default {
             const { valid } = await this.$refs.form.validate();
             return valid;
         },
+        isActive() {
+            //hacer una peticion a la api si esta activo el chatbot
+            this.isActivo = !this.isActivo;
+        }
     },
 
     created() {
-        console.log(this.tokens.access);
+        this.isActive();
     },
 }
 </script>

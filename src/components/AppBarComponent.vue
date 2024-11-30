@@ -13,9 +13,15 @@
             contain
         />
         <template v-slot:append>
-            <v-btn icon @click="changeTheme">
-                <v-icon>mdi-theme-light-dark</v-icon>
-            </v-btn>
+            <v-chip
+                class="ma-2"
+                :color=" this.$store.getters.theme === 'light' ? 'orange' : 'black'"
+                @click="changeTheme"
+                variant="flat"
+            >
+                <v-icon :icon=" this.$store.getters.theme === 'light' ? 'bi bi-brightness-high-fill' : 'bi bi-moon-stars-fill'" :color=" this.$store.getters.theme === 'light' ? 'white' : 'orange'"></v-icon>
+                <span class="ml-2">{{ this.$store.getters.theme === 'light' ? 'Dark' : 'Light' }}</span>
+            </v-chip>
         </template>
         <v-toolbar-title>Bienvenido a Edula</v-toolbar-title>
     </v-app-bar>
@@ -25,7 +31,6 @@
 export default {
     name: "AppBarComponent",
     data: () => ({
-        
     }),
     methods: {
         changeTheme() {
