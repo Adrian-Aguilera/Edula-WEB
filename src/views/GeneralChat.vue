@@ -1,59 +1,86 @@
 <template>
-    <div class="background">
-        <div class="Menu">
-            <MenuComp />
-        </div>
-        <div>
-            <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
-                style="height: 400px; margin-top: 10px; background-color: rgba(187, 187, 187, 0.253);">
-                <div v-if="UsuarioHistorial.length === 0" class="no-conversation-message">
-                    <p class="pstyle">Inicie una nueva conversación</p>
+    <v-layout class=" rounded-md">
+        <v-app-bar
+            :order="order"
+            color="red-darken-2"
+            flat
+        >
+            <template v-slot:append>
+                <v-btn icon @click="changeTheme">
+                    <v-icon>mdi-theme-light-dark</v-icon>
+                </v-btn>
+            </template>
+            <v-toolbar-title>Chat</v-toolbar-title>
+        </v-app-bar>
+        <v-main class="align-center justify-center d-flex" style="min-height: 100vh;">
+            <div style="width: -webkit-fill-available;">
+                <div class="d-flex align-center justify-center mb-11">
+                    <v-img  src="@/assets/logo-itca.avif" width="200" height="120" contain></v-img>
                 </div>
-                <div class="mx-auto pa-12 pb-8 custom-card" style="max-width: 100%"
-                    v-for="(historial, index) in UsuarioHistorial" :key="index">
-                    <!-- Mensaje del usuario -->
-                    <v-card class="CardUser mb-5" style="margin-left: 45px;" flat>
-                        <p>{{ historial.usuario }}</p>
-                    </v-card>
-                    <!-- Respuesta de la IA -->
-                    <v-card class="CardEduIA mb-5" style="margin-right: 45px;" title="EduIA" flat elevation="5">
-                        <v-progress-linear v-if="loading" color="orange-darken-3" indeterminate reverse></v-progress-linear>
-                        <p>{{ historial.ia }}</p>
-                    </v-card>
-                </div>
-            </div>
-            <v-form fast-fail ref="form">
-                <v-row class="mx-auto custom-inputs">
-                    <v-col>
-                        <v-card class="mx-auto cardInputs">
-                            <v-card-item>
-                                <v-row>
-                                    <v-col>
-                                        <v-text-field solo hide-details flat class="chip-input"
-                                            :style="{ width: '100%', backgroundColor: '#bd9235' }"
-                                            v-model="InputMessage" :rules="[rules.required, rules.min]"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="auto">
-                                        <v-btn icon="$collapse" @click="sendMessage" variant="tonal"></v-btn>
-                                    </v-col>
-                                </v-row>
-                            </v-card-item>
+                <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
+                    style="height: 400px; margin-top: 10px; background-color: rgba(187, 187, 187, 0.253);">
+                    <div v-if="UsuarioHistorial.length === 0" class="no-conversation-message">
+                        <p class="pstyle">Inicie una nueva conversación</p>
+                    </div>
+                    <div class="mx-auto pa-12 pb-8 custom-card" style="max-width: 100%"
+                        v-for="(historial, index) in UsuarioHistorial" :key="index">
+                        <!-- Mensaje del usuario -->
+                        <v-card class="CardUser mb-5" style="margin-left: 45px;" flat>
+                            <p>{{ historial.usuario }}</p>
                         </v-card>
-                    </v-col>
-                </v-row>
-            </v-form>
-        </div>
-    </div>
+                        <!-- Respuesta de la IA -->
+                        <v-card class="CardEduIA mb-5" style="margin-right: 45px;" title="EduIA" flat elevation="5">
+                            <v-progress-linear v-if="loading" color="orange-darken-3" indeterminate reverse></v-progress-linear>
+                            <p>{{ historial.ia }}</p>
+                        </v-card>
+                    </div>
+                </div>
+                <v-form fast-fail ref="form">
+                    <v-row class="mx-auto custom-inputs">
+                        <v-col>
+                            <v-container>
+                                <v-row>
+                                  <v-col cols="12">
+                                    <v-text-field
+                                      v-model="InputMessage"
+                                      label="Pregunta algo!"
+                                      type="text"
+                                      variant="outlined"
+                                      color="orange-darken-4"
+                                      rounded
+                                      clearable
+                                      autofocus
+                                      base-color="orange-darken-4"
+                                    >
+                                      <template v-slot:append>
+                                        <v-icon v-if="!loading" @click="sendMessage" icon="mdi-send" color="orange-darken-4"></v-icon>
+                                        <v-progress-circular v-else indeterminate color="orange-darken-4" size="24"></v-progress-circular>
+                                      </template>
+                                      <template v-slot:prepend>
+                                        <v-tooltip  location="start" text="Powered by ITCA-FEPADE AI">
+                                            <template v-slot:activator="{ props }">
+                                                <v-icon  v-bind="props" icon="mdi-robot" color="orange-darken-4"></v-icon>
+                                            </template>
+                                        </v-tooltip>
+                                      </template>
+                                    </v-text-field>
+                                  </v-col>
+                                </v-row>
+                              </v-container>
+                        </v-col>
+                    </v-row>
+                </v-form>
+            </div>
+        </v-main>
+    </v-layout>
 </template>
 
 <script>
-import MenuComp from '@/components/MenuComp.vue';
 import axios from 'axios';
 
 export default {
     name: "GeneralChat",
     components: {
-        MenuComp,
     },
     data: () => ({
         InputMessage: '',
@@ -63,6 +90,8 @@ export default {
             required: (value) => !!value || "Este campo es requerido",
             min: (value) => value.length >= 1 || "El mensaje debe tener al menos 1 caracteres",
         },
+        order: 0,
+        theme : 'light',
     }),
     methods: {
         async sendMessage() {
@@ -106,6 +135,9 @@ export default {
         async ValidateCampos() {
             const { valid } = await this.$refs.form.validate();
             return valid;
+        },
+        changeTheme() {
+            this.$store.dispatch('setTheme', this.$store.getters.theme === 'light' ? 'dark' : 'light')
         },
     },
 }
@@ -202,12 +234,10 @@ export default {
 }
 
 p {
-    color: black !important;
     margin: 10px;
     font-family: "Playwrite GB S", cursive;
 }
 .pstyle {
-    color: black !important;
     margin: 10px;
     font-family: "Playwrite GB S", cursive;
     text-align: center !important;
