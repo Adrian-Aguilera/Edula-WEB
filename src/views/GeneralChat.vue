@@ -1,17 +1,6 @@
 <template>
     <v-layout class=" rounded-md">
-        <v-app-bar
-            :order="order"
-            color="red-darken-2"
-            flat
-        >
-            <template v-slot:append>
-                <v-btn icon @click="changeTheme">
-                    <v-icon>mdi-theme-light-dark</v-icon>
-                </v-btn>
-            </template>
-            <v-toolbar-title>Chat</v-toolbar-title>
-        </v-app-bar>
+        <AppBarComponent />
         <v-main class="align-center justify-center d-flex" style="min-height: 100vh;">
             <div style="width: -webkit-fill-available;">
                 <div class="d-flex align-center justify-center mb-11">
@@ -76,11 +65,13 @@
 </template>
 
 <script>
+import AppBarComponent from '@/components/AppBarComponent.vue';
 import axios from 'axios';
 
 export default {
     name: "GeneralChat",
     components: {
+        AppBarComponent,
     },
     data: () => ({
         InputMessage: '',
@@ -91,7 +82,6 @@ export default {
             min: (value) => value.length >= 1 || "El mensaje debe tener al menos 1 caracteres",
         },
         order: 0,
-        theme : 'light',
         tokens:{
             access: process.env.VUE_APP_ACCESS_TOKEN,
         }
@@ -139,9 +129,6 @@ export default {
         async ValidateCampos() {
             const { valid } = await this.$refs.form.validate();
             return valid;
-        },
-        changeTheme() {
-            this.$store.dispatch('setTheme', this.$store.getters.theme === 'light' ? 'dark' : 'light')
         },
     },
 
