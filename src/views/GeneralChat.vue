@@ -66,7 +66,7 @@
                                     </v-text-field>
                                   </v-col>
                                 </v-row>
-                              </v-container>
+                            </v-container>
                         </v-col>
                     </v-row>
                 </v-form>
@@ -92,6 +92,9 @@ export default {
         },
         order: 0,
         theme : 'light',
+        tokens:{
+            access: process.env.VUE_APP_ACCESS_TOKEN,
+        }
     }),
     methods: {
         async sendMessage() {
@@ -105,23 +108,24 @@ export default {
 
                     // Obtener referencia del último mensaje en el historial
                     const lastMessage = this.UsuarioHistorial[this.UsuarioHistorial.length - 1];
-
-                    const access =
-                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyNDE3ODcxLCJpYXQiOjE3Mjk4MjU4NzEsImp0aSI6Ijc1OThhZjFlYWM5ZDRkYzQ5ODhhMDc4NGEyODYwZjNkIiwidXNlcl9pZCI6MX0.k_f4korDhZL68TfSpyMbuXItvxqEMKTjVnBoaBNKGp8';
                     const json = {
                         "type_engine": { "EngineGeneral": true },
                         "mesage": this.InputMessage,
                     };
                     const headers = {
-                        'Authorization': `Bearer ${access}`,
+                        'Authorization': `Bearer ${this.tokens.access}`,
                         'Content-Type': 'application/json',
                     };
 
                     // Realiza la petición a la API
-                    const response = await axios.post('https://08e8-190-87-195-226.ngrok-free.app/api/EduGeneral/general/chat', json, { headers });
-                    // Agrega la respuesta de la IA al historial
-                    lastMessage.ia = response.data.data.response;
-                    this.InputMessage = '';
+                    const response = await axios.post(`${process.env.VUE_APP_BASE_URL}api/EduGeneral/general/chat`, json, { headers });
+                    if (response.status === 200) {
+                        // Agrega la respuesta de la IA al historial
+                        lastMessage.ia = response.data.data.response;
+                        this.InputMessage = '';
+                    } else {
+                        alert("Error al enviar el mensaje");
+                    }
                 } catch (error) {
                     console.error('Error al enviar el mensaje:', error);
                 } finally {
@@ -129,7 +133,7 @@ export default {
                 }
             } else {
                 alert("Debes escribir un mensaje");
-                this.loading = false; // Desactiva el loading   
+                this.loading = false; // Desactiva el loading
             }
         },
         async ValidateCampos() {
@@ -139,6 +143,10 @@ export default {
         changeTheme() {
             this.$store.dispatch('setTheme', this.$store.getters.theme === 'light' ? 'dark' : 'light')
         },
+    },
+
+    created() {
+        console.log(this.tokens.access);
     },
 }
 </script>
