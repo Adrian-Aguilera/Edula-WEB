@@ -1,8 +1,6 @@
 <template>
     <div class="background">
-        <div class="Menu">
-            <MenuComp />
-        </div>
+       
         <div>
             <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
                 style="height: 400px; margin-top: 10px; background-color: rgba(187, 187, 187, 0.253);">
@@ -47,13 +45,13 @@
 </template>
 
 <script>
-import MenuComp from '@/components/MenuComp.vue';
+
 import axios from 'axios';
 
 export default {
     name: "GeneralChat",
     components: {
-        MenuComp,
+        
     },
     data: () => ({
         InputMessage: '',
