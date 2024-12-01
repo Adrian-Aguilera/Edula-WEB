@@ -3,7 +3,7 @@
       <v-row no-gutters class="h-100">
         <v-col class="Con1" cols="12" md="4" lg="4" xl="4" xxl="4">
           <v-sheet class="pa-0 ma-0 h-100 d-flex align-center justify-center">
-            <v-card class="pa-6 pb-8 cardForm" elevation="1" max-width="400" rounded="lg">
+            <v-card class="pa-6 pb-8 cardForm" elevation="0" max-width="400" rounded="lg">
               <v-img
                 class="mx-auto my-6"
                 max-width="120"
@@ -197,8 +197,7 @@
   <style scoped>
   /* El estilo se mantiene igual que el original */
   .ConGeneral {
-    height: 100vh;
-    padding: 0px;
+    padding: 0;
     background-color: transparent;
   }
   
@@ -211,6 +210,7 @@
   
   .cardForm {
     border: solid 1px #d18469;
+    height: 100%;
   }
   
   /* Media query para ocultar el segundo v-col en pantallas menores a 900px */
