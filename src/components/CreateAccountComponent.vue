@@ -59,7 +59,7 @@
   
               <v-card class="mb-12" color="surface-variant" variant="tonal">
                 <v-card-text class="text-medium-emphasis text-caption alerta">
-                  Solo estudiantes de Itca Fepade pueden acceder a nuestra plataforma. Si no eres de Itca Fepade, no podrás acceder a la plataforma.
+                  Solo se podrá crear la cuenta si todos los campos están completos y las contraseñas coinciden.
                 </v-card-text>
               </v-card>
   
