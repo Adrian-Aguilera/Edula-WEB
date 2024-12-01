@@ -19,7 +19,7 @@
                             v-model="carnet"
                             class="text-orange-darken-4"
                             density="compact"
-                            placeholder="Carnet"
+                            placeholder="Ingresa los 6 digitos de su carnet"
                             prepend-inner-icon="bi bi-person-vcard-fill"
                             variant="outlined"
                             type="text"
