@@ -3,7 +3,7 @@
 <v-container fluid class="bg-surface-variant ConGeneral">
         <v-row no-gutters class="h-100">
             <v-col class="Con1" cols="5" sm="12" md="5" lg="5" xl="5" xxl="5">
-                <v-sheet class="pa-0 ma-0 h-100 d-flex align-center justify-center">
+                <v-sheet class="pa-0 ma-0 h-80 d-flex align-center justify-center">
                             <div>
                                 <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
                                     style="height: 70vh; width:100vh; margin-top: 10px; background-color: rgba(187, 187, 187, 0.253);">
@@ -44,16 +44,15 @@
                                     </v-row>
                                 </v-form>
                             </div>
-                       
+                    </v-sheet>
+            </v-col>
+            <v-col  cols="7" sm="12" md="7" lg="7" xl="7" xxl="7">
+                <v-sheet class="pa-10 ma-0 h-2 d-flex align-center justify-center ">
+                    <v-textarea variant="solo-filled" class="textarea-output"></v-textarea>
                 </v-sheet>
             </v-col>
         </v-row>
-        <v-row no-gutters class="h-100">
-            <v-col class="Con1" cols="5" md="5" lg="5" xl="5" xxl="5">
-                <v-sheet class="pa-0 ma-0 h-100 d-flex align-center justify-center">
-                </v-sheet>
-            </v-col>
-        </v-row>
+      
 </v-container>        
 </template>
 
@@ -125,6 +124,14 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+
+.textarea-output {
+  width: 100%;
+  height: 100vh; /* Ajuste para ocupar toda la altura de la ventana */
+  resize: none; /* Opcional: evitar que el usuario pueda cambiar el tamaño */
+  overflow-y: auto; /* Agregar un scroll en caso de texto extenso */
+}
+
 
 .CardEduIA {
     background-color: transparent;
