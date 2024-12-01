@@ -1,10 +1,11 @@
 <template>
 
-<v-container fluid class="bg-surface-variant ConGeneral">
+<v-container fluid class="bg-surface-variant ConGeneral justify-center">
         <v-row no-gutters class="h-100">
-            <v-col class="Con1" cols="5" sm="12" md="5" lg="5" xl="5" xxl="5">
-                <v-sheet class="pa-0 ma-0 h-80 d-flex align-center justify-center">
-                            <div>
+            <v-col class=" bg-white" sm="12" md="5" lg="5" xl="5" xxl="5">
+                <v-sheet class="pa-0 ma-0 h-80 d-flex align-center justify-center ">
+                    <v-card>
+                        <div>
                                 <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
                                     style="height: 70vh; width:100vh; margin-top: 10px; background-color: rgba(187, 187, 187, 0.253);">
                                     <div v-if="UsuarioHistorial.length === 0" class="no-conversation-message">
@@ -44,9 +45,15 @@
                                     </v-row>
                                 </v-form>
                             </div>
+                    </v-card>
+                           
                     </v-sheet>
             </v-col>
-            <v-col  cols="7" sm="12" md="7" lg="7" xl="7" xxl="7">
+            <v-col sm="12" md="7" lg="7" xl="7" xxl="7" class="bg-white">
+               
+                <v-sheet class="pa-0 ma-0 h-2 d-flex align-center justify-center">
+                    <h3 style=" font-family: Playwrite GB S">Asistencia Academica</h3>
+                </v-sheet>
                 <v-sheet class="pa-10 ma-0 h-2 d-flex align-center justify-center ">
                     <v-textarea variant="solo-filled" class="textarea-output"></v-textarea>
                 </v-sheet>
