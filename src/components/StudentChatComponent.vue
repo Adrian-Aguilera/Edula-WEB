@@ -1,9 +1,9 @@
 <template>
 
 <v-container fluid class="bg-surface-variant ConGeneral justify-center">
-        <v-row no-gutters class="h-100">
-            <v-col class=" bg-white" sm="12" md="5" lg="5" xl="5" xxl="5">
-                <v-sheet class="pa-0 ma-0 h-80 d-flex align-center justify-center ">
+        <v-row no-gutters>
+            <v-col class="bg-white" sm="12" md="5" lg="5" xl="5" xxl="5">
+                <v-sheet class="pa-0 ma-0 h-80 d-flex align-center ">
                     <v-card>
                         <div>
                                 <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
