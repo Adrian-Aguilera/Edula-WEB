@@ -1,85 +1,101 @@
 <template>
-    <v-layout class=" rounded-md">
+    <v-layout class="rounded-md">
         <AppBarComponent />
         <v-main class="align-center justify-center d-flex" style="min-height: 100vh;">
-            <div style="width: -webkit-fill-available;">
-                <div class="d-flex justify-center mb-11">
-                    <v-img  src="@/assets/logo-itca.avif" width="200" height="120" contain></v-img>
-                </div>
-                <div class="d-flex  justify-end" style="width: 84%;">
-                    <div>
-                        <v-chip class="mr-2" variant="tonal" :color="isActivo ? 'green-darken-4' : 'red'" @click="isActive">
-                            {{ isActivo ? 'En linea' : 'Desconectado' }}
-                            <template v-slot:append>
-                                <v-icon class="ml-2" icon="bi bi-diamond-fill" :color="isActivo ? 'green-lighten-1' : 'red'"></v-icon>
-                            </template>
-                        </v-chip>
-                        <span v-if="!loading">
-                            <v-icon icon="bi bi-slack" color="orange-darken-4" ></v-icon>
-                        </span>
-                        <v-progress-circular
-                            v-else
-                            color="red"
-                            indeterminate
-                        ></v-progress-circular>
-                    </div>
-                </div>
-                <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
-                    style="height: 400px; margin-top: 10px; background-color: rgba(187, 187, 187, 0.253);">
-                    <div v-if="UsuarioHistorial.length === 0" class="no-conversation-message">
-                        <p class="pstyle">Inicie una nueva conversación</p>
-                    </div>
-                    <div class="mx-auto pa-12 pb-8 custom-card" style="max-width: 100%"
-                        v-for="(historial, index) in UsuarioHistorial" :key="index">
-                        <!-- Mensaje del usuario -->
-                        <v-card class="CardUser mb-5" style="margin-left: 45px;" flat>
-                            <p>{{ historial.usuario }}</p>
-                        </v-card>
-                        <!-- Respuesta de la IA -->
-                        <v-card class="CardEduIA mb-5" style="margin-right: 45px;" title="EduIA" flat elevation="5">
-                            <p>{{ historial.ia }}</p>
-                        </v-card>
-                    </div>
-                </div>
-                <v-form fast-fail ref="form">
-                    <v-row class="mx-auto custom-inputs">
-                        <v-col>
-                            <v-container>
-                                <v-row>
-                                  <v-col cols="12">
-                                    <v-text-field
-                                      v-model="InputMessage"
-                                      label="Pregunta algo!"
-                                      type="text"
-                                      variant="outlined"
-                                      color="orange-darken-4"
-                                      rounded
-                                      clearable
-                                      autofocus
-                                      base-color="orange-darken-4"
-                                    >
-                                      <template v-slot:append>
-                                        <v-icon v-if="!loading" @click="sendMessage" icon="mdi-send" color="orange-darken-4"></v-icon>
-                                        <v-progress-circular v-else indeterminate color="orange-darken-4" size="24"></v-progress-circular>
-                                      </template>
-                                      <template v-slot:prepend>
-                                        <v-tooltip  location="start" text="Powered by ITCA-FEPADE AI">
-                                            <template v-slot:activator="{ props }">
-                                                <v-icon  v-bind="props" icon="mdi-robot" color="orange-darken-4"></v-icon>
-                                            </template>
-                                        </v-tooltip>
-                                      </template>
-                                    </v-text-field>
-                                  </v-col>
+            <v-container>
+                <v-row>
+                    <!-- Columna izquierda (Contenido existente) -->
+                    <v-col cols="12" md="6" class="d-flex flex-column">
+                        <div>
+                            <div class="d-flex justify-center mb-11">
+                                <v-img src="@/assets/logo-itca.avif" width="300" height="120" contain></v-img>
+                            </div>
+                            <div class="d-flex justify-end" style="width: 84%;">
+                                <div>
+                                    <v-chip class="mr-2" variant="tonal" :color="isActivo ? 'green-darken-4' : 'red'" @click="isActive">
+                                        {{ isActivo ? 'En línea' : 'Desconectado' }}
+                                        <template v-slot:append>
+                                            <v-icon class="ml-2" icon="bi bi-diamond-fill" :color="isActivo ? 'green-lighten-1' : 'red'"></v-icon>
+                                        </template>
+                                    </v-chip>
+                                    <span v-if="!loading">
+                                        <v-icon icon="bi bi-slack" color="orange-darken-4"></v-icon>
+                                    </span>
+                                    <v-progress-circular v-else color="red" indeterminate></v-progress-circular>
+                                </div>
+                            </div>
+                            <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
+                                style="height: 400px; margin-top: 10px; background-color: rgba(187, 187, 187, 0.253);">
+                                <div v-if="UsuarioHistorial.length === 0" class="no-conversation-message">
+                                    <p class="pstyle">Inicie una nueva conversación</p>
+                                </div>
+                                <div class="mx-auto pa-12 pb-8 custom-card" style="max-width: 100%"
+                                    v-for="(historial, index) in UsuarioHistorial" :key="index">
+                                    <!-- Mensaje del usuario -->
+                                    <v-card class="CardUser mb-5" style="margin-left: 45px;" flat>
+                                        <p>{{ historial.usuario }}</p>
+                                    </v-card>
+                                    <!-- Respuesta de la IA -->
+                                    <v-card class="CardEduIA mb-5" style="margin-right: 45px;" title="EduIA" flat elevation="5">
+                                        <p>{{ historial.ia }}</p>
+                                    </v-card>
+                                </div>
+                            </div>
+                            <v-form fast-fail ref="form">
+                                <v-row class="mx-auto custom-inputs">
+                                    <v-col>
+                                        <v-container>
+                                            <v-row>
+                                                <v-col cols="12">
+                                                    <v-text-field
+                                                        v-model="InputMessage"
+                                                        label="Pregunta algo!"
+                                                        type="text"
+                                                        variant="outlined"
+                                                        color="orange-darken-4"
+                                                        rounded
+                                                        clearable
+                                                        autofocus
+                                                        base-color="orange-darken-4"
+                                                    >
+                                                        <template v-slot:append>
+                                                            <v-icon v-if="!loading" @click="sendMessage" icon="mdi-send" color="orange-darken-4"></v-icon>
+                                                            <v-progress-circular v-else indeterminate color="orange-darken-4" size="24"></v-progress-circular>
+                                                        </template>
+                                                        <template v-slot:prepend>
+                                                            <v-tooltip location="start" text="Powered by ITCA-FEPADE AI">
+                                                                <template v-slot:activator="{ props }">
+                                                                    <v-icon v-bind="props" icon="mdi-robot" color="orange-darken-4"></v-icon>
+                                                                </template>
+                                                            </v-tooltip>
+                                                        </template>
+                                                    </v-text-field>
+                                                </v-col>
+                                            </v-row>
+                                        </v-container>
+                                    </v-col>
                                 </v-row>
-                            </v-container>
-                        </v-col>
-                    </v-row>
-                </v-form>
-            </div>
+                            </v-form>
+                        </div>
+                    </v-col>
+
+                    <!-- Columna derecha (Iframe) -->
+                    <v-col cols="12" sm="12" md="6" lg="6" class="d-flex">
+    <div style="width: 100%; height: 100%; position: relative;">
+        <iframe
+            src="http://localhost/ClsUnity/tema 6/index.html"
+            frameborder="0"
+            allowfullscreen
+            style="width: 100%; height: 100%; border: none;">
+        </iframe>
+    </div>
+</v-col>
+                </v-row>
+            </v-container>
         </v-main>
     </v-layout>
 </template>
+
 
 <script>
 import AppBarComponent from '@/components/AppBarComponent.vue';
@@ -163,6 +179,7 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+
 
 .CardEduIA {
     background-color: transparent;
