@@ -1,17 +1,19 @@
 <template>
     <div>
-        <MenuComp />
+     
+        <ChatHomeComponent />
     </div>
 </template>
 
 <script>
 
-import MenuComp from '@/components/MenuComp.vue';
+import ChatHomeComponent from '@/components/chatHomeComponent.vue';
+
 
 export default {
   name: "homeView",
   components: {
-    MenuComp,
+    ChatHomeComponent,
  
   },
 };
