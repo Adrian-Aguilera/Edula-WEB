@@ -12,10 +12,12 @@
                             </div>
                             <div class="d-flex justify-end" style="width: 84%;">
                                 <div>
-                                    <v-chip class="mr-2" variant="tonal" :color="isActivo ? 'green-darken-4' : 'red'" @click="isActive">
+                                    <v-chip class="mr-2" variant="tonal" :color="isActivo ? 'green-darken-4' : 'red'"
+                                        @click="isActive">
                                         {{ isActivo ? 'En línea' : 'Desconectado' }}
                                         <template v-slot:append>
-                                            <v-icon class="ml-2" icon="bi bi-diamond-fill" :color="isActivo ? 'green-lighten-1' : 'red'"></v-icon>
+                                            <v-icon class="ml-2" icon="bi bi-diamond-fill"
+                                                :color="isActivo ? 'green-lighten-1' : 'red'"></v-icon>
                                         </template>
                                     </v-chip>
                                     <span v-if="!loading">
@@ -36,7 +38,8 @@
                                         <p>{{ historial.usuario }}</p>
                                     </v-card>
                                     <!-- Respuesta de la IA -->
-                                    <v-card class="CardEduIA mb-5" style="margin-right: 45px;" title="EduIA" flat elevation="5">
+                                    <v-card class="CardEduIA mb-5" style="margin-right: 45px;" title="EduIA" flat
+                                        elevation="5">
                                         <p>{{ historial.ia }}</p>
                                     </v-card>
                                 </div>
@@ -47,25 +50,21 @@
                                         <v-container>
                                             <v-row>
                                                 <v-col cols="12">
-                                                    <v-text-field
-                                                        v-model="InputMessage"
-                                                        label="Pregunta algo!"
-                                                        type="text"
-                                                        variant="outlined"
-                                                        color="orange-darken-4"
-                                                        rounded
-                                                        clearable
-                                                        autofocus
-                                                        base-color="orange-darken-4"
-                                                    >
+                                                    <v-text-field v-model="InputMessage" label="Pregunta algo!"
+                                                        type="text" variant="outlined" color="orange-darken-4" rounded
+                                                        clearable autofocus base-color="orange-darken-4">
                                                         <template v-slot:append>
-                                                            <v-icon v-if="!loading" @click="sendMessage" icon="mdi-send" color="orange-darken-4"></v-icon>
-                                                            <v-progress-circular v-else indeterminate color="orange-darken-4" size="24"></v-progress-circular>
+                                                            <v-icon v-if="!loading" @click="sendMessage" icon="mdi-send"
+                                                                color="orange-darken-4"></v-icon>
+                                                            <v-progress-circular v-else indeterminate
+                                                                color="orange-darken-4" size="24"></v-progress-circular>
                                                         </template>
                                                         <template v-slot:prepend>
-                                                            <v-tooltip location="start" text="Powered by ITCA-FEPADE AI">
+                                                            <v-tooltip location="start"
+                                                                text="Powered by ITCA-FEPADE AI">
                                                                 <template v-slot:activator="{ props }">
-                                                                    <v-icon v-bind="props" icon="mdi-robot" color="orange-darken-4"></v-icon>
+                                                                    <v-icon v-bind="props" icon="mdi-robot"
+                                                                        color="orange-darken-4"></v-icon>
                                                                 </template>
                                                             </v-tooltip>
                                                         </template>
@@ -81,15 +80,12 @@
 
                     <!-- Columna derecha (Iframe) -->
                     <v-col cols="12" sm="12" md="6" lg="6" class="d-flex">
-    <div style="width: 100%; height: 100%; position: relative;">
-        <iframe
-            src="http://localhost/ClsUnity/tema 6/index.html"
-            frameborder="0"
-            allowfullscreen
-            style="width: 100%; height: 100%; border: none;">
-        </iframe>
-    </div>
-</v-col>
+                        <div style="width: 100%; height: 100%; position: relative;">
+                            <iframe src="http://localhost/ClsUnity/tema 6/index.html" frameborder="0" allowfullscreen
+                                style="width: 100%; height: 100%; border: none;">
+                            </iframe>
+                        </div>
+                    </v-col>
                 </v-row>
             </v-container>
         </v-main>
@@ -102,28 +98,37 @@ import AppBarComponent from '@/components/AppBarComponent.vue';
 import axios from 'axios';
 
 export default {
-    name: "GeneralChat",
+    name: "ChatHomeComponent",
     components: {
         AppBarComponent,
     },
     data: () => ({
         InputMessage: '',
-        UsuarioHistorial: [],
+        UsuarioHistorial: [], // Asegurarse de que es un array vacío
         loading: false,
         rules: {
-            required: (value) => !!value || "Este campo es requerido",
-            min: (value) => value.length >= 1 || "El mensaje debe tener al menos 1 caracteres",
+            required: (value) => {
+                console.log('Validating required:', value);
+                return !!value || "Este campo es requerido";
+            },
+            min: (value) => {
+                console.log('Validating min:', value);
+                return value && value.length >= 1 || "El mensaje debe tener al menos 1 caracteres";
+            },
         },
         order: 0,
-        tokens:{
+        tokens: {
             access: process.env.VUE_APP_ACCESS_TOKEN,
         },
         isActivo: false,
+        id_estudiante: localStorage.getItem('id_estudiante'),
     }),
     methods: {
         async sendMessage() {
             this.loading = true; // Activa el loading
+            console.log('sendMessage called. InputMessage:', this.InputMessage);
             const valid = await this.ValidateCampos();
+            console.log('Validation result:', valid);
 
             if (valid) {
                 try {
@@ -132,20 +137,24 @@ export default {
 
                     // Obtener referencia del último mensaje en el historial
                     const lastMessage = this.UsuarioHistorial[this.UsuarioHistorial.length - 1];
+
                     const json = {
-                        "type_engine": { "EngineGeneral": true },
-                        "mesage": this.InputMessage,
+                        id_estudiante: this.id_estudiante,
+                        pregunta: this.InputMessage,
                     };
+                    console.log('JSON to send:', json);
+
                     const headers = {
-                        'Authorization': `Bearer ${this.tokens.access}`,
+                        Authorization: `Bearer ${this.tokens.access}`,
                         'Content-Type': 'application/json',
                     };
-
+                    
                     // Realiza la petición a la API
-                    const response = await axios.post(`${process.env.VUE_APP_BASE_URL}api/EduGeneral/general/chat`, json, { headers });
+                    const response = await axios.post(`${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/chat`, json, { headers });
+
                     if (response.status === 200) {
                         // Agrega la respuesta de la IA al historial
-                        lastMessage.ia = response.data.data.response;
+                        lastMessage.ia = response.data.data.respuesta.Edula_IA;
                         this.InputMessage = '';
                     } else {
                         alert("Error al enviar el mensaje");
@@ -160,20 +169,41 @@ export default {
                 this.loading = false; // Desactiva el loading
             }
         },
+        async LoadHistory() {
+            try {
+                // Obtener el historial de conversaciones
+                const id_estudiante = localStorage.getItem('id_estudiante');
+                const headers = {
+                        Authorization: `Bearer ${this.tokens.access}`,
+                        'Content-Type': 'application/json',
+                    };
+                console.log('LoadHistory - id_estudiante:', id_estudiante);
+
+                const response = await axios.get(`${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/historial/${id_estudiante}`, { headers });
+
+                if (response.status === 200) {
+                    this.UsuarioHistorial = response.data.data || [];
+                }
+            } catch (error) {
+                console.error('Error al cargar el historial:', error);
+            }
+        },
         async ValidateCampos() {
             const { valid } = await this.$refs.form.validate();
             return valid;
         },
         isActive() {
-            //hacer una peticion a la api si esta activo el chatbot
+            // hacer una peticion a la api si esta activo el chatbot
             this.isActivo = !this.isActivo;
         }
     },
 
     created() {
         this.isActive();
+        this.LoadHistory();
     },
 }
+
 </script>
 
 
@@ -271,6 +301,7 @@ p {
     margin: 10px;
     font-family: "Playwrite GB S", cursive;
 }
+
 .pstyle {
     margin: 10px;
     font-family: "Playwrite GB S", cursive;

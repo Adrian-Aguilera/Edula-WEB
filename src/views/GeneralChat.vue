@@ -126,7 +126,7 @@ export default {
                     };
 
                     // Realiza la petición a la API
-                    const response = await axios.post(`${process.env.VUE_APP_BASE_URL}api/EduGeneral/general/chat`, json, { headers });
+                    const response = await axios.post(`${process.env.VUE_APP_BASE_URL}EduGeneral/api/general/chat`, json, { headers });
                     if (response.status === 200) {
                         // Agrega la respuesta de la IA al historial
                         lastMessage.ia = response.data.data.response;

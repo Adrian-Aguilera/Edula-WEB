@@ -150,13 +150,14 @@ export default {
 
     try {
         // Realizar la solicitud POST a la API
-        const response = await axios.post('http://127.0.0.1:8000/LoginMetodos/api/login', data, {
+        const response = await axios.post(`${process.env.VUE_APP_BASE_URL}LoginMetodos/api/login`, data, {
             headers: {
                 'Content-Type': 'application/json',
             },
         });
-
         if (response.data.data) {
+            const id_estudiante = response.data.data.id;
+            localStorage.setItem('id_estudiante', id_estudiante);
             // Si la respuesta contiene los tokens de acceso y refresh
             this.showAlert("Éxito", "Inicio de sesión exitoso.");
 
