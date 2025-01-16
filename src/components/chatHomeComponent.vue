@@ -81,15 +81,24 @@
 
                     <!-- Columna derecha (Iframe) -->
                     <v-col cols="12" sm="12" md="6" lg="6" class="d-flex">
-    <div style="width: 100%; height: 100%; position: relative;">
-        <iframe
-            src="http://localhost/ClsUnity/tema 6/index.html"
-            frameborder="0"
-            allowfullscreen
-            style="width: 100%; height: 100%; border: none;">
-        </iframe>
-    </div>
-</v-col>
+                        <div style="width: 100%; height: 100%; position: relative;">
+                            <!-- Selector de temas -->
+                            <v-select
+                                v-model="selectedTema"
+                                :items="temas"
+                                label="Selecciona un tema"
+                                variant="outlined"
+                                color="orange-darken-4"
+                                class="mb-4"
+                            ></v-select>
+                            <iframe
+                                :src="`http://localhost/clases/tema ${selectedTema}/index.html`"
+                                frameborder="0"
+                                allowfullscreen
+                                style="width: 100%; height: 100%; border: none;">
+                            </iframe>
+                        </div>
+                    </v-col>
                 </v-row>
             </v-container>
         </v-main>
@@ -107,6 +116,9 @@ export default {
         AppBarComponent2,
     },
     data: () => ({
+         // Temas disponibles
+         temas: Array.from({ length: 10 }, (_, i) => i.toString()), // ["0", "1", "2", ..., "9"]
+        selectedTema: "0", // Tema por defecto
         InputMessage: '',
         UsuarioHistorial: [],
         loading: false,
