@@ -98,7 +98,6 @@
                                 frameborder=""
                                 allowfullscreen
                                 style="width: 100%; height: 95%; border: 1px;">
->>>>>>> 94bb3c1a8d133a4b155f23a132b1a2e60f979200
                             </iframe>
                         </div>
                     </v-col>
