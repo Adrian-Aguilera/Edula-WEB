@@ -1,6 +1,6 @@
 <template>
     <v-layout class="rounded-md">
-        <AppBarComponent />
+        <AppBarComponent2 />
         <v-main class="align-center justify-center d-flex" style="min-height: 100vh;">
             <v-container>
                 <v-row>
@@ -98,13 +98,13 @@
 
 
 <script>
-import AppBarComponent from '@/components/AppBarComponent.vue';
+import AppBarComponent2 from '@/components/AppBarComponent2.vue';
 import axios from 'axios';
 
 export default {
     name: "GeneralChat",
     components: {
-        AppBarComponent,
+        AppBarComponent2,
     },
     data: () => ({
         InputMessage: '',
