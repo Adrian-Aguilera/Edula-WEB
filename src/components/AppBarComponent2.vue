@@ -24,13 +24,13 @@
             </v-chip>
         </template>
         <v-toolbar-title>Bienvenido a Edula</v-toolbar-title>
-        <v-btn rounded="xl" size="x-large" @click="Login">Iniciar Sesion</v-btn>
+        <v-btn rounded="xl" size="x-large" @click="Login">Cerrar Sesion</v-btn>
     </v-app-bar>
 </template>
 
 <script>
 export default {
-    name: "AppBarComponent",
+    name: "AppBarComponent2",
     data: () => ({
     }),
     methods: {
@@ -38,7 +38,7 @@ export default {
             this.$store.dispatch('setTheme', this.$store.getters.theme === 'light' ? 'dark' : 'light')
         },
         Login(){
-            this.$router.push('/Login');
+            this.$router.push('/');
         }
     },
 }
