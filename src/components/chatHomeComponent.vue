@@ -12,12 +12,10 @@
                             </div>
                             <div class="d-flex justify-end" style="width: 84%;">
                                 <div>
-                                    <v-chip class="mr-2" variant="tonal" :color="isActivo ? 'green-darken-4' : 'red'"
-                                        @click="isActive">
+                                    <v-chip class="mr-2" variant="tonal" :color="isActivo ? 'green-darken-4' : 'red'" @click="isActive">
                                         {{ isActivo ? 'En línea' : 'Desconectado' }}
                                         <template v-slot:append>
-                                            <v-icon class="ml-2" icon="bi bi-diamond-fill"
-                                                :color="isActivo ? 'green-lighten-1' : 'red'"></v-icon>
+                                            <v-icon class="ml-2" icon="bi bi-diamond-fill" :color="isActivo ? 'green-lighten-1' : 'red'"></v-icon>
                                         </template>
                                     </v-chip>
                                     <span v-if="!loading">
@@ -26,22 +24,22 @@
                                     <v-progress-circular v-else color="red" indeterminate></v-progress-circular>
                                 </div>
                             </div>
-                            <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
-                                style="height: 400px; margin-top: 10px; background-color: rgba(187, 187, 187, 0.253);">
+                            <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar" style="height: 400px; margin-top: 10px; background-color: rgba(187, 187, 187, 0.253);">
                                 <div v-if="UsuarioHistorial.length === 0" class="no-conversation-message">
                                     <p class="pstyle">Inicie una nueva conversación</p>
                                 </div>
-                                <div class="mx-auto pa-12 pb-8 custom-card" style="max-width: 100%"
-                                    v-for="(historial, index) in UsuarioHistorial" :key="index">
-                                    <!-- Mensaje del usuario -->
-                                    <v-card class="CardUser mb-5" style="margin-left: 45px;" flat>
-                                        <p>{{ historial.usuario }}</p>
-                                    </v-card>
-                                    <!-- Respuesta de la IA -->
-                                    <v-card class="CardEduIA mb-5" style="margin-right: 45px;" title="EduIA" flat
-                                        elevation="5">
-                                        <p>{{ historial.ia }}</p>
-                                    </v-card>
+                                <div v-for="(historial, index) in UsuarioHistorial" :key="index" class="message-pair">
+                                    <!-- Contenedor de preguntas y respuestas -->
+                                    <div class="mx-auto pa-12 pb-8 custom-card" style="max-width: 100%">
+                                        <!-- Mensaje del usuario -->
+                                        <v-card class="CardUser mb-5" style="margin-left: 45px;" flat>
+                                            <p>{{ historial.usuario }}</p>
+                                        </v-card>
+                                        <!-- Respuesta de la IA -->
+                                        <v-card class="CardEduIA mb-5" style="margin-right: 45px;" title="EduIA" flat elevation="5">
+                                            <p>{{ historial.ia }}</p>
+                                        </v-card>
+                                    </div>
                                 </div>
                             </div>
                             <v-form fast-fail ref="form">
@@ -50,21 +48,15 @@
                                         <v-container>
                                             <v-row>
                                                 <v-col cols="12">
-                                                    <v-text-field v-model="InputMessage" label="Pregunta algo!"
-                                                        type="text" variant="outlined" color="orange-darken-4" rounded
-                                                        clearable autofocus base-color="orange-darken-4">
+                                                    <v-text-field v-model="InputMessage" label="Pregunta algo!" type="text" variant="outlined" color="orange-darken-4" rounded clearable autofocus base-color="orange-darken-4">
                                                         <template v-slot:append>
-                                                            <v-icon v-if="!loading" @click="sendMessage" icon="mdi-send"
-                                                                color="orange-darken-4"></v-icon>
-                                                            <v-progress-circular v-else indeterminate
-                                                                color="orange-darken-4" size="24"></v-progress-circular>
+                                                            <v-icon v-if="!loading" @click="sendMessage" icon="mdi-send" color="orange-darken-4"></v-icon>
+                                                            <v-progress-circular v-else indeterminate color="orange-darken-4" size="24"></v-progress-circular>
                                                         </template>
                                                         <template v-slot:prepend>
-                                                            <v-tooltip location="start"
-                                                                text="Powered by ITCA-FEPADE AI">
+                                                            <v-tooltip location="start" text="Powered by ITCA-FEPADE AI">
                                                                 <template v-slot:activator="{ props }">
-                                                                    <v-icon v-bind="props" icon="mdi-robot"
-                                                                        color="orange-darken-4"></v-icon>
+                                                                    <v-icon v-bind="props" icon="mdi-robot" color="orange-darken-4"></v-icon>
                                                                 </template>
                                                             </v-tooltip>
                                                         </template>
@@ -81,24 +73,12 @@
                     <!-- Columna derecha (Iframe) -->
                     <v-col cols="12" sm="12" md="6" lg="6" class="d-flex">
                         <div style="width: 100%; height: 100%; position: relative;">
-                            <div >
+                            <div>
                                 <!-- Selector de temas -->
-                            <v-select
-                            v-model="selectedTema"
-                            :items="temas"
-                            label="Selecciona un tema"
-                            variant="outlined"
-                            color="orange-darken-4"
-                            class="mb-4"
-                        ></v-select>
+                                <v-select v-model="selectedTema" :items="temas" label="Selecciona un tema" variant="outlined" color="orange-darken-4" class="mb-4"></v-select>
                             </div>
-                            
-                            <iframe
-                            :src="`http://localhost/clases/${selectedTema === 'Introducción' ? 'tema 0' : 'tema ' + selectedTema}/index.html`"
-                                frameborder=""
-                                allowfullscreen
-                                style="width: 100%; height: 95%; border: 1px;">
-                            </iframe>
+
+                            <iframe :src="`http://localhost/clases/${selectedTema === 'Introducción' ? 'tema 0' : 'tema ' + selectedTema}/index.html`" frameborder="" allowfullscreen style="width: 100%; height: 95%; border: 1px;"></iframe>
                         </div>
                     </v-col>
                 </v-row>
@@ -106,7 +86,6 @@
         </v-main>
     </v-layout>
 </template>
-
 
 <script>
 import AppBarComponent2 from '@/components/AppBarComponent2.vue';
@@ -118,8 +97,8 @@ export default {
         AppBarComponent2,
     },
     data: () => ({
-         // Temas disponibles
-         temas: ['Introducción', ...Array.from({ length: 9 }, (_, i) => (i + 1).toString())], // ["Introducción", "1", "2", ..., "9"]
+        // Temas disponibles
+        temas: ['Introducción', ...Array.from({ length: 9 }, (_, i) => (i + 1).toString())], // ["Introducción", "1", "2", ..., "9"]
         selectedTema: "Introducción", // Tema por defecto
         InputMessage: '',
         UsuarioHistorial: [], // Asegurarse de que es un array vacío
@@ -166,7 +145,7 @@ export default {
                         Authorization: `Bearer ${this.tokens.access}`,
                         'Content-Type': 'application/json',
                     };
-                    
+
                     // Realiza la petición a la API
                     const response = await axios.post(`${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/chat`, json, { headers });
 
@@ -192,9 +171,9 @@ export default {
                 // Obtener el historial de conversaciones
                 const id_estudiante = localStorage.getItem('id_estudiante');
                 const headers = {
-                        Authorization: `Bearer ${this.tokens.access}`,
-                        'Content-Type': 'application/json',
-                    };
+                    Authorization: `Bearer ${this.tokens.access}`,
+                    'Content-Type': 'application/json',
+                };
                 console.log('LoadHistory - id_estudiante:', id_estudiante);
 
                 const response = await axios.get(`${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/historial/${id_estudiante}`, { headers });
@@ -224,10 +203,8 @@ export default {
 
 </script>
 
-
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
-
 
 .CardEduIA {
     background-color: transparent;
@@ -332,6 +309,5 @@ v-form {
     left: 0;
     right: 0;
     padding-bottom: 10px;
-
 }
 </style>
