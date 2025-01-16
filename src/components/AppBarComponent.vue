@@ -24,6 +24,7 @@
             </v-chip>
         </template>
         <v-toolbar-title>Bienvenido a Edula</v-toolbar-title>
+        <v-btn rounded="xl" size="x-large" @click="Login">Iniciar Sesion</v-btn>
     </v-app-bar>
 </template>
 
@@ -36,6 +37,9 @@ export default {
         changeTheme() {
             this.$store.dispatch('setTheme', this.$store.getters.theme === 'light' ? 'dark' : 'light')
         },
+        Login(){
+            this.$router.push('/Login');
+        }
     },
 }
 </script>
