@@ -26,9 +26,10 @@
                                     <v-progress-circular v-else color="red" indeterminate></v-progress-circular>
                                 </div>
                             </div>
-                            <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
-                                style="height: 400px; margin-top: 10px; background-color: rgba(187, 187, 187, 0.253);">
 
+                            <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
+                                :class="{ 'chat-theme-light': this.$store.getters.theme === 'light', 'chat-theme-dark': this.$store.getters.theme === 'dark' }"
+                                style="height: 400px; margin-top: 10px;">
                                 <div v-if="UsuarioHistorial.length === 0" class="no-conversation-message">
                                     <p class="pstyle">Inicie una nueva conversación</p>
                                 </div>
@@ -39,19 +40,23 @@
                                         <div class="mx-auto custom-card" style="max-width: 100%">
 
                                             <v-card v-if="historial.usuario && historial.usuario.trim() !== ''"
-                                                class="CardUser mb-5" style="margin-left: 45px;" flat>
+                                                class="CardUser mb-5"
+                                                :class="{ 'CardUser-light': this.$store.getters.theme === 'light', 'CardUser-dark': this.$store.getters.theme === 'dark' }"
+                                                style="margin-left: 45px;" flat>
                                                 <p>{{ historial.usuario }}</p>
                                             </v-card>
 
                                             <v-card v-if="historial.ia && historial.ia.trim() !== ''"
-                                                class="CardEduIA mb-5" style="margin-right: 45px;" title="EduIA" flat
-                                                elevation="5">
+                                                class="CardEduIA mb-5"
+                                                :class="{ 'CardEduIA-light': this.$store.getters.theme === 'light', 'CardEduIA-dark': this.$store.getters.theme === 'dark' }"
+                                                style="margin-right: 45px;" title="EduIA" flat elevation="5">
                                                 <p>{{ historial.ia }}</p>
                                             </v-card>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <v-form fast-fail ref="form">
                                 <v-row class="mx-auto custom-inputs">
                                     <v-col>
@@ -224,14 +229,93 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+/* Si vas a usar Roboto, también impórtala si no lo has hecho globalmente */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+/* ------------------------------------- */
+/* ESTILOS DE TEMA: CLARO / OSCURO       */
+/* ------------------------------------- */
+
+/* Contenedor principal del chat */
+.chat-theme-light {
+    background-color: rgba(187, 187, 187, 0.253);
+    /* Color para el modo claro */
+    color: #333;
+    /* Color de texto general para el modo claro */
+}
+
+.chat-theme-dark {
+    background-color: #333;
+    /* Color oscuro para el fondo del chat */
+    color: #eee;
+    /* Color de texto general para el modo oscuro */
+}
+
+/* Fondo general de la aplicación (usado en .background) */
+.background-light {
+    background-color: white;
+    /* Color de fondo claro */
+}
+
+.background-dark {
+    background-color: #121212;
+    /* Color de fondo oscuro */
+    color: #f5f5f5;
+    /* Color de texto para el fondo oscuro, si aplica a elementos que no son chat */
+}
+
+/* Estilos para las tarjetas de usuario (CardUser) */
+.CardUser-light {
+    border: 1px solid #6b6b6b;
+    /* Color del texto del usuario en modo claro */
+    box-shadow: 0 0 15px #919191 !important;
+    background-color: transparent !important;
+    /* Para asegurar que el fondo sea transparente en modo claro */
+}
+
+.CardUser-dark {
+    border: 1px solid #c2c2c2;
+    /* Un rojo más brillante para el modo oscuro */
+    color: #ffebee;
+    /* Texto blanco/claro para el modo oscuro */
+    background-color: #525252 !important;
+    /* Fondo más oscuro para la tarjeta de usuario */
+    box-shadow: 0 0 15px #9eb1bb !important;
+    /* Sombra que contraste */
+}
+
+/* Estilos para las tarjetas de la IA (CardEduIA) */
+.CardEduIA-light {
+    border: 1px solid #6b6b6b;
+    /* Color del texto de IA en modo claro */
+    box-shadow: 0 0 15px #919191 !important;
+    background-color: transparent !important;
+    /* Para asegurar que el fondo sea transparente en modo claro */
+}
+
+.CardEduIA-dark {
+   border: 1px solid #c2c2c2;
+    /* Un rojo más brillante para el modo oscuro */
+    color: #ffebee;
+    /* Texto blanco/claro para el modo oscuro */
+    background-color: #525252 !important;
+    /* Fondo más oscuro para la tarjeta de IA */
+    box-shadow: 0 0 15px #cae8f7 !important;
+    /* Sombra que contraste */
+}
+
+
+/* ------------------------------------- */
+/* ESTILOS GENERALES (EXISTENTES Y MEJORADOS) */
+/* ------------------------------------- */
 
 .CardEduIA {
-    background-color: transparent;
-    border: 3px solid #e2a522;
+    /* Estas propiedades son la base, pero serán anuladas por las clases de tema si se aplican */
+    /* No necesitan background-color: transparent; aquí si CardEduIA-light/dark ya lo manejan */
     border-radius: 10px;
-    color: #e2a522;
-    box-shadow: 0 0 15px #63450f !important;
-    font-family: "Playwrite GB S", cursive;
+    font-family: "Roboto", Arial, sans-serif;
+    /* Preferencia a Roboto, con Arial/sans-serif como fallback */
 }
 
 .cardInputs {
@@ -240,13 +324,13 @@ export default {
 }
 
 .CardUser {
-    background-color: transparent;
-    border: 3px solid #bb1010;
+    /* Estas propiedades son la base, pero serán anuladas por las clases de tema si se aplican */
+    /* No necesitan background-color: transparent; aquí si CardUser-light/dark ya lo manejan */
     border-radius: 10px;
-    color: #bb1010;
-    box-shadow: 0 0 15px #552b2b !important;
-    font-family: "Playwrite GB S", cursive;
+    font-family: "Roboto", Arial, sans-serif;
+    /* Preferencia a Roboto, con Arial/sans-serif como fallback */
     margin-top: 15px !important;
+    /* Mantener este margen si es necesario */
 }
 
 .Menu {
@@ -260,7 +344,7 @@ export default {
 
 .background {
     position: relative;
-    background-color: white;
+    /* background-color: white; REMOVIDO, ahora lo controlan .background-light/.dark */
     min-height: 100vh;
     padding: 16px;
     background-size: cover;
@@ -270,12 +354,14 @@ export default {
 
 .custom-card {
     background-color: transparent !important;
+    /* Esto es importante si tus v-cards no son transparentes y quieres el fondo del chat */
 }
 
 .custom-scrollbar {
     max-width: 70%;
     border-radius: 20px;
     box-shadow: 0 0 15px #666666;
+    /* Podrías hacer que esta sombra también cambie con el tema */
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -300,7 +386,7 @@ export default {
     width: 100%;
     border-radius: 20px;
     color: rgb(255, 255, 255);
-    font-family: "Playwrite GB S", cursive;
+    font-family: "Roboto", sans-serif;
 }
 
 .custom-btn {
@@ -311,14 +397,38 @@ export default {
 }
 
 p {
-    margin: 10px;
-    font-family: "Playwrite GB S", cursive;
+    margin: 0;
+    /* Ajustado a 0, el padding lo controla .CardEduIA p, .CardUser p */
+    font-family: "Roboto", Arial, sans-serif;
+    /* Usando Roboto como preferencia */
+    line-height: 1.5;
+    /* Añadido para mejor legibilidad */
+}
+
+/* Padding para el texto dentro de las tarjetas */
+.CardEduIA p,
+.CardUser p {
+    padding: 10px;
+    /* Añade un padding interno al texto del mensaje */
+    /* margin: 0; ya se define en 'p' globalmente */
 }
 
 .pstyle {
     margin: 10px;
-    font-family: "Playwrite GB S", cursive;
+    /* Mantener este margen para el mensaje "Inicie una nueva conversación" */
     text-align: center !important;
+    font-family: "Roboto", Arial, sans-serif;
+    /* Asegurar que también use Roboto */
+    /* El color de este p también se adaptará si el padre .chat-theme-dark tiene color: #eee; */
+}
+
+.message-pair {
+    margin-bottom: 15px;
+    /* Ajusta este valor para la separación entre pares */
+    padding-left: 10px;
+    /* Opcional: para que los mensajes no toquen el borde izquierdo */
+    padding-right: 10px;
+    /* Opcional: para que los mensajes no toquen el borde derecho */
 }
 
 v-form {
@@ -329,41 +439,26 @@ v-form {
     padding-bottom: 10px;
 }
 
+/* ------------------------------------- */
+/* ESTILOS DE SCROLL (NO RELACIONADOS CON TEMA) */
+/* ------------------------------------- */
+
+/* Este bloque es el mismo que tenías, pero lo agrupo para claridad */
+/* Puedes dejarlo así o moverlo a un lugar más apropiado si tienes un archivo CSS de utilidades */
 .chat-messages-container {
+    /* NOTA: Esta clase fue removida del HTML en la última actualización para evitar conflicto
+             con el scroll en #goto-container-example. Si la estás usando en otra parte,
+             mantenla. Si no, puedes considerarla obsoleta para el chat principal.
+             El scroll es manejado por #goto-container-example directamente. */
     max-height: calc(100vh - 200px);
-    /* Ajusta esta altura según sea necesario */
-    /* Ejemplo: 100vh - (altura_appbar + altura_input_area + padding_inferior) */
+    /* Ajusta según tus necesidades */
     overflow-y: auto;
-    /* Permite el desplazamiento vertical */
     padding: 10px;
-    /* Opcional: padding para los mensajes */
-    /* background-color: #f0f0f0; /* Opcional: para visualizar el área */
     display: flex;
-    /* Para asegurar que el scroll se aplique correctamente a los elementos flexibles */
     flex-direction: column-reverse;
-    /* Para que los últimos mensajes aparezcan abajo */
 }
 
-/* Opcional: Para asegurar que el scroll inicie al final */
 .chat-messages-container .message-pair:first-child {
     margin-top: auto;
-    /* Empuja el primer mensaje hacia arriba, los nuevos se apilan abajo */
-}
-
-.CardEduIA p,
-.CardUser p {
-    padding: 10px;
-    /* Añade un padding interno al texto del mensaje */
-    margin: 0;
-    /* Resetea el margen predeterminado del párrafo */
-}
-
-.message-pair {
-    margin-bottom: 15px;
-    /* Ajusta este valor para la separación entre pares */
-    padding-left: 10px;
-    /* Opcional: para que los mensajes no toquen el borde izquierdo */
-    padding-right: 10px;
-    /* Opcional: para que los mensajes no toquen el borde derecho */
 }
 </style>
