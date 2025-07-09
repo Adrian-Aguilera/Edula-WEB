@@ -114,6 +114,7 @@
 <script>
 import AppBarComponent2 from '@/components/AppBarComponent2.vue';
 import axios from 'axios';
+import { mapGetters, mapActions } from 'vuex'; // Importa mapGetters y mapActions
 
 export default {
     name: "ChatHomeComponent",
@@ -121,110 +122,192 @@ export default {
         AppBarComponent2,
     },
     data: () => ({
-        // Temas disponibles
-        temas: ['Introducción', ...Array.from({ length: 9 }, (_, i) => (i + 1).toString())], // ["Introducción", "1", "2", ..., "9"]
-        selectedTema: "Introducción", // Tema por defecto
+        temas: ['Introducción', ...Array.from({ length: 9 }, (_, i) => (i + 1).toString())],
+        selectedTema: "Introducción",
         InputMessage: '',
-        UsuarioHistorial: [], // Asegurarse de que es un array vacío
+        UsuarioHistorial: [],
         loading: false,
+        // Las reglas de validación se usan con <v-form ref="form">
         rules: {
             required: (value) => {
-                console.log('Validating required:', value);
                 return !!value || "Este campo es requerido";
             },
             min: (value) => {
-                console.log('Validating min:', value);
-                return value && value.length >= 1 || "El mensaje debe tener al menos 1 caracteres";
+                return value && value.length >= 1 || "El mensaje debe tener al menos 1 caracter";
             },
         },
         order: 0,
-        tokens: {
-            access: process.env.VUE_APP_ACCESS_TOKEN,
-        },
-        isActivo: false,
-        id_estudiante: localStorage.getItem('id_estudiante'),
+        // No necesitamos 'tokens' ni 'id_estudiante' en data si los obtenemos del Vuex store
+        // tokens: {
+        //     access: process.env.VUE_APP_ACCESS_TOKEN, // <-- ¡Esto se eliminará!
+        // },
+        // id_estudiante: localStorage.getItem('id_estudiante'), // <-- ¡Esto se eliminará!
+        isActivo: false, // Propiedad para el estado del chatbot
     }),
+    computed: {
+        // Mapear getters del módulo de autenticación del store
+        ...mapGetters('auth', ['accessToken', 'refreshToken', 'userId', 'temporaryUsername', 'isAuthenticated', 'authHeader']),
+
+        // Necesitas una referencia al formulario para la validación de Vuetify
+        // Asegúrate de que tu template tenga <v-form ref="messageForm">
+        messageForm: {
+            get() {
+                return this.$refs.messageForm;
+            },
+            set() {
+                // Setter vacío o no implementado si solo es para acceso
+            }
+        }
+    },
     methods: {
+        // Mapear acciones del módulo de autenticación del store
+        ...mapActions('auth', ['logout']),
+
+        // Método para validar el formulario (del v-form)
+        async ValidateCampos() {
+            // Asume que tienes un <v-form ref="messageForm"> en tu template
+            if (this.$refs.messageForm) {
+                const { valid } = await this.$refs.messageForm.validate();
+                return valid;
+            }
+            return false; // Si no hay formulario, la validación falla
+        },
+
         async sendMessage() {
             this.loading = true; // Activa el loading
-            console.log('sendMessage called. InputMessage:', this.InputMessage);
+
+            // 1. Verificar autenticación al inicio
+            if (!this.isAuthenticated) {
+                console.error("Usuario no autenticado. Redirigiendo a login.");
+                this.logout(); // Limpia los datos de auth y redirige
+                this.loading = false;
+                return;
+            }
+
+            // 2. Validar campos
             const valid = await this.ValidateCampos();
-            console.log('Validation result:', valid);
+            if (!valid) {
+                // Vuetify debería mostrar los mensajes de error en el campo,
+                // así que la alerta redundante se puede quitar.
+                // alert("Debes escribir un mensaje");
+                this.loading = false;
+                return;
+            }
 
-            if (valid) {
-                try {
-                    // Agregar solo el mensaje del usuario inicialmente
-                    this.UsuarioHistorial.push({ usuario: this.InputMessage, ia: '' });
+            try {
+                this.UsuarioHistorial.push({ usuario: this.InputMessage, ia: '' });
+                await this.$nextTick(); // Espera a que el DOM se actualice
+                this.scrollToBottom(); // Asegúrate de que esta función existe y desplaza correctamente
 
-                    // Obtener referencia del último mensaje en el historial
-                    const lastMessage = this.UsuarioHistorial[this.UsuarioHistorial.length - 1];
+                const lastMessage = this.UsuarioHistorial[this.UsuarioHistorial.length - 1];
 
-                    const json = {
-                        id_estudiante: this.id_estudiante,
-                        pregunta: this.InputMessage,
-                    };
-                    console.log('JSON to send:', json);
+                const json = {
+                    id_estudiante: this.userId, // Obtiene del store
+                    pregunta: this.InputMessage,
+                    username: this.temporaryUsername, // Obtiene del store
+                };
+                console.log('JSON to send:', json);
 
-                    const headers = {
-                        Authorization: `Bearer ${this.tokens.access}`,
-                        'Content-Type': 'application/json',
-                    };
+                const headers = {
+                    Authorization: this.authHeader, // Obtiene del store
+                    'Content-Type': 'application/json',
+                };
 
-                    // Realiza la petición a la API
-                    const response = await axios.post(`${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/chat`, json, { headers });
+                // Realiza la petición a la API
+                const response = await axios.post(`${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/chat`, json, { headers });
 
-                    if (response.status === 200) {
-                        // Agrega la respuesta de la IA al historial
-                        lastMessage.ia = response.data.data.respuesta.Edula_IA;
-                        this.InputMessage = '';
-                    } else {
-                        alert("Error al enviar el mensaje");
-                    }
-                } catch (error) {
-                    console.error('Error al enviar el mensaje:', error);
-                } finally {
-                    this.loading = false; // Desactiva el loading
+                if (response.status === 200) {
+                    lastMessage.ia = response.data.data.respuesta.Edula_IA;
+                    this.InputMessage = '';
+                    await this.$nextTick();
+                    this.scrollToBottom();
+                } else {
+                    alert("Error al enviar el mensaje"); // Considera usar un sistema de alertas más robusto
                 }
-            } else {
-                alert("Debes escribir un mensaje");
+            } catch (error) {
+                console.error('Error al enviar el mensaje:', error);
+                if (error.response && error.response.status === 401) {
+                    alert("Su sesión ha expirado. Por favor, inicie sesión de nuevo.");
+                    this.logout(); // Llama a la acción logout del store
+                } else {
+                    alert("Hubo un problema al comunicarse con el asistente. Intenta de nuevo."); // Mensaje genérico de error de red/servidor
+                }
+            } finally {
                 this.loading = false; // Desactiva el loading
             }
         },
+
         async LoadHistory() {
+            // 1. Verificar autenticación al inicio
+            if (!this.isAuthenticated) {
+                console.error("Usuario no autenticado. No se puede cargar el historial.");
+                this.logout(); // Limpia los datos de auth y redirige
+                return;
+            }
+
             try {
                 // Obtener el historial de conversaciones
-                const id_estudiante = localStorage.getItem('id_estudiante');
+                // Asumo que el historial se carga con un POST que incluye id_estudiante y username
+                const payload = {
+                    id_estudiante: this.userId, // Obtiene del store
+                    username: this.temporaryUsername, // Obtiene del store
+                };
                 const headers = {
-                    Authorization: `Bearer ${this.tokens.access}`,
+                    Authorization: this.authHeader, // Obtiene del store
                     'Content-Type': 'application/json',
                 };
-                console.log('LoadHistory - id_estudiante:', id_estudiante);
+                console.log('LoadHistory - payload:', payload);
 
-                const response = await axios.get(`${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/historial/${id_estudiante}`, { headers });
+                // CAMBIO: Si el historial requiere POST con payload, ajustamos aquí.
+                // Si es GET con id_estudiante en la URL y NO necesita username, revertir a axios.get
+                // y eliminar el payload de username.
+                const response = await axios.post(`${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/historial`, payload, { headers });
+                // const response = await axios.get(`${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/historial/${this.userId}`, { headers }); // Si fuera GET
 
                 if (response.status === 200) {
                     this.UsuarioHistorial = response.data.data || [];
+                } else {
+                    console.error("Error al cargar el historial:", response.status, response.data);
                 }
             } catch (error) {
                 console.error('Error al cargar el historial:', error);
+                if (error.response && error.response.status === 401) {
+                    alert("Su sesión ha expirado. Por favor, inicie sesión de nuevo.");
+                    this.logout(); // Llama a la acción logout del store
+                } else {
+                    alert("Hubo un problema al cargar el historial. Intenta de nuevo.");
+                }
             }
         },
-        async ValidateCampos() {
-            const { valid } = await this.$refs.form.validate();
-            return valid;
+
+        // Función de ejemplo para el scroll, si no la tienes, añádela
+        scrollToBottom() {
+            const chatBox = this.$refs.chatBox; // Asegúrate de tener ref="chatBox" en tu contenedor de mensajes
+            if (chatBox) {
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
         },
         isActive() {
-            // hacer una peticion a la api si esta activo el chatbot
-            this.isActivo = !this.isActivo;
+            // Lógica para verificar el estado del chatbot.
+            // Esto podría implicar una petición a otra API o simplemente setear un valor por defecto.
+            this.isActivo = true; // Por ejemplo, asume que siempre está activo al cargar la página
         }
     },
 
     created() {
         this.isActive();
-        this.LoadHistory();
+        // Verificar autenticación al inicio
+        if (this.isAuthenticated) {
+            this.LoadHistory().then(() => {
+                // Asegurarse de que el scroll ocurra después de cargar el historial
+                this.scrollToBottom();
+            });
+        } else {
+            console.warn("Usuario no autenticado al crear el componente. Redirigiendo a login.");
+            this.logout(); // Llama a la acción logout del store, que redirige
+        }
     },
 }
-
 </script>
 
 <style scoped>

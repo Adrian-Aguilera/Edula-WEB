@@ -9,6 +9,7 @@
                             max-width="120"
                             src="@/assets/logo-itca.avif"
                         ></v-img>
+                        
 
                         <div class="text-subtitle-1 text-medium-emphasis">
                             <strong class="text-orange-darken-3">Carnet</strong> 
@@ -109,17 +110,26 @@ export default {
         return {
             carnet: "", // Inicializa el carnet vacío
             password: "", // Inicializa la contraseña vacía
+            username: "alumno", // ¡Valor fijo: "alumno"!
             visible: false, // Controlar visibilidad de la contraseña
             alert: {
                 visible: false,
                 title: "",
                 message: "",
             },
+            // Asegúrate de que tus reglas también estén definidas aquí,
+            // si las usas con :rules en tus v-text-fields.
+            rules: {
+                required: value => !!value || 'Este campo es requerido.',
+                carnetLength: value => (value && value.length === 6) || 'El carnet debe tener 6 dígitos.',
+                numeric: value => /^[0-9]+$/.test(value) || 'El carnet solo debe contener números.',
+            }
         };
     },
 
     computed: {
-        // Computado para habilitar/deshabilitar el botón de enviar
+        // Computado para habilitar/deshabilitar el botón de enviar.
+        // Simplificado: 'username' ya no necesita ser validado aquí porque es fijo.
         isFormValid() {
             return this.carnet.length === 6 && this.password.length > 0;
         }
@@ -131,48 +141,67 @@ export default {
             // Eliminar cualquier carácter que no sea un número
             this.carnet = this.carnet.replace(/[^0-9]/g, '');
         },
-        createCount(){
+        createCount() {
             this.$router.push('/CreateAccount');
         },
         // Método llamado cuando el botón de iniciar sesión es presionado
         async onSubmit() {
-    // Verificar si se ingresaron las credenciales
-    if (!this.carnet || !this.password) {
-        this.showAlert("Error", "Por favor, ingresa tu carnet y contraseña.");
-        return;
-    }
+            // Verificar si se ingresaron las credenciales (carnet y password).
+            // 'username' ya no necesita ser verificado aquí porque es fijo.
+            if (!this.carnet || !this.password) {
+                this.showAlert("Error", "Por favor, ingresa tu carnet y contraseña.");
+                return;
+            }
 
-    // Preparar los datos para enviar en la solicitud POST
-    const data = {
-        carnet: this.carnet,
-        password: this.password,
-    };
+            // Preparar los datos para enviar en la solicitud POST
+            const data = {
+                carnet: this.carnet,
+                password: this.password,
+                username: this.username, // Siempre será "alumno"
+            };
 
-    try {
-        // Realizar la solicitud POST a la API
-        const response = await axios.post(`${process.env.VUE_APP_BASE_URL}LoginMetodos/api/login`, data, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (response.data.data) {
-            const id_estudiante = response.data.data.id;
-            localStorage.setItem('id_estudiante', id_estudiante);
-            // Si la respuesta contiene los tokens de acceso y refresh
-            this.showAlert("Éxito", "Inicio de sesión exitoso.");
+            try {
+                // Realizar la solicitud POST a la nueva API de tokens
+                const response = await axios.post(`${process.env.VUE_APP_BASE_URL}EduAssist/Perfil/tokens`, data, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
 
-            // Esperar un momento para mostrar la alerta antes de redirigir
-            setTimeout(() => {
-                this.$router.push('/home'); // Redirigir a la página de inicio
-            }, 2000); // 2000 ms = 2 segundos
-        } else {
-            this.showAlert("Error", "Credenciales incorrectas.");
-        }
-    } catch (error) {
-        console.error("Error al iniciar sesión:", error);
-        this.showAlert("Error", "Hubo un error al intentar iniciar sesión. Intenta nuevamente.");
-    }
-},
+                // Asumiendo que response.data contiene { "refresh": "...", "access": "..." }
+                if (response.data) {
+                    const { access, refresh } = response.data; // Desestructura directamente 'access' y 'refresh'
+
+                    localStorage.setItem('access_token', access);   // Almacenar el access token
+                    localStorage.setItem('refresh_token', refresh); // Almacenar el refresh token
+                    localStorage.setItem('temporary_username', this.username); // Guardar "alumno"
+
+                    this.showAlert("Éxito", "Inicio de sesión exitoso.");
+
+                    // Esperar un momento para mostrar la alerta antes de redirigir
+                    setTimeout(() => {
+                        this.$router.push('/home'); // Redirigir a la página de inicio
+                    }, 2000); // 2000 ms = 2 segundos
+                } else {
+                    // Si response.data está vacío o no tiene los tokens esperados
+                    this.showAlert("Error", "Respuesta inesperada del servidor.");
+                }
+            } catch (error) {
+                console.error("Error al iniciar sesión:", error);
+                // Manejo de errores más específico
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        this.showAlert("Error", "Credenciales incorrectas (carnet y/o contraseña).");
+                    } else if (error.response.status === 400) {
+                        this.showAlert("Error", "Datos de solicitud inválidos. " + (error.response.data.detail || ""));
+                    } else {
+                        this.showAlert("Error", `Error del servidor: ${error.response.status}. Intenta nuevamente.`);
+                    }
+                } else {
+                    this.showAlert("Error", "Hubo un error de red o de conexión. Intenta nuevamente.");
+                }
+            }
+        },
 
         // Método para mostrar alertas
         showAlert(title, message) {
@@ -182,13 +211,18 @@ export default {
         },
     },
 
-    // Reglas de validación para el campo carnet
+    // ¡IMPORTANTE! Se elimina la validación para 'username' de aquí.
+    // Solo se mantienen las validaciones para los campos que el usuario ingresa.
     validations: {
         carnet: {
             required: true,
             length: (value) => value.length === 6,
             numeric: (value) => /^[0-9]+$/.test(value),
         },
+        password: {
+            required: true,
+            // Puedes añadir reglas para password aquí
+        }
     }
 };
 </script>
