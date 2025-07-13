@@ -26,7 +26,7 @@
 
                             <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
                                 :class="{ 'chat-theme-light': this.$store.getters.theme === 'light', 'chat-theme-dark': this.$store.getters.theme === 'dark' }"
-                                style="height: 350px; margin-top: 10px;">
+                                style="height: 372px; margin-top: 10px;">
                                 <div v-if="UsuarioHistorial.length === 0" class="no-conversation-message">
                                     <p class="pstyle">Inicie una nueva conversación</p>
                                 </div>
@@ -35,50 +35,46 @@
                                     <div v-for="(historial, index) in UsuarioHistorial" :key="index"
                                         class="message-pair">
                                         <div class="mx-auto custom-card" style="max-width: 100%">
-
-                                            <v-card v-if="historial.usuario && historial.usuario.trim() !== ''"
-                                                class="CardUser mb-5"
-                                                :class="{ 'CardUser-light': this.$store.getters.theme === 'light', 'CardUser-dark': this.$store.getters.theme === 'dark' }"
-                                                style="margin-left: 45px;" flat>
-                                                <p>{{ historial.usuario }}</p>
-                                            </v-card>
-
-                                            <v-card v-if="historial.ia && historial.ia.trim() !== ''"
-                                                class="CardEduIA mb-5"
-                                                :class="{ 'CardEduIA-light': this.$store.getters.theme === 'light', 'CardEduIA-dark': this.$store.getters.theme === 'dark' }"
-                                                style="margin-right: 45px;" title="EduIA" flat elevation="5">
-                                                <p>{{ historial.ia }}</p>
-                                            </v-card>
+                                            <div class="d-flex justify-end">
+                                                <!-- Contenedor flex alineado a la derecha -->
+                                                <v-card v-if="historial.usuario && historial.usuario.trim() !== ''"
+                                                    class="CardUser mb-5" :class="{
+                                                        'CardUser-light': $store.getters.theme === 'light',
+                                                        'CardUser-dark': $store.getters.theme === 'dark'
+                                                    }" flat style="max-width: 70%;">
+                                                    <p class="pa-2 mb-0">{{ historial.usuario }}</p>
+                                                </v-card>
+                                            </div>
+                                            <div class="d-flex justify-start">
+                                                <v-card v-if="historial.ia && historial.ia.trim() !== ''"
+                                                    class="CardEduIA mb-5"
+                                                    :class="{ 'CardEduIA-light': this.$store.getters.theme === 'light', 'CardEduIA-dark': this.$store.getters.theme === 'dark' }"
+                                                    style="margin-right: 45px;" title="EduIA" flat elevation="5">
+                                                    <p>{{ historial.ia }}</p>
+                                                </v-card>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <v-form fast-fail ref="form">
+                            <v-form fast-fail ref="form" @submit.prevent>
                                 <v-row class="mx-auto custom-inputs">
                                     <v-col>
                                         <v-container>
                                             <v-row>
                                                 <v-col cols="12">
-                                                    <v-text-field v-model="InputMessage" label="Pregunta algo!"
-                                                        type="text" variant="outlined" color="orange-darken-4" rounded
-                                                        clearable autofocus base-color="orange-darken-4">
+                                                    <v-textarea v-model="InputMessage" label="Pregunta algo!"
+                                                        variant="outlined" color="orange-darken-4" rounded clearable
+                                                        autofocus rows="1" no-resize @keydown="handleKeyDown"
+                                                        class="chat-message-input" hide-details>
                                                         <template v-slot:append>
                                                             <v-icon v-if="!loading" @click="sendMessage" icon="mdi-send"
                                                                 color="orange-darken-4"></v-icon>
                                                             <v-progress-circular v-else indeterminate
                                                                 color="orange-darken-4" size="24"></v-progress-circular>
                                                         </template>
-                                                        <template v-slot:prepend>
-                                                            <v-tooltip location="start"
-                                                                text="Powered by ITCA-FEPADE AI">
-                                                                <template v-slot:activator="{ props }">
-                                                                    <v-icon v-bind="props" icon="mdi-robot"
-                                                                        color="orange-darken-4"></v-icon>
-                                                                </template>
-                                                            </v-tooltip>
-                                                        </template>
-                                                    </v-text-field>
+                                                    </v-textarea>
                                                 </v-col>
                                             </v-row>
                                         </v-container>
@@ -90,15 +86,15 @@
 
                     <!-- Columna derecha (Iframe) -->
                     <v-col cols="12" sm="12" md="6" lg="6" class="d-flex">
-                        <div style="width: 100%; height: 75%; position: relative;">
+                        <div style="width: 100%; height: 80%; position: relative; margin-top: 5px;">
                             <iframe
-                            :src="`http://localhost/clases/${selectedTema === 'Introducción' ? 'tema 0' : 'tema ' + selectedTema}/index.html`"
-                            frameborder="" allowfullscreen style="width: 100%; height: 95%; border: 1px;"></iframe>
+                                :src="`http://localhost/clases/${selectedTema === 'Introducción' ? 'tema 0' : 'tema ' + selectedTema}/index.html`"
+                                frameborder="" allowfullscreen style="width: 100%; height: 97%; border: 1px;"></iframe>
                             <!-- Selector de temas -->
                             <div ref="selectContainer" style="position: relative;">
                                 <v-select v-model="selectedTema" :items="temas" label="Selecciona un tema"
-                                    variant="outlined" color="orange-darken-4" class="mb-4" :menu-props="menuProps"
-                                    @update:menu="checkPosition"></v-select>
+                                    variant="outlined" color="orange-darken-4" class="mb-4" style="margin-top: 4%;"
+                                    :menu-props="menuProps" @update:menu="checkPosition"></v-select>
                             </div>
                         </div>
                     </v-col>
@@ -122,7 +118,8 @@ export default {
         temas: ['Introducción', ...Array.from({ length: 9 }, (_, i) => (i + 1).toString())], // ["Introducción", "1", "2", ..., "9"]
         selectedTema: "Introducción", // Tema por defecto
         InputMessage: '',
-        UsuarioHistorial: [], // Asegurarse de que es un array vacío
+        UsuarioHistorial: [],
+        initialHistoryLoaded: false, // Bandera para controlar carga inicial
         loading: false,
         menuProps: {
             offsetY: true,
@@ -143,80 +140,98 @@ export default {
         id_estudiante: localStorage.getItem('id_estudiante'),
     }),
     methods: {
+        handleKeyDown(event) {
+            if (event.key === 'Enter' && !event.shiftKey && !this.loading) {
+                event.preventDefault();
+                this.sendMessage();
+            }
+            // Shift+Enter permite saltos de línea internos sin cambiar el tamaño del campo
+        },
         checkPosition(isOpen) {
-      if (isOpen) {
-        const rect = this.$refs.selectContainer.getBoundingClientRect();
-        const nearBottom = window.innerHeight - rect.bottom < 300; // 300px del borde inferior
-        
-        this.menuProps = {
-          ...this.menuProps,
-          bottom: nearBottom,
-          top: !nearBottom
-        };
-      }
-    },
+            if (isOpen) {
+                const rect = this.$refs.selectContainer.getBoundingClientRect();
+                const nearBottom = window.innerHeight - rect.bottom < 300; // 300px del borde inferior
+
+                this.menuProps = {
+                    ...this.menuProps,
+                    bottom: nearBottom,
+                    top: !nearBottom
+                };
+            }
+        },
         async sendMessage() {
-            this.loading = true; // Activa el loading
-            console.log('sendMessage called. InputMessage:', this.InputMessage);
-            const valid = await this.ValidateCampos();
-            console.log('Validation result:', valid);
+            if (!this.InputMessage.trim()) {
+                alert("Debes escribir un mensaje");
+                return;
+            }
 
-            if (valid) {
-                try {
-                    // Agregar solo el mensaje del usuario inicialmente
-                    this.UsuarioHistorial.push({ usuario: this.InputMessage, ia: '' });
+            this.loading = true;
 
-                    // Obtener referencia del último mensaje en el historial
-                    const lastMessage = this.UsuarioHistorial[this.UsuarioHistorial.length - 1];
+            try {
+                // Agregar mensaje de usuario inmediatamente (optimistic update)
+                const newMessage = {
+                    usuario: this.InputMessage,
+                    ia: '',
+                    timestamp: new Date().toISOString()
+                };
+                this.UsuarioHistorial.push(newMessage);
 
-                    const json = {
+                const response = await axios.post(
+                    `${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/chat`,
+                    {
                         id_estudiante: this.id_estudiante,
                         pregunta: this.InputMessage,
-                    };
-                    console.log('JSON to send:', json);
-
-                    const headers = {
-                        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                        'Content-Type': 'application/json',
-                    };
-
-                    // Realiza la petición a la API
-                    const response = await axios.post(`${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/chat`, json, { headers });
-
-                    if (response.status === 200) {
-                        // Agrega la respuesta de la IA al historial
-                        lastMessage.ia = response.data.data.respuesta.Edula_IA;
-                        this.InputMessage = '';
-                    } else {
-                        alert("Error al enviar el mensaje");
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                            'Content-Type': 'application/json'
+                        }
                     }
-                } catch (error) {
-                    console.error('Error al enviar el mensaje:', error);
-                } finally {
-                    this.loading = false; // Desactiva el loading
+                );
+
+                if (response.status === 200) {
+                    // Actualizar solo el último mensaje con la respuesta
+                    this.UsuarioHistorial[this.UsuarioHistorial.length - 1].ia =
+                        response.data.data.respuesta.Edula_IA;
                 }
-            } else {
-                alert("Debes escribir un mensaje");
-                this.loading = false; // Desactiva el loading
+            } catch (error) {
+                console.error('Error al enviar mensaje:', error);
+                // Opcional: Mostrar error al usuario en la UI
+                this.UsuarioHistorial[this.UsuarioHistorial.length - 1].ia =
+                    "Error al obtener respuesta. Intenta nuevamente.";
+            } finally {
+                this.InputMessage = '';
+                this.loading = false;
+            }
+        },
+        async loadHistoryIfNeeded() {
+            if (this.UsuarioHistorial.length === 0 && !this.initialHistoryLoaded) {
+                await this.LoadHistory();
+                this.initialHistoryLoaded = true;
             }
         },
         async LoadHistory() {
             try {
-                // Obtener el historial de conversaciones
-                const id_estudiante = localStorage.getItem('id_estudiante');
-                const headers = {
-                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                    'Content-Type': 'application/json',
-                };
-                console.log('LoadHistory - id_estudiante:', id_estudiante);
-
-                const response = await axios.get(`${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/historial/${id_estudiante}`, { headers });
+                const response = await axios.get(
+                    `${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/historial/${this.id_estudiante}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
 
                 if (response.status === 200) {
-                    this.UsuarioHistorial = response.data.data || [];
+                    // Agregar al inicio sin perder los mensajes actuales
+                    this.UsuarioHistorial = [
+                        ...(response.data.data || []),
+                        ...this.UsuarioHistorial
+                    ];
                 }
             } catch (error) {
-                console.error('Error al cargar el historial:', error);
+                console.error('Error al cargar historial:', error);
             }
         },
         async ValidateCampos() {
@@ -238,140 +253,100 @@ export default {
 </script>
 
 <style scoped>
+/* ------------------------------------- */
+/* IMPORTACIONES DE FUENTES              */
+/* ------------------------------------- */
 @import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
-/* Si vas a usar Roboto, también impórtala si no lo has hecho globalmente */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+/* ------------------------------------- */
+/* VARIABLES Y ESTILOS BASE              */
+/* ------------------------------------- */
+:root {
+    --border-radius: 10px;
+    --box-shadow: 0 0 15px;
+    --transition: all 0.3s ease;
+    --input-height: 56px;
+}
 
 /* ------------------------------------- */
-/* ESTILOS DE TEMA: CLARO / OSCURO       */
+/* ESTILOS DE TEMA                       */
 /* ------------------------------------- */
-
 /* Contenedor principal del chat */
 .chat-theme-light {
     background-color: rgba(187, 187, 187, 0.253);
-    /* Color para el modo claro */
     color: #333;
-    /* Color de texto general para el modo claro */
 }
 
 .chat-theme-dark {
     background-color: #333;
-    /* Color oscuro para el fondo del chat */
     color: #eee;
-    /* Color de texto general para el modo oscuro */
 }
 
-/* Fondo general de la aplicación (usado en .background) */
+/* Fondo general */
 .background-light {
     background-color: white;
-    /* Color de fondo claro */
 }
 
 .background-dark {
     background-color: #121212;
-    /* Color de fondo oscuro */
     color: #f5f5f5;
-    /* Color de texto para el fondo oscuro, si aplica a elementos que no son chat */
 }
 
-/* Estilos para las tarjetas de usuario (CardUser) */
+/* Tarjetas de usuario */
 .CardUser-light {
-    border: 1px solid #6b6b6b;
-    /* Color del texto del usuario en modo claro */
-    box-shadow: 0 0 15px #919191 !important;
-    background-color: transparent !important;
-    /* Para asegurar que el fondo sea transparente en modo claro */
+    box-shadow: var(--box-shadow) #919191 !important;
+    background-color: #cecece71 !important;
 }
 
 .CardUser-dark {
-    border: 1px solid #c2c2c2;
-    /* Un rojo más brillante para el modo oscuro */
     color: #ffebee;
-    /* Texto blanco/claro para el modo oscuro */
     background-color: #525252 !important;
-    /* Fondo más oscuro para la tarjeta de usuario */
-    box-shadow: 0 0 15px #9eb1bb !important;
-    /* Sombra que contraste */
+    box-shadow: var(--box-shadow) #9eb1bb !important;
 }
 
-/* Estilos para las tarjetas de la IA (CardEduIA) */
+/* Tarjetas de IA */
 .CardEduIA-light {
-    border: 1px solid #6b6b6b;
-    /* Color del texto de IA en modo claro */
-    box-shadow: 0 0 15px #919191 !important;
     background-color: transparent !important;
-    /* Para asegurar que el fondo sea transparente en modo claro */
+    
+    box-shadow: var(--box-shadow) #cae8f7 !important;
 }
 
 .CardEduIA-dark {
-    border: 1px solid #c2c2c2;
-    /* Un rojo más brillante para el modo oscuro */
     color: #ffebee;
-    /* Texto blanco/claro para el modo oscuro */
-    background-color: #525252 !important;
-    /* Fondo más oscuro para la tarjeta de IA */
-    box-shadow: 0 0 15px #cae8f7 !important;
-    /* Sombra que contraste */
+    background-color: transparent !important;
+    box-shadow: var(--box-shadow) #cae8f7 !important;
 }
 
-
 /* ------------------------------------- */
-/* ESTILOS GENERALES (EXISTENTES Y MEJORADOS) */
+/* ESTILOS COMPARTIDOS                   */
 /* ------------------------------------- */
-
-.CardEduIA {
-    /* Estas propiedades son la base, pero serán anuladas por las clases de tema si se aplican */
-    /* No necesitan background-color: transparent; aquí si CardEduIA-light/dark ya lo manejan */
-    border-radius: 10px;
+.CardEduIA,
+.CardUser {
     font-family: "Roboto", Arial, sans-serif;
-    /* Preferencia a Roboto, con Arial/sans-serif como fallback */
-}
-
-.cardInputs {
-    background-color: rgba(187, 187, 187, 0.253);
-    border-radius: 20px;
 }
 
 .CardUser {
-    /* Estas propiedades son la base, pero serán anuladas por las clases de tema si se aplican */
-    /* No necesitan background-color: transparent; aquí si CardUser-light/dark ya lo manejan */
-    border-radius: 10px;
-    font-family: "Roboto", Arial, sans-serif;
-    /* Preferencia a Roboto, con Arial/sans-serif como fallback */
-    margin-top: 15px !important;
-    /* Mantener este margen si es necesario */
+    border-radius: 15px;
+    margin-top: 5px !important;
+}
+.CardUser p,
+.CardEduIA p {
+    white-space: pre-wrap;
+    word-break: break-word; /* Opcional: asegura que las palabras muy largas se rompan si no caben */
 }
 
-.Menu {
-    position: relative;
-    background-color: transparent;
-    width: auto;
-    height: auto;
-    margin-top: 5px;
-    border-radius: 10px;
-}
-
-.background {
-    position: relative;
-    /* background-color: white; REMOVIDO, ahora lo controlan .background-light/.dark */
-    min-height: 100vh;
-    padding: 16px;
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
-}
-
+/* ------------------------------------- */
+/* COMPONENTES ESPECÍFICOS               */
+/* ------------------------------------- */
 .custom-card {
     background-color: transparent !important;
-    /* Esto es importante si tus v-cards no son transparentes y quieres el fondo del chat */
 }
 
 .custom-scrollbar {
     max-width: 98%;
     border-radius: 20px;
-    box-shadow: 0 0 15px #666666;
-    /* Podrías hacer que esta sombra también cambie con el tema */
+    box-shadow: var(--box-shadow) #666666;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -387,88 +362,129 @@ export default {
 }
 
 .custom-inputs {
-    max-width: 70%;
+    max-width: 90%;
     background-color: transparent;
     margin-top: 5px;
 }
-
-.chip-input {
-    width: 100%;
-    border-radius: 20px;
-    color: rgb(255, 255, 255);
-    font-family: "Roboto", sans-serif;
+/* ------------------------------------- */
+/* INPUT DE MENSAJES (SOLUCIÓN FINAL)    */
+/* ------------------------------------- */
+.chat-message-input {
+    --input-height: 56px;
 }
 
+.chat-message-input .v-field {
+    min-height: var(--input-height) !important;
+    max-height: var(--input-height) !important;
+    transition: none !important;
+}
+
+.chat-message-input .v-field__input {
+    /* We keep the container for the input fixed height and ensure it doesn't overflow */
+    height: var(--input-height) !important;
+    padding-top: 12px !important;
+    align-items: center !important;
+    overflow: hidden !important; 
+}
+
+.chat-message-input textarea {
+    line-height: 1.5 !important;
+    white-space: pre-wrap !important;
+    
+    /* Changed from hidden to auto: allows vertical scrolling when content exceeds the max-height */
+    overflow-y: auto !important; 
+    
+    resize: none !important;
+    min-height: 24px !important;
+    max-height: 40px !important; /* Fixed height for the text area content */
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    
+    /* Keep scrollbar hidden for a clean look, but the content can still scroll */
+    scrollbar-width: none; 
+}
+
+.chat-message-input textarea::-webkit-scrollbar {
+    display: none;
+}
+
+.chat-message-input .v-field--variant-outlined .v-field__outline {
+    height: var(--input-height) !important;
+}
+
+/* Adjustments for the label positioning (existing CSS) */
+.chat-message-input .v-label {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    transition: all 0.2s ease !important;
+}
+
+.chat-message-input .v-field--focused .v-label,
+.chat-message-input .v-field--persistent .v-label {
+    top: 8px !important;
+    transform: scale(0.75) translateY(-50%) !important;
+}
+
+/* ------------------------------------- */
+/* TIPOGRAFÍA Y ELEMENTOS DE TEXTO       */
+/* ------------------------------------- */
+p {
+    margin: 0;
+    font-family: "Roboto", Arial, sans-serif;
+    line-height: 1.5;
+}
+
+.CardEduIA p,
+.CardUser p {
+    padding: 10px;
+}
+
+.pstyle {
+    margin: 10px;
+    text-align: center !important;
+    font-family: "Roboto", Arial, sans-serif;
+}
+
+/* ------------------------------------- */
+/* MENSAJES Y FORMULARIO                 */
+/* ------------------------------------- */
+.message-pair {
+    margin-bottom: 15px;
+    padding: 0 10px;
+}
+
+/* ------------------------------------- */
+/* BOTONES Y ELEMENTOS INTERACTIVOS      */
+/* ------------------------------------- */
 .custom-btn {
     background-color: #bd9235 !important;
     color: aliceblue;
     margin: 5px;
     border: 1px solid #bd9235;
+    transition: var(--transition);
 }
 
-p {
-    margin: 0;
-    /* Ajustado a 0, el padding lo controla .CardEduIA p, .CardUser p */
-    font-family: "Roboto", Arial, sans-serif;
-    /* Usando Roboto como preferencia */
-    line-height: 1.5;
-    /* Añadido para mejor legibilidad */
-}
-
-/* Padding para el texto dentro de las tarjetas */
-.CardEduIA p,
-.CardUser p {
-    padding: 10px;
-    /* Añade un padding interno al texto del mensaje */
-    /* margin: 0; ya se define en 'p' globalmente */
-}
-
-.pstyle {
-    margin: 10px;
-    /* Mantener este margen para el mensaje "Inicie una nueva conversación" */
-    text-align: center !important;
-    font-family: "Roboto", Arial, sans-serif;
-    /* Asegurar que también use Roboto */
-    /* El color de este p también se adaptará si el padre .chat-theme-dark tiene color: #eee; */
-}
-
-.message-pair {
-    margin-bottom: 15px;
-    /* Ajusta este valor para la separación entre pares */
-    padding-left: 10px;
-    /* Opcional: para que los mensajes no toquen el borde izquierdo */
-    padding-right: 10px;
-    /* Opcional: para que los mensajes no toquen el borde derecho */
-}
-
-v-form {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding-bottom: 10px;
+.custom-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
 }
 
 /* ------------------------------------- */
-/* ESTILOS DE SCROLL (NO RELACIONADOS CON TEMA) */
+/* AJUSTES RESPONSIVE                    */
 /* ------------------------------------- */
+@media (max-width: 768px) {
+    .custom-scrollbar {
+        max-width: 100%;
+        border-radius: 10px;
+    }
 
-/* Este bloque es el mismo que tenías, pero lo agrupo para claridad */
-/* Puedes dejarlo así o moverlo a un lugar más apropiado si tienes un archivo CSS de utilidades */
-.chat-messages-container {
-    /* NOTA: Esta clase fue removida del HTML en la última actualización para evitar conflicto
-             con el scroll en #goto-container-example. Si la estás usando en otra parte,
-             mantenla. Si no, puedes considerarla obsoleta para el chat principal.
-             El scroll es manejado por #goto-container-example directamente. */
-    max-height: calc(100vh - 200px);
-    /* Ajusta según tus necesidades */
-    overflow-y: auto;
-    padding: 10px;
-    display: flex;
-    flex-direction: column-reverse;
-}
+    .message-pair {
+        padding: 0 5px;
+    }
 
-.chat-messages-container .message-pair:first-child {
-    margin-top: auto;
+    .chat-message-input .v-field {
+        min-height: 48px !important;
+        max-height: 48px !important;
+    }
 }
 </style>

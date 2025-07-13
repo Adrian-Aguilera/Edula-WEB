@@ -15,10 +15,10 @@ export default {
   }),
   computed: {
     theme() {
-      return this.$store.getters.theme
+      // Mapea el estado de Vuex ('light' o 'dark') al nombre del tema de Vuetify.
+      // Si el estado de Vuex es 'dark', usa el nombre de tu tema gris: 'miTemaOscuroGris'
+      return this.$store.getters.theme === 'dark' ? 'miTemaOscuroGris' : 'light';
     },
   },
 }
 </script>
-
-
