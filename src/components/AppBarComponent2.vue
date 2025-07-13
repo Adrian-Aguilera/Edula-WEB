@@ -24,7 +24,7 @@
             </v-chip>
         </template>
         <v-toolbar-title>Bienvenido a Edula</v-toolbar-title>
-        <v-btn rounded="xl" size="x-large" @click="Login">Cerrar Sesion</v-btn>
+        <v-btn rounded="xl" size="x-large" @click="Logout">Cerrar Sesion</v-btn>
     </v-app-bar>
 </template>
 
@@ -37,7 +37,8 @@ export default {
         changeTheme() {
             this.$store.dispatch('setTheme', this.$store.getters.theme === 'light' ? 'dark' : 'light')
         },
-        Login(){
+        Logout(){
+            localStorage.clear();
             this.$router.push('/');
         }
     },

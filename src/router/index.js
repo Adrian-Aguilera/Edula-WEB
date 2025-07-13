@@ -5,12 +5,12 @@ import HomeView from '../views/HomeView.vue'
 import GeneralChat from '@/views/GeneralChat.vue';
 const routes = [
   {
-    path: '/',
+    path: '/GeneralChat',
     name: 'GeneralChat',
     component: GeneralChat
   },
   {
-    path: '/Login',
+    path: '/',
     name: 'LoginName',
     component: LoginView
   },

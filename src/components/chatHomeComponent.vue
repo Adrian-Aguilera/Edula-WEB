@@ -138,9 +138,6 @@ export default {
             },
         },
         order: 0,
-        tokens: {
-            access: process.env.VUE_APP_ACCESS_TOKEN,
-        },
         isActivo: false,
         id_estudiante: localStorage.getItem('id_estudiante'),
     }),
@@ -166,7 +163,7 @@ export default {
                     console.log('JSON to send:', json);
 
                     const headers = {
-                        Authorization: `Bearer ${this.tokens.access}`,
+                        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                         'Content-Type': 'application/json',
                     };
 
@@ -195,7 +192,7 @@ export default {
                 // Obtener el historial de conversaciones
                 const id_estudiante = localStorage.getItem('id_estudiante');
                 const headers = {
-                    Authorization: `Bearer ${this.tokens.access}`,
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                     'Content-Type': 'application/json',
                 };
                 console.log('LoadHistory - id_estudiante:', id_estudiante);
