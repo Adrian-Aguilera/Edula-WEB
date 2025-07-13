@@ -7,10 +7,7 @@
                     <!-- Columna izquierda (Contenido existente) -->
                     <v-col cols="12" md="6" class="d-flex flex-column">
                         <div>
-                            <div class="d-flex justify-center mb-11">
-                                <v-img src="@/assets/logo-itca.avif" width="300" height="120" contain></v-img>
-                            </div>
-                            <div class="d-flex justify-end" style="width: 84%;">
+                            <div class="d-flex justify-end" style="width: 98%;">
                                 <div>
                                     <v-chip class="mr-2" variant="tonal" :color="isActivo ? 'green-darken-4' : 'red'"
                                         @click="isActive">
@@ -29,7 +26,7 @@
 
                             <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
                                 :class="{ 'chat-theme-light': this.$store.getters.theme === 'light', 'chat-theme-dark': this.$store.getters.theme === 'dark' }"
-                                style="height: 400px; margin-top: 10px;">
+                                style="height: 350px; margin-top: 10px;">
                                 <div v-if="UsuarioHistorial.length === 0" class="no-conversation-message">
                                     <p class="pstyle">Inicie una nueva conversación</p>
                                 </div>
@@ -93,7 +90,7 @@
 
                     <!-- Columna derecha (Iframe) -->
                     <v-col cols="12" sm="12" md="6" lg="6" class="d-flex">
-                        <div style="width: 100%; height: 100%; position: relative;">
+                        <div style="width: 100%; height: 75%; position: relative;">
                             <div>
                                 <!-- Selector de temas -->
                                 <v-select v-model="selectedTema" :items="temas" label="Selecciona un tema"
@@ -355,7 +352,7 @@ export default {
 }
 
 .custom-scrollbar {
-    max-width: 70%;
+    max-width: 98%;
     border-radius: 20px;
     box-shadow: 0 0 15px #666666;
     /* Podrías hacer que esta sombra también cambie con el tema */
