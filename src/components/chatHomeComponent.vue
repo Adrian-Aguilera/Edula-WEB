@@ -91,15 +91,15 @@
                     <!-- Columna derecha (Iframe) -->
                     <v-col cols="12" sm="12" md="6" lg="6" class="d-flex">
                         <div style="width: 100%; height: 75%; position: relative;">
-                            <div>
-                                <!-- Selector de temas -->
-                                <v-select v-model="selectedTema" :items="temas" label="Selecciona un tema"
-                                    variant="outlined" color="orange-darken-4" class="mb-4"></v-select>
-                            </div>
-
                             <iframe
-                                :src="`http://localhost/clases/${selectedTema === 'Introducción' ? 'tema 0' : 'tema ' + selectedTema}/index.html`"
-                                frameborder="" allowfullscreen style="width: 100%; height: 95%; border: 1px;"></iframe>
+                            :src="`http://localhost/clases/${selectedTema === 'Introducción' ? 'tema 0' : 'tema ' + selectedTema}/index.html`"
+                            frameborder="" allowfullscreen style="width: 100%; height: 95%; border: 1px;"></iframe>
+                            <!-- Selector de temas -->
+                            <div ref="selectContainer" style="position: relative;">
+                                <v-select v-model="selectedTema" :items="temas" label="Selecciona un tema"
+                                    variant="outlined" color="orange-darken-4" class="mb-4" :menu-props="menuProps"
+                                    @update:menu="checkPosition"></v-select>
+                            </div>
                         </div>
                     </v-col>
                 </v-row>
@@ -124,6 +124,10 @@ export default {
         InputMessage: '',
         UsuarioHistorial: [], // Asegurarse de que es un array vacío
         loading: false,
+        menuProps: {
+            offsetY: true,
+            positionStrategy: 'connected'
+        },
         rules: {
             required: (value) => {
                 console.log('Validating required:', value);
@@ -139,6 +143,18 @@ export default {
         id_estudiante: localStorage.getItem('id_estudiante'),
     }),
     methods: {
+        checkPosition(isOpen) {
+      if (isOpen) {
+        const rect = this.$refs.selectContainer.getBoundingClientRect();
+        const nearBottom = window.innerHeight - rect.bottom < 300; // 300px del borde inferior
+        
+        this.menuProps = {
+          ...this.menuProps,
+          bottom: nearBottom,
+          top: !nearBottom
+        };
+      }
+    },
         async sendMessage() {
             this.loading = true; // Activa el loading
             console.log('sendMessage called. InputMessage:', this.InputMessage);
@@ -289,7 +305,7 @@ export default {
 }
 
 .CardEduIA-dark {
-   border: 1px solid #c2c2c2;
+    border: 1px solid #c2c2c2;
     /* Un rojo más brillante para el modo oscuro */
     color: #ffebee;
     /* Texto blanco/claro para el modo oscuro */
