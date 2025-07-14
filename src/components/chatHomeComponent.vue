@@ -81,7 +81,7 @@
                                                                 </div>
                                                                 <v-alert v-else-if="errorMessage" type="error" dense
                                                                     dismissible @input="errorMessage = null">{{
-                                                                        errorMessage }}</v-alert>
+                                                                    errorMessage }}</v-alert>
                                                                 <div v-else-if="chatHistory.length === 0"
                                                                     class="text-center my-4 text-grey-darken-1">
                                                                     No hay historial disponible para mostrar.
@@ -116,12 +116,49 @@
                                                                 </v-list>
                                                             </v-card-text>
                                                             <v-card-actions>
+                                                                <v-btn color="error" text
+                                                                    @click="showConfirmClearDialog"
+                                                                    :disabled="historyLoading">
+                                                                    <v-icon left>mdi-delete-empty</v-icon> Limpiar
+                                                                    Historial
+                                                                </v-btn>
                                                                 <v-spacer></v-spacer>
                                                                 <v-btn color="primary" text
                                                                     @click="closeHistoryDialog">Cerrar</v-btn>
                                                             </v-card-actions>
                                                         </v-card>
                                                     </v-dialog>
+
+                                                    <v-dialog v-model="confirmClearDialogVisible" max-width="400">
+                                                        <v-card>
+                                                            <v-card-title
+                                                                class="headline red--text text--lighten-1">Confirmar
+                                                                Limpieza</v-card-title>
+                                                            <v-card-text>
+                                                                ¿Estás seguro de que deseas eliminar todo el historial
+                                                                de conversación? Esta acción
+                                                                no se puede deshacer.
+                                                            </v-card-text>
+                                                            <v-card-actions>
+                                                                <v-spacer></v-spacer>
+                                                                <v-btn color="grey" text
+                                                                    @click="confirmClearDialogVisible = false">Cancelar</v-btn>
+                                                                <v-btn color="error" text @click="executeClearHistory"
+                                                                    :loading="clearingHistory">Eliminar</v-btn>
+                                                            </v-card-actions>
+                                                        </v-card>
+                                                    </v-dialog>
+
+                                                    <v-snackbar v-model="snackbarVisible" :color="snackbarColor"
+                                                        :timeout="3000" bottom right>
+                                                        {{ snackbarText }}
+                                                        <template v-slot:action="{ attrs }">
+                                                            <v-btn color="white" text v-bind="attrs"
+                                                                @click="snackbarVisible = false">
+                                                                Cerrar
+                                                            </v-btn>
+                                                        </template>
+                                                    </v-snackbar>
                                                 </v-col>
                                                 <v-col cols="10">
                                                     <v-textarea v-model="InputMessage" label="Pregunta algo!"
@@ -188,6 +225,12 @@ export default {
         chatHistory: [],        // Almacenará los mensajes del historial del diálogo (obtenidos de la API)
         errorMessage: null,     // Para mostrar errores de la API
 
+        // Nuevas propiedades para la limpieza de historial y notificaciones
+        confirmClearDialogVisible: false, // Controla la visibilidad del diálogo de confirmación
+        clearingHistory: false,           // Estado de carga para la operación de limpieza
+        snackbarVisible: false,           // Controla la visibilidad del snackbar
+        snackbarText: '',                 // Texto del snackbar
+        snackbarColor: '',                // Color del snackbar
         // Propiedades relacionadas con v-select/v-form (asumimos que se usan en otras partes de tu template no mostradas)
         menuProps: {
             offsetY: true,
@@ -343,7 +386,60 @@ export default {
             this.chatHistory = [];      // Limpia el historial cargado en el diálogo
             this.errorMessage = null;
         },
+        // --- Nuevos métodos para limpiar el historial ---
+        showConfirmClearDialog() {
+            this.confirmClearDialogVisible = true; // Abre el diálogo de confirmación
+            this.errorMessage = null; // Limpiar errores previos si los hubiera
+        },
 
+        async executeClearHistory() {
+            this.clearingHistory = true; // Inicia el estado de carga del botón
+            this.errorMessage = null;    // Limpia errores
+            
+            try {
+                const id_estudiante = localStorage.getItem('id_estudiante');
+
+                if (!id_estudiante) {
+                    throw new Error('ID de estudiante no encontrado en el almacenamiento local.');
+                }
+
+                const baseUrl = process.env.VUE_APP_BASE_URL;
+                // Endpoint para limpiar historial
+                const apiUrl = `${baseUrl}EduAsistente/api/asistente/historial/limpiar/${id_estudiante}`;
+
+                const response = await axios.get(apiUrl, { // Usamos GET como especificaste
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.status === 200) {
+                    // Si la limpieza fue exitosa:
+                    this.chatHistory = []; // Limpia el historial mostrado en el diálogo
+                    this.UsuarioHistorial = []; // ¡Importante! También limpia el historial del chat principal
+                    
+                    this.showSnackbar('Historial limpiado exitosamente.', 'success');
+                    this.confirmClearDialogVisible = false; // Cierra el diálogo de confirmación
+                    this.closeHistoryDialog(); // Cierra el diálogo principal del historial
+                } else {
+                    throw new Error(response.data.message || `Error ${response.status}: No se pudo limpiar el historial.`);
+                }
+            } catch (error) {
+                console.error('Error al limpiar historial:', error);
+                this.errorMessage = 'No se pudo limpiar el historial: ' + (error.response?.data?.message || error.message || 'Error desconocido.');
+                this.showSnackbar('Error al limpiar historial.', 'error');
+            } finally {
+                this.clearingHistory = false; // Finaliza el estado de carga del botón
+            }
+        },
+
+        showSnackbar(text, color) {
+            this.snackbarText = text;
+            this.snackbarColor = color;
+            this.snackbarVisible = true;
+        },
+        // --- Fin de nuevos métodos para limpiar el historial ---
         async ValidateCampos() {
             const { valid } = await this.$refs.form.validate();
             return valid;
