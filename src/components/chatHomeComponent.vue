@@ -94,7 +94,7 @@
                                                                             class="d-flex justify-end mb-1">
                                                                             <v-card class="pa-2 rounded-lg elevation-2"
                                                                                 :class="{ 'CardUser-light': $store.getters.theme === 'light', 'CardUser-dark': $store.getters.theme === 'dark' }"
-                                                                                style="max-width: 80%; background-color: var(--v-theme-primary-container) !important; color: white !important;">
+                                                                                style="max-width: 80%; background-color: var(--v-theme-primary-container) !important;">
                                                                                 <p class="pre-wrap text-right">{{
                                                                                     item.content }}</p>
                                                                                 <span
