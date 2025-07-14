@@ -63,7 +63,67 @@
                                     <v-col>
                                         <v-container>
                                             <v-row>
-                                                <v-col cols="12">
+                                                <!-- Boton para abrir el diálogo de historial -->
+                                                <v-col cols="2">
+                                                    <v-btn icon color="primary" @click="openHistoryDialog" class="ml-2">
+                                                        <v-icon>mdi-history</v-icon> </v-btn>
+
+                                                    <v-dialog v-model="dialogVisible" max-width="600">
+                                                        <v-card>
+                                                            <v-card-title class="headline">Historial de
+                                                                Conversación</v-card-title>
+                                                            <v-card-text>
+                                                                <div v-if="historyLoading"
+                                                                    class="d-flex justify-center my-4">
+                                                                    <v-progress-circular indeterminate
+                                                                        color="primary"></v-progress-circular>
+                                                                    <span class="ml-2">Cargando historial...</span>
+                                                                </div>
+                                                                <v-alert v-else-if="errorMessage" type="error" dense
+                                                                    dismissible @input="errorMessage = null">{{
+                                                                        errorMessage }}</v-alert>
+                                                                <div v-else-if="chatHistory.length === 0"
+                                                                    class="text-center my-4 text-grey-darken-1">
+                                                                    No hay historial disponible para mostrar.
+                                                                </div>
+                                                                <v-list v-else dense class="overflow-y-auto"
+                                                                    style="max-height: 400px;">
+                                                                    <v-list-item v-for="(item, index) in chatHistory"
+                                                                        :key="index" class="my-2">
+                                                                        <div v-if="item.role === 'user' && item.content.trim() !== ''"
+                                                                            class="d-flex justify-end mb-1">
+                                                                            <v-card class="pa-2 rounded-lg elevation-2"
+                                                                                :class="{ 'CardUser-light': $store.getters.theme === 'light', 'CardUser-dark': $store.getters.theme === 'dark' }"
+                                                                                style="max-width: 80%; background-color: var(--v-theme-primary-container) !important; color: white !important;">
+                                                                                <p class="pre-wrap text-right">{{
+                                                                                    item.content }}</p>
+                                                                                <span
+                                                                                    class="text-caption text-grey-lighten-2 text-right d-block">Tú</span>
+                                                                            </v-card>
+                                                                        </div>
+                                                                        <div v-if="item.role === 'assistant' && item.content.trim() !== ''"
+                                                                            class="d-flex justify-start mb-1">
+                                                                            <v-card class="pa-2 rounded-lg elevation-2"
+                                                                                :class="{ 'CardEduIA-light': $store.getters.theme === 'light', 'CardEduIA-dark': $store.getters.theme === 'dark' }"
+                                                                                style="max-width: 80%;">
+                                                                                <p class="pre-wrap text-left">{{
+                                                                                    item.content }}</p>
+                                                                                <span
+                                                                                    class="text-caption text-grey-darken-1 text-left d-block">EduIA</span>
+                                                                            </v-card>
+                                                                        </div>
+                                                                    </v-list-item>
+                                                                </v-list>
+                                                            </v-card-text>
+                                                            <v-card-actions>
+                                                                <v-spacer></v-spacer>
+                                                                <v-btn color="primary" text
+                                                                    @click="closeHistoryDialog">Cerrar</v-btn>
+                                                            </v-card-actions>
+                                                        </v-card>
+                                                    </v-dialog>
+                                                </v-col>
+                                                <v-col cols="10">
                                                     <v-textarea v-model="InputMessage" label="Pregunta algo!"
                                                         variant="outlined" color="orange-darken-4" rounded clearable
                                                         autofocus rows="1" no-resize @keydown="handleKeyDown"
@@ -115,29 +175,35 @@ export default {
     },
     data: () => ({
         // Temas disponibles
-        temas: ['Introducción', ...Array.from({ length: 9 }, (_, i) => 'Semana: '+(i + 1).toString())], // ["Introducción", "1", "2", ..., "9"]
+        temas: ['Introducción', ...Array.from({ length: 9 }, (_, i) => 'Tema: ' + (i + 1))], // Cambiado a "Tema:"
         selectedTema: "Introducción", // Tema por defecto
         InputMessage: '',
-        UsuarioHistorial: [],
-        initialHistoryLoaded: false, // Bandera para controlar carga inicial
-        loading: false,
+        UsuarioHistorial: [], // Historial del chat principal
+        initialHistoryLoaded: false, // Bandera para controlar carga inicial del historial principal
+        loading: false, // Estado de carga del envío de mensaje
+
+        // Propiedades para el diálogo de historial
+        dialogVisible: false,   // Controla si el diálogo del historial está abierto
+        historyLoading: false,  // Indica si el historial del diálogo está cargando
+        chatHistory: [],        // Almacenará los mensajes del historial del diálogo (obtenidos de la API)
+        errorMessage: null,     // Para mostrar errores de la API
+
+        // Propiedades relacionadas con v-select/v-form (asumimos que se usan en otras partes de tu template no mostradas)
         menuProps: {
             offsetY: true,
             positionStrategy: 'connected'
         },
         rules: {
             required: (value) => {
-                console.log('Validating required:', value);
                 return !!value || "Este campo es requerido";
             },
             min: (value) => {
-                console.log('Validating min:', value);
                 return value && value.length >= 1 || "El mensaje debe tener al menos 1 caracteres";
             },
         },
-        order: 0,
+        // order: 0, // Esta propiedad no parece usarse, considera eliminarla
         isActivo: false,
-        id_estudiante: localStorage.getItem('id_estudiante'),
+        id_estudiante: localStorage.getItem('id_estudiante'), // Se obtiene una vez al inicio
     }),
     methods: {
         handleKeyDown(event) {
@@ -145,12 +211,14 @@ export default {
                 event.preventDefault();
                 this.sendMessage();
             }
-            // Shift+Enter permite saltos de línea internos sin cambiar el tamaño del campo
         },
         checkPosition(isOpen) {
+            // Este método se usa para un v-select que no está completamente en el código.
+            // Si tu v-select tiene ref="selectContainer", este método es útil.
+            // De lo contrario, puedes eliminarlo si no lo necesitas.
             if (isOpen) {
                 const rect = this.$refs.selectContainer.getBoundingClientRect();
-                const nearBottom = window.innerHeight - rect.bottom < 300; // 300px del borde inferior
+                const nearBottom = window.innerHeight - rect.bottom < 300;
 
                 this.menuProps = {
                     ...this.menuProps,
@@ -168,9 +236,8 @@ export default {
             this.loading = true;
 
             try {
-                // Agregar mensaje de usuario inmediatamente (optimistic update)
                 const newMessage = {
-                    usuario: this.InputMessage,
+                    usuario: this.InputMessage, // Para tu historial principal
                     ia: '',
                     timestamp: new Date().toISOString()
                 };
@@ -191,13 +258,11 @@ export default {
                 );
 
                 if (response.status === 200) {
-                    // Actualizar solo el último mensaje con la respuesta
                     this.UsuarioHistorial[this.UsuarioHistorial.length - 1].ia =
                         response.data.data.respuesta.Edula_IA;
                 }
             } catch (error) {
                 console.error('Error al enviar mensaje:', error);
-                // Opcional: Mostrar error al usuario en la UI
                 this.UsuarioHistorial[this.UsuarioHistorial.length - 1].ia =
                     "Error al obtener respuesta. Intenta nuevamente.";
             } finally {
@@ -205,51 +270,100 @@ export default {
                 this.loading = false;
             }
         },
-        async loadHistoryIfNeeded() {
-            if (this.UsuarioHistorial.length === 0 && !this.initialHistoryLoaded) {
-                await this.LoadHistory();
-                this.initialHistoryLoaded = true;
+
+        /**
+         * Método auxiliar para realizar la petición GET al historial de la API.
+         * Retorna los datos o lanza un error.
+         */
+        async _fetchApiHistory(studentId) {
+            const baseUrl = process.env.VUE_APP_BASE_URL;
+            const apiUrl = `${baseUrl}EduAsistente/api/asistente/historial/${studentId}`;
+
+            const response = await axios.get(apiUrl, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.status === 200) {
+                // La API retorna { "data": [...] }, así que accedemos a response.data.data
+                return response.data.data || [];
+            } else {
+                throw new Error(response.data.message || `Error ${response.status}: No se pudo obtener el historial.`);
             }
         },
+
+        /**
+         * Carga el historial de conversación en UsuarioHistorial (para el chat principal).
+         * Utilizado para la carga inicial o recargas manuales.
+         */
         async LoadHistory() {
             try {
-                const response = await axios.get(
-                    `${process.env.VUE_APP_BASE_URL}EduAsistente/api/asistente/historial/${this.id_estudiante}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
-                );
-
-                if (response.status === 200) {
-                    // Agregar al inicio sin perder los mensajes actuales
-                    this.UsuarioHistorial = [
-                        ...(response.data.data || []),
-                        ...this.UsuarioHistorial
-                    ];
-                }
+                this.UsuarioHistorial = await this._fetchApiHistory(this.id_estudiante);
             } catch (error) {
-                console.error('Error al cargar historial:', error);
+                console.error('Error al cargar historial (LoadHistory para chat principal):', error);
+                // Opcional: mostrar un mensaje de error en la interfaz de usuario del chat principal
             }
         },
+
+        /**
+         * Carga el historial de conversación en chatHistory (para el diálogo).
+         * Utilizado al abrir el v-dialog.
+         */
+        async loadChatHistory() {
+            this.historyLoading = true;
+            this.errorMessage = null;
+            this.chatHistory = [];
+
+            try {
+                const id_estudiante = localStorage.getItem('id_estudiante');
+
+                if (!id_estudiante) {
+                    throw new Error('ID de estudiante no encontrado en el almacenamiento local.');
+                }
+                this.chatHistory = await this._fetchApiHistory(id_estudiante);
+
+            } catch (error) {
+                console.error('Error al cargar historial (loadChatHistory para diálogo):', error);
+                this.errorMessage = 'No se pudo cargar el historial: ' + (error.response?.data?.message || error.message || 'Error desconocido.');
+            } finally {
+                this.historyLoading = false;
+            }
+        },
+
+        // Métodos para el diálogo de historial
+        openHistoryDialog() {
+            this.dialogVisible = true;
+            this.loadChatHistory();    // Carga el historial específico del diálogo
+        },
+
+        closeHistoryDialog() {
+            this.dialogVisible = false;
+            this.chatHistory = [];      // Limpia el historial cargado en el diálogo
+            this.errorMessage = null;
+        },
+
         async ValidateCampos() {
             const { valid } = await this.$refs.form.validate();
             return valid;
         },
         isActive() {
-            // hacer una peticion a la api si esta activo el chatbot
-            this.isActivo = !this.isActivo;
+            // Lógica para verificar si el chatbot está activo
+            this.isActivo = !this.isActivo; // Esto actualmente solo lo invierte. Asegúrate de que haga la petición real si es necesario.
         }
     },
-
     created() {
-        this.isActive();
-        this.LoadHistory();
+        this.isActive(); // Llama a tu función para verificar si el chatbot está activo
+
+        // Carga el historial principal (UsuarioHistorial) si no ha sido cargado.
+        // Esto reemplaza la doble llamada de antes.
+        if (this.UsuarioHistorial.length === 0 && !this.initialHistoryLoaded) {
+            this.LoadHistory();
+            this.initialHistoryLoaded = true; // Marca como cargado
+        }
     },
 }
-
 </script>
 
 <style scoped>
@@ -308,7 +422,7 @@ export default {
 /* Tarjetas de IA */
 .CardEduIA-light {
     background-color: transparent !important;
-    
+
     box-shadow: var(--box-shadow) #cae8f7 !important;
 }
 
@@ -330,15 +444,23 @@ export default {
     border-radius: 15px;
     margin-top: 5px !important;
 }
+
 .CardUser p,
 .CardEduIA p {
     white-space: pre-wrap;
-    word-break: break-word; /* Opcional: asegura que las palabras muy largas se rompan si no caben */
+    word-break: break-word;
+    /* Opcional: asegura que las palabras muy largas se rompan si no caben */
 }
 
 /* ------------------------------------- */
 /* COMPONENTES ESPECÍFICOS               */
 /* ------------------------------------- */
+.pre-wrap {
+    white-space: pre-wrap;
+    word-break: break-word;
+    /* Rompe palabras largas si no caben */
+}
+
 .custom-card {
     background-color: transparent !important;
 }
@@ -366,6 +488,7 @@ export default {
     background-color: transparent;
     margin-top: 5px;
 }
+
 /* ------------------------------------- */
 /* INPUT DE MENSAJES (SOLUCIÓN FINAL)    */
 /* ------------------------------------- */
@@ -384,24 +507,25 @@ export default {
     height: var(--input-height) !important;
     padding-top: 12px !important;
     align-items: center !important;
-    overflow: hidden !important; 
+    overflow: hidden !important;
 }
 
 .chat-message-input textarea {
     line-height: 1.5 !important;
     white-space: pre-wrap !important;
-    
+
     /* Changed from hidden to auto: allows vertical scrolling when content exceeds the max-height */
-    overflow-y: auto !important; 
-    
+    overflow-y: auto !important;
+
     resize: none !important;
     min-height: 24px !important;
-    max-height: 40px !important; /* Fixed height for the text area content */
+    max-height: 40px !important;
+    /* Fixed height for the text area content */
     margin-top: 0 !important;
     padding-top: 0 !important;
-    
+
     /* Keep scrollbar hidden for a clean look, but the content can still scroll */
-    scrollbar-width: none; 
+    scrollbar-width: none;
 }
 
 .chat-message-input textarea::-webkit-scrollbar {
