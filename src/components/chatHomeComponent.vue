@@ -93,7 +93,7 @@
                             <!-- Selector de temas -->
                             <div ref="selectContainer" style="position: relative;">
                                 <v-select v-model="selectedTema" :items="temas" label="Selecciona un tema"
-                                    variant="outlined" color="orange-darken-4" class="mb-4" style="margin-top: 4%;"
+                                    variant="outlined" color="orange-darken-4" class="mb-4" style="margin-top: 6%;"
                                     :menu-props="menuProps" @update:menu="checkPosition"></v-select>
                             </div>
                         </div>
@@ -115,7 +115,7 @@ export default {
     },
     data: () => ({
         // Temas disponibles
-        temas: ['Introducción', ...Array.from({ length: 9 }, (_, i) => (i + 1).toString())], // ["Introducción", "1", "2", ..., "9"]
+        temas: ['Introducción', ...Array.from({ length: 9 }, (_, i) => 'Semana: '+(i + 1).toString())], // ["Introducción", "1", "2", ..., "9"]
         selectedTema: "Introducción", // Tema por defecto
         InputMessage: '',
         UsuarioHistorial: [],

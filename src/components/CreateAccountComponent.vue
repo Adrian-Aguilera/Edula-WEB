@@ -143,7 +143,7 @@
   },
 
     goToLogin() {
-      this.$router.push('/Login');
+      this.$router.push('/');
     },
   createAccount() {
     // Validación de que el carnet tenga exactamente 6 dígitos

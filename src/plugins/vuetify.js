@@ -33,7 +33,7 @@ const miTemaClaro = {
     // Definiciones del tema claro
     primary: '#FF9800',
     background: '#ffffffff',
-    surface: '#ccccccff',
+    surface: '#ffffffff',
     // ...
   },
 };

@@ -160,7 +160,7 @@ export default {
             localStorage.setItem('id_estudiante', id_estudiante);
             // Si la respuesta contiene los tokens de acceso y refresh
             localStorage.setItem('access_token', response.data.data.access);
-            this.showAlert("Éxito", "Inicio de sesión exitoso.");
+            //this.showAlert("Éxito", "Inicio de sesión exitoso.");
 
             // Esperar un momento para mostrar la alerta antes de redirigir
             setTimeout(() => {
