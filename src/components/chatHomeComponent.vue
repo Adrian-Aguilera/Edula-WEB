@@ -2,7 +2,7 @@
     <v-layout class="rounded-md">
         <AppBarComponent2 />
         <v-main class="align-center justify-center d-flex" style="min-height: 100vh;">
-            <v-container>
+            <v-container class="chat-container-with-background">
                 <v-row>
                     <!-- Columna izquierda (Contenido existente) -->
                     <v-col cols="12" md="6" class="d-flex flex-column">
@@ -25,7 +25,7 @@
                             </div>
 
                             <div id="goto-container-example" class="mx-auto overflow-auto custom-scrollbar"
-                                :class="{ 'chat-theme-light': this.$store.getters.theme === 'light', 'chat-theme-dark': this.$store.getters.theme === 'dark' }"
+                                :class="{ 'chat-theme-light chat-theme-dark': this.$store.getters.theme === 'light', 'chat-theme-dark': this.$store.getters.theme === 'dark' }"
                                 style="height: 372px; margin-top: 10px;">
                                 <div v-if="UsuarioHistorial.length === 0" class="no-conversation-message">
                                     <p class="pstyle">Inicie una nueva conversación</p>
@@ -119,9 +119,7 @@
                                                                 <v-btn color="error" text
                                                                     @click="showConfirmClearDialog"
                                                                     :disabled="historyLoading">
-                                                                    <v-icon left>mdi-delete-empty</v-icon> Limpiar
-                                                                    Historial
-                                                                </v-btn>
+                                                                    <v-icon left>mdi-delete-empty</v-icon></v-btn>
                                                                 <v-spacer></v-spacer>
                                                                 <v-btn color="primary" text
                                                                     @click="closeHistoryDialog">Cerrar</v-btn>
@@ -489,7 +487,7 @@ export default {
 }
 
 .chat-theme-dark {
-    background-color: #333;
+    background-color: rgba(68, 68, 68, 0.377);
     color: #eee;
 }
 
@@ -624,6 +622,7 @@ export default {
     scrollbar-width: none;
 }
 
+
 .chat-message-input textarea::-webkit-scrollbar {
     display: none;
 }
@@ -707,4 +706,27 @@ p {
         max-height: 48px !important;
     }
 }
+/* Estilos para el contenedor principal con la imagen de fondo */
+.chat-container-with-background {
+  position: relative; /* Necesario para posicionar correctamente el pseudo-elemento */
+  overflow: hidden; /* Asegura que la imagen no se desborde del contenedor */
+  /* Puedes agregar un padding-top para evitar que el contenido se superponga con la imagen si es muy grande */
+  /* padding-top: 50px; */ 
+}
+
+.chat-container-with-background::before {
+  content: ""; /* Obligatorio para pseudo-elementos */
+  position: absolute; /* Permite posicionarlo libremente dentro del contenedor */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('@/assets/BGIA.jpg'); /* Inserta la imagen como pseudo-elemento */
+  background-size: cover; /* Ajusta la imagen para cubrir todo el área del contenedor */
+  background-position: center center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  opacity: 0.05; /* Ajusta la transparencia (0.0 es totalmente transparente, 1.0 es totalmente opaco) */
+  z-index: -1; /* Envía la imagen detrás del contenido del contenedor */
+}
+
 </style>
