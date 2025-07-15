@@ -173,7 +173,7 @@
 
         // Retrasar la redirección para asegurar que la alerta se vea
         setTimeout(() => {
-          this.$router.push('/login'); // Redirigir a la página de login
+          this.$router.push('/'); // Redirigir a la página de login
         }, 2000); // 2 segundos de retraso para permitir que el usuario vea la alerta
       })
       .catch((error) => {
