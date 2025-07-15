@@ -81,7 +81,7 @@
                                                                 </div>
                                                                 <v-alert v-else-if="errorMessage" type="error" dense
                                                                     dismissible @input="errorMessage = null">{{
-                                                                    errorMessage }}</v-alert>
+                                                                        errorMessage }}</v-alert>
                                                                 <div v-else-if="chatHistory.length === 0"
                                                                     class="text-center my-4 text-grey-darken-1">
                                                                     No hay historial disponible para mostrar.
@@ -90,18 +90,18 @@
                                                                     style="max-height: 400px;">
                                                                     <v-list-item v-for="(item, index) in chatHistory"
                                                                         :key="index" class="my-2">
-                                                                        <div v-if="item.role === 'user' && item.content.trim() !== ''"
+                                                                        <div v-if="item.role === 'user' && item.content != null && item.content.trim() !== ''"
                                                                             class="d-flex justify-end mb-1">
                                                                             <v-card class="pa-2 rounded-lg elevation-2"
                                                                                 :class="{ 'CardUser-light': $store.getters.theme === 'light', 'CardUser-dark': $store.getters.theme === 'dark' }"
-                                                                                style="max-width: 80%; background-color: var(--v-theme-primary-container) !important;">
+                                                                                style="max-width: 80%; background-color: var(--v-theme-primary-container) !important; color: white !important;">
                                                                                 <p class="pre-wrap text-right">{{
                                                                                     item.content }}</p>
                                                                                 <span
                                                                                     class="text-caption text-grey-lighten-2 text-right d-block">Tú</span>
                                                                             </v-card>
                                                                         </div>
-                                                                        <div v-if="item.role === 'assistant' && item.content.trim() !== ''"
+                                                                        <div v-if="item.role === 'assistant' && item.content != null && item.content.trim() !== ''"
                                                                             class="d-flex justify-start mb-1">
                                                                             <v-card class="pa-2 rounded-lg elevation-2"
                                                                                 :class="{ 'CardEduIA-light': $store.getters.theme === 'light', 'CardEduIA-dark': $store.getters.theme === 'dark' }"
@@ -393,7 +393,7 @@ export default {
         async executeClearHistory() {
             this.clearingHistory = true; // Inicia el estado de carga del botón
             this.errorMessage = null;    // Limpia errores
-            
+
             try {
                 const id_estudiante = localStorage.getItem('id_estudiante');
 
@@ -416,7 +416,7 @@ export default {
                     // Si la limpieza fue exitosa:
                     this.chatHistory = []; // Limpia el historial mostrado en el diálogo
                     this.UsuarioHistorial = []; // ¡Importante! También limpia el historial del chat principal
-                    
+
                     this.showSnackbar('Historial limpiado exitosamente.', 'success');
                     this.confirmClearDialogVisible = false; // Cierra el diálogo de confirmación
                     this.closeHistoryDialog(); // Cierra el diálogo principal del historial
@@ -706,27 +706,37 @@ p {
         max-height: 48px !important;
     }
 }
+
 /* Estilos para el contenedor principal con la imagen de fondo */
 .chat-container-with-background {
-  position: relative; /* Necesario para posicionar correctamente el pseudo-elemento */
-  overflow: hidden; /* Asegura que la imagen no se desborde del contenedor */
-  /* Puedes agregar un padding-top para evitar que el contenido se superponga con la imagen si es muy grande */
-  /* padding-top: 50px; */ 
+    position: relative;
+    /* Necesario para posicionar correctamente el pseudo-elemento */
+    overflow: hidden;
+    /* Asegura que la imagen no se desborde del contenedor */
+    /* Puedes agregar un padding-top para evitar que el contenido se superponga con la imagen si es muy grande */
+    /* padding-top: 50px; */
 }
 
 .chat-container-with-background::before {
-  content: ""; /* Obligatorio para pseudo-elementos */
-  position: absolute; /* Permite posicionarlo libremente dentro del contenedor */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('@/assets/BGIA.jpg'); /* Inserta la imagen como pseudo-elemento */
-  background-size: cover; /* Ajusta la imagen para cubrir todo el área del contenedor */
-  background-position: center center; /* Centra la imagen */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  opacity: 0.05; /* Ajusta la transparencia (0.0 es totalmente transparente, 1.0 es totalmente opaco) */
-  z-index: -1; /* Envía la imagen detrás del contenido del contenedor */
+    content: "";
+    /* Obligatorio para pseudo-elementos */
+    position: absolute;
+    /* Permite posicionarlo libremente dentro del contenedor */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('@/assets/BGIA.jpg');
+    /* Inserta la imagen como pseudo-elemento */
+    background-size: cover;
+    /* Ajusta la imagen para cubrir todo el área del contenedor */
+    background-position: center center;
+    /* Centra la imagen */
+    background-repeat: no-repeat;
+    /* Evita que la imagen se repita */
+    opacity: 0.05;
+    /* Ajusta la transparencia (0.0 es totalmente transparente, 1.0 es totalmente opaco) */
+    z-index: -1;
+    /* Envía la imagen detrás del contenido del contenedor */
 }
-
 </style>
