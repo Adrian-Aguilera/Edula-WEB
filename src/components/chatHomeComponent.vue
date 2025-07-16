@@ -182,14 +182,14 @@
                     <!-- Columna derecha (Iframe) -->
                     <v-col cols="12" sm="12" md="6" lg="6" class="d-flex">
                         <div style="width: 100%; height: 80%; position: relative; margin-top: 5px;">
-                            <iframe
-                                :src="`http://localhost/clases/${selectedTema === 'Introducción' ? 'tema 0' : 'tema ' + selectedTema}/index.html`"
-                                frameborder="" allowfullscreen style="width: 100%; height: 97%; border: 1px;"></iframe>
-                            <!-- Selector de temas -->
+                            <iframe :src="`http://localhost:8082/clases/${selectedTema}/index.html`" frameborder=""
+                                allowfullscreen style="width: 100%; height: 97%; border: 1px;">
+                            </iframe>
                             <div ref="selectContainer" style="position: relative;">
                                 <v-select v-model="selectedTema" :items="temas" label="Selecciona un tema"
                                     variant="outlined" color="orange-darken-4" class="mb-4" style="margin-top: 6%;"
-                                    :menu-props="menuProps" @update:menu="checkPosition"></v-select>
+                                    :menu-props="menuProps" @update:menu="checkPosition">
+                                </v-select>
                             </div>
                         </div>
                     </v-col>
@@ -210,8 +210,8 @@ export default {
     },
     data: () => ({
         // Temas disponibles
-        temas: ['Introducción', ...Array.from({ length: 9 }, (_, i) => 'Tema: ' + (i + 1))], // Cambiado a "Tema:"
-        selectedTema: "Introducción", // Tema por defecto
+        temas: [], // Inicializamos como array vacío
+        selectedTema: 'semana 0',  // Tema por defecto
         InputMessage: '',
         UsuarioHistorial: [], // Historial del chat principal
         initialHistoryLoaded: false, // Bandera para controlar carga inicial del historial principal
@@ -448,6 +448,20 @@ export default {
         }
     },
     created() {
+        //Inicio para la selección del tema
+        this.temas.push({ title: 'Introducción', value: 'semana 0' });
+
+        // Generamos las entradas para 'Semana 1' hasta 'Semana 11'
+        // Asumiendo que tienes carpetas desde 'semana 1' hasta 'semana 11'
+        for (let i = 1; i <= 11; i++) {
+            this.temas.push({ title: `Semana ${i}`, value: `semana ${i}` });
+        }
+
+        // Asegurarse de que selectedTema tenga un valor válido al inicio
+        if (!this.selectedTema || !this.temas.some(t => t.value === this.selectedTema)) {
+            this.selectedTema = 'semana 0'; // Establece 'semana 0' como predeterminado si no hay selección válida
+        }
+        //Fin para la selección del tema
         this.isActive(); // Llama a tu función para verificar si el chatbot está activo
 
         // Carga el historial principal (UsuarioHistorial) si no ha sido cargado.
